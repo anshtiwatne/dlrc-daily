@@ -24,8 +24,8 @@
     "shortcuts": [],
     "lang": "en",
     "display_override": [
-        "fullscreen",
         "standalone",
+        "fullscreen",
         "window-controls-overlay",
         "minimal-ui",
         "browser"
