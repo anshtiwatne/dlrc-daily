@@ -5,9 +5,9 @@
     "display": "standalone",
     "name": "DLRC InShorts",
     "orientation": "portrait-primary",
-    "scope": "/",
+    "scope": "/dlrc-inshorts/",
     "short_name": "DLRC InShorts",
-    "start_url": "/",
+    "start_url": "/dlrc-inshorts/",
     "theme_color": "#ffffff",
     "categories": [
       "news"
