@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DLRC InShorts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto+Slab:wght@900&display=swap" rel="stylesheet">
+</head>
+
+<style>
+    :root {
+        scroll-snap-type: y mandatory;
+    }
+
+    body {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    body::-webkit-scrollbar {
+        display: none;
+    }
+
+    .logo {
+        font-family: 'Roboto Slab', serif;
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        position: sticky;
+        top: 0;
+        z-index: 0;
+        color: rgba(255, 255, 255, 0.75);
+        font-weight: 900;
+        text-shadow: 0.1rem 0.1rem 1rem rgba(0, 0, 0, 1);
+    }
+
+    .article {
+        height: 100vh;
+        margin: 0 auto;
+        max-width: 22.5rem;
+        box-sizing: border-box;
+        scroll-snap-align: start;
+    }
+
+    .article>*:not(.coverImage) {
+        margin: 1rem;
+    }
+
+    .coverImage {
+        height: 40vh;
+        width: 100vw;
+        max-width: 22.5rem;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .headline {
+        font-weight: 600;
+        color: #2F2F2F;
+    }
+
+    .story {
+        font-size: 0.9rem;
+        color: #404040;
+    }
+</style>
+
+<body onload="load_articles(1)">
+    <div class="logo">
+        <img src="./assets/logo.webp" height="35rem" style="border-radius: 0.45rem; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+        <span style="padding-left: 0.5rem;">DLRC TIMES</span>
+    </div>
+    <div id="articles">
+    </div>
+</body>
+
+<script>
+    const color_palette = ["255, 105, 97", "119, 221, 119", "174, 198, 207", "253, 253, 150"]
+
+    function load_articles(n) {
+        fetch(`./articles/article${n}/headline.txt`, { method: "HEAD" })
+        .then((res) => {
+            if (res.ok) {
+                load_articles(n+1)
+            }
+            else {
+                n = n-1
+                for (let i = 1; i <= n; i++) {
+                    const color = color_palette[(i) % color_palette.length]
+
+                    document.getElementById("articles").innerHTML +=
+                    `<div class="article" style="background-color: rgb(${color});">
+                        <div id="coverImage${i}" class="coverImage">
+                        </div>
+                        <div id="headline${i}" class="headline">${i}</div>
+                        <div id="story${i}" class="story">${i}</div>
+                    </div>`
+
+                    document.getElementById(`coverImage${i}`).style.backgroundImage = `linear-gradient(to top, rgba(${color}, 1), rgba(${color}, 0)), url("./articles/article${i}/cover.webp")`
+
+                    fetch(`./articles/article${i}/headline.txt`)
+                        .then((res) => res.text())
+                        .then((headline) => { document.getElementById(`headline${i}`).innerHTML = headline })
+
+                    fetch(`./articles/article${i}/story.txt`)
+                        .then((res) => res.text())
+                        .then((story) => { document.getElementById(`story${i}`).innerHTML = story })
+                }
+            }
+        })
+    }
+</script>
+
+</html>
