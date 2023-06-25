@@ -6,7 +6,7 @@
     "name": "DLRC InShorts",
     "orientation": "portrait-primary",
     "short_name": "DLRC InShorts",
-    "theme_color": "#ffffff",
+    "theme_color": "#000000",
     "categories": [
       "news"
     ],
