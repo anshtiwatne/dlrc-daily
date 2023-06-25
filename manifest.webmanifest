@@ -1,0 +1,33 @@
+{
+    "background_color": "#ffffff",
+    "description": "Short from news by the DLRC Newsletter",
+    "dir": "ltr",
+    "display": "standalone",
+    "name": "DLRC InShorts",
+    "orientation": "portrait-primary",
+    "scope": "/",
+    "short_name": "DLRC InShorts",
+    "start_url": "/",
+    "theme_color": "#ffffff",
+    "categories": [
+      "news"
+    ],
+    "screenshots": [],
+    "icons": [
+        {
+            "src": "assets/logo.webp",
+            "type": "image/webp",
+            "sizes": "256x256",
+            "purpose": "any"
+        }
+    ],
+    "shortcuts": [],
+    "lang": "en",
+    "display_override": [
+      "standalone",
+      "fullscreen",
+      "window-controls-overlay",
+      "minimal-ui",
+      "browser"
+    ]
+}
