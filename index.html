@@ -35,7 +35,7 @@
         padding: 1rem;
         position: sticky;
         top: 0;
-        z-index: 0;
+        z-index: 10;
         color: rgba(255, 255, 255, 0.75);
         font-weight: 900;
         text-shadow: 0.1rem 0.1rem 1rem rgba(0, 0, 0, 1);
@@ -83,7 +83,7 @@
 </body>
 
 <script>
-    const color_palette = ["255, 105, 97", "119, 221, 119", "174, 198, 207", "253, 253, 150"]
+    const color_palette = ["251, 231, 198",  "160, 231, 229", "180, 248, 200", "255, 174, 188"]
 
     function load_articles(n) {
         fetch(`./articles/article${n}/headline.txt`, { method: "HEAD" })
@@ -94,7 +94,7 @@
             else {
                 n = n-1
                 for (let i = 1; i <= n; i++) {
-                    const color = color_palette[(i) % color_palette.length]
+                    const color = color_palette[(i-1) % color_palette.length]
 
                     document.getElementById("articles").innerHTML +=
                     `<div class="article" style="background-color: rgb(${color});">
