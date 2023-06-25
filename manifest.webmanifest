@@ -5,9 +5,7 @@
     "display": "standalone",
     "name": "DLRC InShorts",
     "orientation": "portrait-primary",
-    "scope": "/",
     "short_name": "DLRC InShorts",
-    "start_url": "https://anshtiwatne.github.io/dlrc-inshorts/",
     "theme_color": "#ffffff",
     "categories": [
       "news"
