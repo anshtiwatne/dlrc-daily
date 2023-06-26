@@ -82,15 +82,36 @@
         padding-top: 1rem;
     }
 
-    .endscreen {
-        height: 15vh;
+    #endScreen {
+        scroll-snap-align: start;
+        display: flex;
+        height: 100vh;
         background-color: #2F2F2F;
         color: #f0f0f0;
-        display: flex;
         justify-content: center;
         align-items: center;
         font-weight: 600;
     }
+
+    .loader {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: inline-block;
+        border-top: 3px solid #FFF;
+        border-right: 3px solid transparent;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+    }
+
+    @keyframes rotation {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    } 
 
     @media only screen and (max-width: 380px) {
         .textContent {
@@ -133,7 +154,7 @@
     </div>
     <div id="articles">
     </div>
-    <div class="endscreen">That's All For Today :)</div>
+    <div id="endScreen"><span class="loader"></span></div>
 </body>
 
 <script>
@@ -176,6 +197,15 @@
                 }
             }
         })
+        unhide_articles()
+    }
+
+    function unhide_articles() {
+        const endScreen = document.getElementById("endScreen")
+        endScreen.style.height = "15vh"
+        endScreen.innerHTML = "That's all for now :("
+        endScreen.style.scrollSnapAlign = "none"
+        
     }
 </script>
 
