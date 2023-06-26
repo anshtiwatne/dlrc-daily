@@ -47,7 +47,7 @@
         margin: 0 auto;
         box-sizing: border-box;
         scroll-snap-align: start;
-        scroll-snap-stop: always;
+        scroll-snap-stop: always;;
     }
 
     .article>*:not(.coverImage) {
@@ -70,13 +70,21 @@
     .story {
         font-size: 1.1rem;
         color: #404040;
+        padding: 1.5rem 0;
     }
 
     .tags {
         font-size: 1.15rem;
         font-weight: 500;
         color: #505050;
-        padding-top: 1rem;
+    }
+
+    .content {
+        flex-direction: column;
+        display: flex;
+        justify-content: space-between;
+        height: 54vh;
+        padding-bottom: 1rem;
     }
 
     .endscreen {
@@ -124,11 +132,14 @@
 
                     document.getElementById("articles").innerHTML +=
                     `<div class="article" style="background-color: rgb(${color});">
-                        <div id="coverImage${i}" class="coverImage">
-                        </div>
+                        <div id="coverImage${i}" class="coverImage"></div>
+                        <div class="content">
+                        <div>
                         <div id="headline${i}" class="headline">${i}</div>
                         <div id="story${i}" class="story">${i}</div>
+                        </div>
                         <footer id="tags${i}" class="tags">${i}</footer>
+                        </div>
                     </div>`
 
                     document.getElementById(`coverImage${i}`).style.backgroundImage = `linear-gradient(to top, rgba(${color}, 1), rgba(${color}, 0)), url("./articles/article${i}/cover.webp")`
