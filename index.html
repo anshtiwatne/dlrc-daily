@@ -47,11 +47,13 @@
         margin: 0 auto;
         box-sizing: border-box;
         scroll-snap-align: start;
-        scroll-snap-stop: always;;
+        scroll-snap-stop: always;
     }
 
-    .article>*:not(.coverImage) {
+    .textContent {
         margin: 1rem;
+        display: flex;
+        flex-direction: column;
     }
 
     .coverImage {
@@ -68,23 +70,16 @@
     }
 
     .story {
-        font-size: 1.1rem;
+        font-size: 1.10rem;
         color: #404040;
-        padding: 1.5rem 0;
+        padding: 2rem 0;
     }
 
     .tags {
         font-size: 1.15rem;
         font-weight: 500;
         color: #505050;
-    }
-
-    .content {
-        flex-direction: column;
-        display: flex;
-        justify-content: space-between;
-        height: 54vh;
-        padding-bottom: 1rem;
+        padding-top: 1rem;
     }
 
     .endscreen {
@@ -97,11 +92,33 @@
         font-weight: 600;
     }
 
+    @media only screen and (max-width: 380px) {
+        .textContent {
+            justify-content: space-between;
+            height: 55vh;
+        }
+        .story {
+            padding: 0;
+        }
+        .tags {
+            padding: 0;
+        }
+    }
+
     @media only screen and (min-width: 750px) {
-        .article>*:not(.coverImage) {
+        .textContent {
             margin: 0 auto;
             padding: 1rem;
             max-width: 75vw;
+        }
+        .headline {
+            font-size: 1.30rem;
+        }
+        .story {
+            font-size: 1.15rem;
+        }
+        .tags {
+            font-size: 1.20rem;
         }
     }
 </style>
@@ -133,12 +150,10 @@
                     document.getElementById("articles").innerHTML +=
                     `<div class="article" style="background-color: rgb(${color});">
                         <div id="coverImage${i}" class="coverImage"></div>
-                        <div class="content">
-                        <div>
+                        <div class="textContent">
                         <div id="headline${i}" class="headline">${i}</div>
                         <div id="story${i}" class="story">${i}</div>
-                        </div>
-                        <footer id="tags${i}" class="tags">${i}</footer>
+                        <div id="tags${i}" class="tags">${i}</div>
                         </div>
                     </div>`
 
