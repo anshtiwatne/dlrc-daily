@@ -1,1 +1,1 @@
-# dlrc-inshorts
+# DLRC Daily
