@@ -26,7 +26,6 @@ function unhide_articles() {
 db.collection("articles").get().then((snapshot) => {
     let i = -1
     const today = new Date()
-    console.log(today)
 
     snapshot.docs.forEach(doc => {
         let article = doc.data()
