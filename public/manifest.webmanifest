@@ -1,13 +1,13 @@
 {
     "background_color": "#000000",
-    "description": "Short from news by the DLRC Newsletter",
+    "description": "Daily short from news by the DLRC Newsletter",
     "dir": "ltr",
     "display": "standalone",
-    "name": "DLRC InShorts",
+    "name": "DLRC Daily",
     "orientation": "portrait-primary",
     "scope": "/",
-    "short_name": "DLRC InShorts",
-    "start_url": "../dlrc-inshorts/",
+    "short_name": "DLRC Daily",
+    "start_url": "/",
     "theme_color": "#000000",
     "categories": [
         "news"
@@ -15,7 +15,7 @@
     "screenshots": [],
     "icons": [
         {
-            "src": "assets/logo.webp",
+            "src": "./assets/logo.webp",
             "type": "image/webp",
             "sizes": "256x256",
             "purpose": "any"
