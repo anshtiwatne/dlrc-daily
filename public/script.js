@@ -1,15 +1,3 @@
-// import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";;
-
-const firebaseConfig = {
-    apiKey: "AIzaSyCO145OUsjafOByFoghuIQdY1HamdYuO0s",
-    authDomain: "dlrc-daily.firebaseapp.com",
-    projectId: "dlrc-daily",
-    storageBucket: "dlrc-daily.appspot.com",
-    messagingSenderId: "235007567187",
-    appId: "1:235007567187:web:91c604b6d82632c036ada6"
-};
-
-const app = !firebase.apps.length ? firebase.initializeApp(config) : firebase.app()
 const db = firebase.firestore();
 
 function load_article(article, i) {
