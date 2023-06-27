@@ -9,7 +9,7 @@ const firebaseConfig = {
     appId: "1:235007567187:web:91c604b6d82632c036ada6"
 };
 
-const app = firebase.initializeApp(firebaseConfig);
+const app = !firebase.apps.length ? firebase.initializeApp(config) : firebase.app()
 const db = firebase.firestore();
 
 function load_article(article, i) {
