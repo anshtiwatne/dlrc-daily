@@ -1,5 +1,5 @@
 {
-    "background_color": "#000000",
+    "background_color": "#FFFFFF",
     "description": "Daily short from news by the DLRC Newsletter",
     "dir": "ltr",
     "display": "standalone",
@@ -8,7 +8,7 @@
     "scope": "/",
     "short_name": "DLRC Daily",
     "start_url": "/",
-    "theme_color": "#2F2F2F",
+    "theme_color": "#000000",
     "categories": [
         "news"
     ],
