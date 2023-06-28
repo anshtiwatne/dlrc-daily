@@ -36,7 +36,10 @@ body::-webkit-scrollbar {
 }
 
 .textContent {
+    justify-content: space-evenly;
+    height: 60vh;
     margin: 1rem;
+    margin-top: -7.5vh;
     display: flex;
     flex-direction: column;
 }
@@ -49,19 +52,18 @@ body::-webkit-scrollbar {
 }
 
 .headline {
-    font-size: 1.25rem;
+    font-size: min(1.25rem, 5vmin);
     font-weight: 600;
     color: #2F2F2F;
 }
 
 .story {
-    font-size: 1.10rem;
+    font-size: min(1.10rem, 4.5vmin);
     color: #404040;
-    padding: 2rem 0;
 }
 
 .tags {
-    font-size: 1.15rem;
+    font-size: min(1.15rem, 4.75vmin);
     font-weight: 500;
     color: #505050;
     padding-top: 1rem;
@@ -99,27 +101,9 @@ body::-webkit-scrollbar {
     }
 }
 
-@media only screen and (max-width: 380px) {
+@media (min-width: 500px) {
     .textContent {
-        justify-content: space-between;
-        height: 60vh;
-    }
-
-    .coverImage {
-        height: 35vh;
-    }
-
-    .story {
-        padding: 0;
-    }
-
-    .tags {
-        padding: 0;
-    }
-}
-
-@media only screen and (min-width: 750px) {
-    .textContent {
+        justify-content: normal;
         margin: 0 auto;
         padding: 1rem;
         max-width: 75vw;
@@ -131,9 +115,11 @@ body::-webkit-scrollbar {
 
     .story {
         font-size: 1.15rem;
+        padding: 2rem 0;
     }
 
     .tags {
         font-size: 1.20rem;
+        padding-top: 1rem;
     }
 }
