@@ -1,12 +1,12 @@
 const db = firebase.firestore();
 
 function load_article(article, i) {
-    const color_palette = ["251, 231, 198", "160, 231, 229", "180, 248, 200", "255, 174, 188"]
+    const color_palette = ["#FBE7C6", "#A0E7E5", "#B4F8C8", "#FFAEBC"]
     const color = color_palette[(i) % color_palette.length]
 
     document.getElementById("articles").innerHTML +=
-        `<div class="article" style="background-color: rgb(${color});">
-            <div class="coverImage" style="background-image: linear-gradient(to top, rgba(${color}, 1), rgba(${color}, 0)), url(${article.coverImage});"></div>
+        `<div class="article" style="background-color: ${color};">
+            <div class="coverImage" style="background-image: linear-gradient(to top, ${color}, transparent), url(${article.coverImage});"></div>
             <div class="textContent">
             <div class="headline">${article.headline}</div>
             <div class="story">${article.story}</div>
