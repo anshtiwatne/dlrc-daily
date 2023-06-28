@@ -15,16 +15,23 @@ body::-webkit-scrollbar {
 }
 
 .logo {
-    font-family: 'Roboto Slab', serif;
     display: flex;
     align-items: center;
     padding: 1rem;
     position: sticky;
     top: 0;
     z-index: 10;
+}
+
+.logo:hover {
+    cursor: pointer;
+}
+
+.logoText {
     color: rgba(255, 255, 255, 0.75);
-    font-weight: 900;
+    font-family: 'Roboto Slab', serif;
     text-shadow: 0.1rem 0.1rem 1rem rgba(0, 0, 0, 1);
+    animation: disappearToLeft 2s 5s forwards;
 }
 
 .article {
@@ -98,6 +105,17 @@ body::-webkit-scrollbar {
 
     100% {
         transform: rotate(360deg);
+    }
+}
+
+@keyframes disappearToLeft {
+    0% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(-7.5%);
+      opacity: 0;
     }
 }
 
