@@ -1,5 +1,9 @@
 :root {
     scroll-snap-type: y mandatory;
+    --bg-color: #2F2F2F;
+    --headline-text-color: #333333;
+    --story-text-color: #3C3C3C;
+    --tags-text-color: #505050;
 }
 
 body {
@@ -7,7 +11,7 @@ body {
     font-family: 'Poppins', sans-serif;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    background-color: #2F2F2F;
+    background-color: var(--bg-color);
 }
 
 body::-webkit-scrollbar {
@@ -30,7 +34,7 @@ body::-webkit-scrollbar {
 .logoText {
     color: rgba(255, 255, 255, 0.75);
     font-family: 'Roboto Slab', serif;
-    text-shadow: 0.1rem 0.1rem 1rem rgba(0, 0, 0, 1);
+    text-shadow: 0.1rem 0.1rem 1rem black;
     animation: disappearToLeft 2s 5s forwards;
 }
 
@@ -61,44 +65,27 @@ body::-webkit-scrollbar {
 .headline {
     font-size: min(1.25rem, 5vmin);
     font-weight: 600;
-    color: #2F2F2F;
+    color: var(--headline-text-color);
 }
 
 .story {
     font-size: min(1.10rem, 4.5vmin);
-    color: #404040;
+    color: var(--story-text-color);
 }
 
 .tags {
     font-size: min(1.15rem, 4.75vmin);
     font-weight: 500;
-    color: #505050;
+    color: var(--tags-text-color);
     padding-top: 1vh;
-}
-
-.author {
-    font-size: min(1rem, 4vmin);
-    font-weight: 400;
-    color: #505050;
-    padding-top: 1vh;
-}
-
-.credits {
-    font-size: min(0.8rem, 3.25vmin);
-}
-
-.footer {
-    display: flex;
-    justify-content: space-between;
-    padding-right: 1rem;
 }
 
 #endScreen {
     scroll-snap-align: start;
     display: flex;
     height: 100vh;
-    background-color: #2F2F2F;
-    color: #f0f0f0;
+    background-color: var(--bg-color);
+    color: whitesmoke;
     justify-content: center;
     align-items: center;
     font-weight: 600;
@@ -109,7 +96,7 @@ body::-webkit-scrollbar {
     height: 48px;
     border-radius: 50%;
     display: inline-block;
-    border-top: 3px solid #FFF;
+    border-top: 3px solid white;
     border-right: 3px solid transparent;
     box-sizing: border-box;
     animation: rotation 1s linear infinite;

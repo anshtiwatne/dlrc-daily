@@ -8,12 +8,9 @@ function load_article(article, i) {
         `<div class="article" style="background-color: ${color};">
             <div class="coverImage" style="background-image: linear-gradient(to top, ${color}, transparent), url(${article.coverImage});"></div>
             <div class="textContent">
-            <div class="headline">${article.headline}</div>
-            <div class="story">${article.story}</div>
-            <div class="footer">
-                <span class="tags">${article.tags}</span>
-                <span class="author"><span class="credits">story by </span>${article.author}</span>
-            </div>
+                <div class="headline">${article.headline}</div>
+                <div class="story">${article.story}</div>
+                <div class="tags">${article.tags}</div>
             </div>
         </div>`
 }
