@@ -1,6 +1,6 @@
-const db = firebase.firestore();
+const db = firebase.firestore()
 
-function load_article(article, i) {
+function loadArticle(article, i) {
     const color_palette = ["#FBE7C6", "#A0E7E5", "#B4F8C8", "#FFAEBC"]
     const color = color_palette[(i) % color_palette.length]
 
@@ -15,7 +15,7 @@ function load_article(article, i) {
         </div>`
 }
 
-function unhide_articles() {
+function unhideArticles() {
     const endScreen = document.getElementById("endScreen")
     endScreen.style.height = "10vh"
     endScreen.innerHTML = "That's all for now :("
@@ -34,8 +34,8 @@ db.collection("articles").get().then((snapshot) => {
         // if the article is less than a day old
         if (timeDelta <= 86400) {
             i++
-            load_article(article, i)
+            loadArticle(article, i)
         }
-    });
-    setTimeout(unhide_articles, 250)
-});
+    })
+    setTimeout(unhideArticles, 250)
+})
