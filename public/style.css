@@ -76,6 +76,23 @@ body::-webkit-scrollbar {
     padding-top: 1vh;
 }
 
+.author {
+    font-size: min(1rem, 4vmin);
+    font-weight: 400;
+    color: #505050;
+    padding-top: 1vh;
+}
+
+.credits {
+    font-size: min(0.8rem, 3.25vmin);
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 1rem;
+}
+
 #endScreen {
     scroll-snap-align: start;
     display: flex;
