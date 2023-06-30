@@ -6,7 +6,6 @@ function loadArticle(article, id, i) {
 
     document.getElementById("articles").innerHTML +=
         `<div class="article" style="background-color: ${color};">
-            <div >
             <div class="coverImage" style="background-image: linear-gradient(to top, ${color}, transparent), url(${article.coverImage});"></div>
             <div class="textContent">
                 <div class="tag">${article.tag}</div>

@@ -47,12 +47,12 @@ body::-webkit-scrollbar {
 }
 
 .textContent {
+    display: flex;
+    flex-direction: column;
     justify-content: space-evenly;
     height: 60vh;
     margin: 1rem;
     margin-top: -5vh;
-    display: flex;
-    flex-direction: column;
 }
 
 .coverImage {
@@ -116,12 +116,12 @@ body::-webkit-scrollbar {
 
 .footer {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     padding-right: 1.75rem;
-    flex-grow: 1;
 }
 
-#likeGroup:hover {
+.likeGroup:hover {
     cursor: pointer;
 }
 
