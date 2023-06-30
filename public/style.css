@@ -3,7 +3,7 @@
     --bg-color: #2F2F2F;
     --headline-text-color: #333333;
     --story-text-color: #3C3C3C;
-    --tags-text-color: #505050;
+    --tags-text-color: #4F4F4F;
 }
 
 body {
@@ -50,7 +50,7 @@ body::-webkit-scrollbar {
     justify-content: space-evenly;
     height: 60vh;
     margin: 1rem;
-    margin-top: -3vh;
+    margin-top: -5vh;
     display: flex;
     flex-direction: column;
 }
@@ -76,8 +76,53 @@ body::-webkit-scrollbar {
 .tags {
     font-size: min(1.15rem, 4.75vmin);
     font-weight: 500;
-    color: var(--tags-text-color);
+    color: var(--headline-text-color);
     padding-top: 1vh;
+}
+
+.tag {
+    font-size: min(0.9rem, 3.5vmin);
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.75);
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-decoration-color: rgba(0, 0, 0, 0.7);
+    text-decoration-thickness: 0.15rem;
+    text-underline-offset: 0.3rem;
+}
+
+.credits {
+    font-size: min(0.9rem, 3.5vmin);
+    color: var(--headline-text-color);
+}
+
+.author {
+    font-size: min(1rem, 4vmin);
+    font-weight: 600;
+    color: var(--tags-text-color);
+}
+
+.likeIcon {
+    vertical-align: text-bottom;
+    color: var(--tags-text-color);
+    font-size: min(1.5rem, 6vmin);
+}
+
+.likeCounter {
+    color: var(--tags-text-color);
+    font-size: min(1.25rem, 5vmin);
+    font-weight: 400;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 1.75rem;
+    flex-grow: 1;
+}
+
+#likeGroup:hover {
+    cursor: pointer;
 }
 
 #endScreen {
@@ -143,5 +188,9 @@ body::-webkit-scrollbar {
     .tags {
         font-size: 1.20rem;
         padding-top: 1rem;
+    }
+
+    .tag {
+        padding-bottom: 2.5vh;
     }
 }
