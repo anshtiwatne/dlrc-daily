@@ -8,7 +8,7 @@ function loadArticle(article, id, i) {
         `<div class="article" style="background-color: ${color};">
             <div class="coverImage" style="background-image: linear-gradient(to top, ${color}, transparent), url(${article.coverImage});"></div>
             <div class="textContent">
-                <div class="heading">
+                <div>
                     <div class="tag">${article.tag}</div>
                     <div class="headline">${article.headline}</div>
                 </div>
