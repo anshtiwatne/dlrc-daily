@@ -27,24 +27,31 @@
 
 <style>
     .about {
-        font-family: Poppins;
+        padding-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        height: 70vh;
+        font-family: 'Poppins', sans-serif;
         color: whitesmoke;
-        padding: 5rem 1rem;
+    }
+
+    .item {
+        background-color: lightblue;
     }
 </style>
 
 <body>
-    <div class="header" onclick="window.scrollTo(0, 0)">
+    <div class="header">
         <a href="/">
         <img class="logoImage" src="./assets/logo.webp" height="35rem">
         <span class="logoText" style="padding-left: 0.5rem;">DLRC DAILY</span>
         </a>
-        <a href="info.html" class="infoButton material-symbols-rounded">info</a>
+        <a href="/" class="infoButton material-symbols-rounded">close</a>
     </div>
     <div class="about">
-        DLRC Daily Beta<br><br>
-        By the DLRC Newsletter Team<br><br>
-        App Developed by Ansh Tiwatne
+        DLRC Daily Beta the DLRC Newsletter
     </div>
 </body>
 
