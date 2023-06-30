@@ -73,13 +73,6 @@ body::-webkit-scrollbar {
     color: var(--story-text-color);
 }
 
-.tags {
-    font-size: min(1.15rem, 4.75vmin);
-    font-weight: 500;
-    color: var(--headline-text-color);
-    padding-top: 1vh;
-}
-
 .tag {
     font-size: min(0.9rem, 3.5vmin);
     font-weight: 600;
@@ -89,6 +82,7 @@ body::-webkit-scrollbar {
     text-decoration-color: rgba(0, 0, 0, 0.7);
     text-decoration-thickness: 0.15rem;
     text-underline-offset: 0.3rem;
+    padding-bottom: min(0.9rem, 3.5vmin);
 }
 
 .credits {
