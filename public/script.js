@@ -4,6 +4,11 @@ function loadArticle(article, id, i) {
     const color_palette = ["#FBE7C6", "#A0E7E5", "#B4F8C8", "#FFAEBC"]
     const color = color_palette[(i) % color_palette.length]
 
+    let fill = 0
+    if (document.cookie.indexOf(`${id}=`) == 0) {
+        fill = 1
+    }
+
     document.getElementById("articles").innerHTML +=
         `<div class="article" style="background-color: ${color};">
             <div class="coverImage" style="background-image: linear-gradient(to top, ${color}, transparent), url(${article.coverImage});"></div>
@@ -18,8 +23,8 @@ function loadArticle(article, id, i) {
                         <span class="credits">short by</span>
                         <span class="author">${article.author}</span>
                     </span>
-                    <span id="likeGroup" class="likeGroup" data-id="${id}" data-clicked=${0}>
-                        <span class="likeIcon material-symbols-rounded">thumb_up</span>
+                    <span id="likeGroup" class="likeGroup clickable" data-id="${id}">
+                        <span class="likeIcon material-symbols-rounded" style="font-variation-settings: 'FILL' ${fill};">thumb_up</span>
                         <span class="likeCounter">${article.likes}</span>
                     </span>
                 </div>
@@ -43,21 +48,33 @@ function updateLikes() {
 
         button.addEventListener("click", () => {
 
-            if (button.getAttribute("data-clicked") == 0) {
+            const articleID = button.getAttribute("data-id")
+            const articleDoc = db.collection("articles").doc(articleID)
+            const articleLikeButton = button.querySelector(":nth-child(1)")
+            const articleLikeCounter = button.querySelector(":nth-child(2)")
 
-                const articleID = button.getAttribute("data-id")
-                const articleDoc = db.collection("articles").doc(articleID)
+            if (document.cookie.indexOf(`${articleID}=`) == -1) {
                 const increment = firebase.firestore.FieldValue.increment(1)
-
                 articleDoc.update({"likes": increment})
-                console.log(articleID)
-                console.log('Button clicked!')
-                button.setAttribute("data-clicked", 1)
 
-                const articleLikeButton = button.querySelector(":nth-child(1)")
-                const articleLikeCounter = button.querySelector(":nth-child(2)")
+                button.setAttribute("data-clicked", 1)
+                document.cookie = `${articleID}=; path=/`;
+                console.log(document.cookie)
+
                 articleLikeButton.style = "font-variation-settings: 'FILL' 1;"
                 articleLikeCounter.innerHTML = parseInt(articleLikeCounter.innerHTML) + 1
+            }
+
+            else if (document.cookie.indexOf(`${articleID}=`) == 0) {
+                const increment = firebase.firestore.FieldValue.increment(-1)
+                articleDoc.update({"likes": increment})
+
+                button.setAttribute("data-clicked", 0)
+                document.cookie = `${articleID}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+                console.log(document.cookie)
+
+                articleLikeButton.style = "font-variation-settings: 'FILL' 0;"
+                articleLikeCounter.innerHTML = parseInt(articleLikeCounter.innerHTML) - 1
             }
         })
     })
@@ -65,18 +82,19 @@ function updateLikes() {
 
 db.collection("articles").get().then((snapshot) => {
     let i = -1
-    const today = new Date()
+    // const today = new Date()
 
     snapshot.docs.forEach(doc => {
         let article = doc.data()
         let id = doc.id
-        let publishDate = article.publishDate.toDate()
-        let timeDelta = (today.getTime() - publishDate.getTime()) / 1000
-        // if the article is less than a day old
-        if (timeDelta <= 86400) {
-            i++
-            loadArticle(article, id, i)
-        }
+        // let publishDate = article.publishDate.toDate()
+        // let timeDelta = (today.getTime() - publishDate.getTime()) / 1000
+        // if (timeDelta <= 86400) {
+        //     i++
+        //     loadArticle(article, id, i)
+        // }
+        i++
+        loadArticle(article, id, i)
     })
     setTimeout(unhideArticles, 250)
 })
