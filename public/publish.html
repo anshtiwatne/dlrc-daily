@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Publish an Article</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/9.23.0/firebase-app-compat.js"></script>
+    <script defer src="/__/firebase/9.23.0/firebase-firestore-compat.js"></script>
+    <!-- 
+      initialize the SDK after all desired features are loaded, set useEmulator to false
+      to avoid connecting the SDK to running emulators.
+    -->
+    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+</head>
+
+<style>
+    input {
+        width: 100%;
+    }
+</style>
+
+<body>
+    <header style="padding: 0;">
+        <h3>Publish to DLRC Daily</h3>
+    </header>
+
+    <form action="">
+        <br>
+        <label for="author">Author</label>
+        <input id="author" type="text" required>
+
+        <label for="headline">Headline</label>
+        <input id="headline" type="text" placeholder="< 30 characters" required>
+
+        <label for="coverImage">Cover Image</label>
+        <input id="coverImage" type="text">
+
+        <label for="story">Story</label>
+        <textarea id="story" type="text" placeholder="< 300 characters" required></textarea>
+
+        <label for="tag">Tag</label>
+        <input id="tag" type="text" required>
+
+        <div style="display: flex; align-items: center; text-align: center; margin-top: 2rem;">
+            <input id="psswd" type="text" placeholder="Password" required>
+            <button type="submit" id="publishButton" style="margin-left: 1rem; margin-bottom: 1rem;">Publish</button>
+        </div>
+    </form>
+</body>
+
+<script type="module">
+    const db = firebase.firestore()
+
+    function publish() {
+        let articles = db.collection("articles")
+        articles.add({
+            author: document.getElementById("author").value,
+            headline: document.getElementById("headline").value,
+            coverImage: document.getElementById("coverImage").value,
+            story: document.getElementById("story").value,
+            tag: document.getElementById("tag").value,
+            publishDate: firebase.firestore.Timestamp.now(),
+            likes: 0
+        })
+        alert("Published!")
+    }
+
+    document.getElementById("publishButton").addEventListener("click", () => {
+        // absolute terrible way of authentication only for demo purposes
+        if (document.getElementById("psswd").value == "demo") {
+            publish()
+        } else {
+            alert("Wrong password!")
+        }
+    })
+</script>
+
+</html>

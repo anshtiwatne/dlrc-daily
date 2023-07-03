@@ -104,11 +104,11 @@ db.collection("articles").get().then((snapshot) => {
         articles.push([article, id, publishDate])
     })
 
-    articles.sort((a, b) => a[2] - b[2]) // sorting the articles by publishDate
+    articles.sort((a, b) => a[2] - b[2]).reverse() // sorting the articles by publishDate
     articles.forEach(article => {
         i++
         loadArticle(article[0], article[1], i)
     })
-    
+
     setTimeout(unhideArticles, 250)
 })
