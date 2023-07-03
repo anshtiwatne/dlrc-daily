@@ -94,20 +94,21 @@ function updateLikes() {
 }
 
 db.collection("articles").get().then((snapshot) => {
+    let articles = []
     let i = -1
-    // const today = new Date()
 
     snapshot.docs.forEach(doc => {
         let article = doc.data()
         let id = doc.id
-        // let publishDate = article.publishDate.toDate()
-        // let timeDelta = (today.getTime() - publishDate.getTime()) / 1000
-        // if (timeDelta <= 86400) {
-        //     i++
-        //     loadArticle(article, id, i)
-        // }
-        i++
-        loadArticle(article, id, i)
+        let publishDate = article.publishDate.toDate()
+        articles.push([article, id, publishDate])
     })
+
+    articles.sort((a, b) => a[2] - b[2]) // sorting the articles by publishDate
+    articles.forEach(article => {
+        i++
+        loadArticle(article[0], article[1], i)
+    })
+    
     setTimeout(unhideArticles, 250)
 })
