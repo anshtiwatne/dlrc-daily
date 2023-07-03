@@ -5,7 +5,7 @@ function loadArticle(article, id, i) {
     const color = color_palette[(i) % color_palette.length]
 
     let fill = 0
-    if (document.cookie.indexOf(`${id}=`) == 0) {
+    if (checkCookie(id) == 1) {
         fill = 1
     }
 
@@ -42,6 +42,19 @@ function unhideArticles() {
     window.scrollTo(0, 0)
 }
 
+function checkCookie(cookieName) {
+    let cookies = document.cookie.split(';');
+  
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.indexOf(`${cookieName}=`) === 0) {
+        return true;
+      }
+    }
+  
+    return false;
+}  
+
 function updateLikes() {
     let likeButtons = document.querySelectorAll(".likeGroup");
     likeButtons.forEach(function(button) {
@@ -53,7 +66,7 @@ function updateLikes() {
             const articleLikeButton = button.querySelector(":nth-child(1)")
             const articleLikeCounter = button.querySelector(":nth-child(2)")
 
-            if (document.cookie.indexOf(`${articleID}=`) == -1) {
+            if (!checkCookie(articleID)) {
                 const increment = firebase.firestore.FieldValue.increment(1)
                 articleDoc.update({"likes": increment})
 
@@ -65,7 +78,7 @@ function updateLikes() {
                 articleLikeCounter.innerHTML = parseInt(articleLikeCounter.innerHTML) + 1
             }
 
-            else if (document.cookie.indexOf(`${articleID}=`) == 0) {
+            else if (checkCookie(articleID)) {
                 const increment = firebase.firestore.FieldValue.increment(-1)
                 articleDoc.update({"likes": increment})
 
