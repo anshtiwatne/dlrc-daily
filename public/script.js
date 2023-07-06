@@ -14,14 +14,13 @@ function loadArticle(article, id, i) {
             <div class="coverImage" style="background-image: linear-gradient(to top, ${color}, transparent), url(${article.coverImage});"></div>
             <div class="textContent">
                 <div>
-                    <div class="headerGroup">
-                        <div class="tag">${article.tag}</div>
-                        <span class="timestamp">${article.publishDate.toDate().toLocaleDateString()}</span>
-                    </div>
+                    <div class="tag">${article.tag}</div>
                     <div class="headline">${article.headline}</div>
-                        
                 </div>
-                <div class="story">${article.story}</div>
+                <div>
+                    <div class="story">${article.story}</div>
+                    <div class="timestamp">${article.publishDate.toDate().toLocaleDateString()}</div>
+                </dov>
                 <div class="footer">
                     <span id="creditsGroup">
                         <span class="credits">short by</span>

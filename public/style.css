@@ -85,13 +85,6 @@ a {
     background-position: center;
 }
 
-.headerGroup {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-right: 0.5rem;
-}
-
 .headline {
     font-size: min(1.25rem, 5vmin);
     font-weight: 600;
@@ -207,14 +200,19 @@ a {
 
     .story {
         font-size: 1.15rem;
-        padding: 2rem 0;
+        padding: 1.5rem 0 0.5rem;
     }
 
     .tag {
         padding-bottom: 2.5vh;
     }
 
-    .headerGroup, .footer {
+    .timestamp {
+        font-size: 1rem;
+        padding-bottom: 1.5rem;
+    }
+
+    .footer {
         padding-right: 1rem;
     }
 }
