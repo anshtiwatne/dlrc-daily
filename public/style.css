@@ -85,10 +85,21 @@ a {
     background-position: center;
 }
 
+.headerGroup {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .headline {
     font-size: min(1.25rem, 5vmin);
     font-weight: 600;
     color: var(--primary-text-color);
+}
+
+.timestamp {
+    font-size: min(0.9rem, 3.5vmin);
+    color: var(--muted-text-color);
 }
 
 .story {
@@ -135,7 +146,6 @@ a {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-right: 1rem;
 }
 
 #endScreen {
@@ -200,5 +210,9 @@ a {
 
     .tag {
         padding-bottom: 2.5vh;
+    }
+
+    .headerGroup, .footer {
+        padding-right: 1rem;
     }
 }
