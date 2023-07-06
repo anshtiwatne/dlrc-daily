@@ -18,9 +18,12 @@ function loadArticle(article, id, i) {
                     <div class="headline">${article.headline}</div>
                 </div>
                 <div>
-                    <div class="story">${article.story}</div>
-                    <div class="timestamp">${article.publishDate.toDate().toLocaleDateString()}</div>
-                </dov>
+                <div class="story">${article.story}</div>
+                <div class="timestamp">
+                    <span class="material-symbols-rounded" style="padding-right: 0.25rem">calendar_month</span>
+                    ${article.publishDate.toDate().toLocaleDateString()}
+                </div>
+                </div>
                 <div class="footer">
                     <span id="creditsGroup">
                         <span class="credits">short by</span>
