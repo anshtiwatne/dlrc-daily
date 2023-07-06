@@ -94,9 +94,11 @@ a {
 .timestamp {
     display: flex;
     font-size: min(0.9rem, 3.5vmin);
-    color: var(--muted-text-color);
+    font-weight: 500;
+    color: #5A5A5A;
     align-items: center;
     padding-top: min(0.75rem, 3vmin);
+    font-variation-settings: 'FILL' 1;
 }
 
 .story {
