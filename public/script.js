@@ -1,5 +1,15 @@
 const db = firebase.firestore()
 
+function startDownload() {
+    let imageURL ="https://cdn.glitch.com/4c9ebeb9-8b9a-4adc-ad0a-238d9ae00bb5%2Fmdn_logo-only_color.svg?1535749917189";
+  
+    let downloadedImg = new Image();
+    downloadedImg.crossOrigin = "anonymous";
+    // downloadedImg.addEventListener("load", imageReceived, false);
+    downloadedImg.src = imageURL;
+  }
+  
+
 function loadArticle(article, id, i) {
     const color_palette = ["#FBE7C6", "#A0E7E5", "#B4F8C8", "#FFAEBC"]
     const color = color_palette[(i) % color_palette.length]
@@ -10,32 +20,33 @@ function loadArticle(article, id, i) {
     }
 
     document.getElementById("articles").innerHTML +=
-        `<div class="article" style="background-color: ${color};">
-            <div class="coverImage" style="background-image: linear-gradient(to top, ${color}, transparent), url(${article.coverImage});"></div>
-            <div class="textContent">
-                <div>
-                    <div class="tag">${article.tag}</div>
-                    <div class="headline">${article.headline}</div>
-                </div>
-                <div>
-                <div class="story">${article.story}</div>
-                <div class="timestamp">
-                    <span class="material-symbols-rounded" style="padding-right: 0.25rem">calendar_month</span>
-                    ${article.publishDate.toDate().toLocaleDateString()}
-                </div>
-                </div>
-                <div class="footer">
-                    <span id="creditsGroup">
-                        <span class="credits">short by</span>
-                        <span class="author">${article.author}</span>
-                    </span>
-                    <span id="likeGroup" class="likeGroup clickable" data-id="${id}">
-                        <span class="likeIcon material-symbols-rounded" style="font-variation-settings: 'FILL' ${fill};">thumb_up</span>
-                        <span class="likeCounter">${article.likes}</span>
+        /*html*/`
+        <div class="article" style="background-color: ${color};">
+        <div class="coverImage" style="background-image: linear-gradient(to top, ${color}, transparent), url(${article.coverImage});"></div>
+        <div class="textContent">
+            <div>
+                <div class="header">
+                    <span class="tag">${article.tag}</span>
+                    <span class="timestamp">
+                        <span class="material-symbols-rounded" style="padding-right: 0.25rem;">calendar_month</span>
+                        <span style="padding-top: 0.125rem">${article.publishDate.toDate().toLocaleDateString()}</span>
                     </span>
                 </div>
+                <div class="headline">${article.headline}</div>
             </div>
-        </div>`
+            <div class="story">${article.story}</div>
+            <div class="footer">
+                <span id="creditsGroup">
+                    <span class="credits">short by</span>
+                    <span class="author">${article.author}</span>
+                </span>
+                <span id="likeGroup" class="likeGroup clickable" data-id="${id}">
+                    <span class="likeIcon material-symbols-rounded" style="font-variation-settings: 'FILL' ${fill};">thumb_up</span>
+                    <span class="likeCounter">${article.likes}</span>
+                </span>
+            </div>
+        </div>
+    </div>`
 
     updateLikes()
 }
@@ -118,3 +129,5 @@ db.collection("articles").get().then((snapshot) => {
 
     setTimeout(unhideArticles, 250)
 })
+
+startDownload()

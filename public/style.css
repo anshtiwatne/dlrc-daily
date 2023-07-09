@@ -96,9 +96,11 @@ a {
     font-size: min(0.9rem, 3.5vmin);
     font-weight: 500;
     color: #5A5A5A;
+    color: rgba(0, 0, 0, 0.65);
     align-items: center;
     padding-top: min(0.75rem, 3vmin);
     font-variation-settings: 'FILL' 1;
+    padding-bottom: 1rem;
 }
 
 .story {
@@ -141,11 +143,12 @@ a {
     font-weight: 400;
 }
 
-.footer {
+.header, .footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding-right: 0.5rem;
+    vertical-align: middle;
 }
 
 #endScreen {
@@ -205,7 +208,7 @@ a {
 
     .story {
         font-size: 1.15rem;
-        padding: 1.5rem 0 0.5rem;
+        padding: 2rem 0;
     }
 
     .tag {
@@ -214,10 +217,9 @@ a {
 
     .timestamp {
         font-size: 1rem;
-        padding: 0.25rem 0 1.5rem;
     }
 
     .footer {
-        padding-right: 1rem;
+        padding-top: 0.75rem;
     }
 }
