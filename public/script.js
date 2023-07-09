@@ -1,14 +1,4 @@
-const db = firebase.firestore()
-
-function startDownload() {
-    let imageURL ="https://cdn.glitch.com/4c9ebeb9-8b9a-4adc-ad0a-238d9ae00bb5%2Fmdn_logo-only_color.svg?1535749917189";
-  
-    let downloadedImg = new Image();
-    downloadedImg.crossOrigin = "anonymous";
-    // downloadedImg.addEventListener("load", imageReceived, false);
-    downloadedImg.src = imageURL;
-  }
-  
+const db = firebase.firestore() 
 
 function loadArticle(article, id, i) {
     const color_palette = ["#FBE7C6", "#A0E7E5", "#B4F8C8", "#FFAEBC"]
@@ -127,7 +117,7 @@ db.collection("articles").get().then((snapshot) => {
         loadArticle(article[0], article[1], i)
     })
 
-    setTimeout(unhideArticles, 250)
+    if (i !== -1) {
+        setTimeout(unhideArticles, 250)
+    }
 })
-
-startDownload()
