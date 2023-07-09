@@ -98,9 +98,7 @@ a {
     color: #5A5A5A;
     color: rgba(0, 0, 0, 0.65);
     align-items: center;
-    padding-top: min(0.75rem, 3vmin);
     font-variation-settings: 'FILL' 1;
-    padding-bottom: 1rem;
 }
 
 .story {
@@ -117,7 +115,6 @@ a {
     text-decoration-color: rgba(0, 0, 0, 0.7);
     text-decoration-thickness: 0.15rem;
     text-underline-offset: 0.3rem;
-    padding-bottom: min(0.9rem, 3.5vmin);
 }
 
 .credits {
@@ -145,10 +142,14 @@ a {
 
 .header, .footer {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     padding-right: 0.5rem;
     vertical-align: middle;
+}
+
+.header {
+    padding-bottom: min(0.9rem, 3.5vmin);
 }
 
 #endScreen {
@@ -211,7 +212,7 @@ a {
         padding: 2rem 0;
     }
 
-    .tag {
+    .header {
         padding-bottom: 2.5vh;
     }
 
