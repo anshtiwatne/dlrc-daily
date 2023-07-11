@@ -10,6 +10,7 @@
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/9.23.0/firebase-app-compat.js"></script>
     <script defer src="/__/firebase/9.23.0/firebase-firestore-compat.js"></script>
+    <script defer src="/__/firebase/9.23.0/firebase-storage-compat.js"></script>
     <!-- 
       initialize the SDK after all desired features are loaded, set useEmulator to false
       to avoid connecting the SDK to running emulators.
@@ -21,8 +22,13 @@
     input {
         width: 100%;
     }
+
     h3 {
         margin-top: 2rem;
+    }
+
+    input[type="file"] {
+        border: 1px solid var(--border);
     }
 </style>
 
@@ -40,7 +46,7 @@
         <input id="headline" type="text" placeholder="< 30 characters" maxlength="30" required>
 
         <label for="coverImage">Cover Image</label>
-        <input id="coverImage" type="text" required>
+        <input id="coverImage" type="file" accept="image/*" required>
 
         <label for="story">Story</label>
         <textarea id="story" type="text" placeholder="< 300 characters" maxlength="300" required></textarea>
@@ -57,18 +63,38 @@
 
 <script type="module">
     const db = firebase.firestore()
+    const storage = firebase.storage()
 
     function publish() {
-        let articles = db.collection("articles")
+        const articles = db.collection("articles")
+        const images = storage.ref()
 
-        articles.add({
-            author: document.getElementById("author").value,
-            headline: document.getElementById("headline").value,
-            coverImage: document.getElementById("coverImage").value,
-            story: document.getElementById("story").value,
-            tag: document.getElementById("tag").value,
-            publishDate: firebase.firestore.Timestamp.now(),
-            likes: 0
+        const file = document.getElementById("coverImage").files[0]
+        const name = `coverImages/${Date.now()}`
+        const metadata = {contentType: file.type}
+
+        const author = document.getElementById("author").value
+        const headline = document.getElementById("headline").value
+        const story = document.getElementById("story").value
+        const tag = document.getElementById("tag").value
+        
+        images.child(name).put(file, metadata)
+        .then(snapshot => snapshot.ref.getDownloadURL())
+        .then(imageURL => {
+            const image = document.getElementById("coverImage")
+            image.src = imageURL
+            console.log(imageURL)
+            console.log(author, story, headline, tag)
+
+            articles.add({
+                author: author,
+                headline: headline,
+                coverImage: imageURL,
+                story: story,
+                tag: tag,
+                publishDate: firebase.firestore.Timestamp.now(),
+                likes: 0
+            })
         })
 
         alert("Published!")
@@ -77,7 +103,6 @@
 
     document.getElementById("publishForm").addEventListener("submit", () => {
         // terrible way of authentication only for demo purposes
-        console.log("hello")
         if (document.getElementById("psswd").value == "demo") {
             publish()
         } else {
