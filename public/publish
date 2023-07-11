@@ -46,7 +46,7 @@
         <input id="headline" type="text" placeholder="< 30 characters" maxlength="30" required>
 
         <label for="coverImage">Cover Image</label>
-        <input id="coverImage" type="file" accept="image/*" required>
+        <input id="coverImage" type="file" accept="image/webp" required>
 
         <label for="story">Story</label>
         <textarea id="story" type="text" placeholder="< 300 characters" maxlength="300" required></textarea>
