@@ -1,4 +1,5 @@
-const db = firebase.firestore() 
+const analytics = firebase.analytics()
+const db = firebase.firestore()
 
 function loadArticle(article, id, i) {
     // const color_palette = ["#FBE7C6", "#A0E7E5", "#B4F8C8", "#FFAEBC"]
