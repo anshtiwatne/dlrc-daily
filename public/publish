@@ -94,7 +94,7 @@
                 story: story,
                 tag: tag,
                 publishDate: firebase.firestore.Timestamp.now(),
-                likes: 0
+                likes: 0,
                 color: "#FFFFFF"
             })
         })
