@@ -22,10 +22,6 @@ body::-webkit-scrollbar {
     display: none;
 }
 
-.clickable:hover {
-    cursor: pointer;
-}
-
 a {
     text-decoration: none;
 }
@@ -138,6 +134,10 @@ a {
     color: var(--muted-text-color);
     font-size: min(1.25rem, 5vmin);
     font-weight: 400;
+}
+
+.likeGroup:hover {
+    cursor: pointer;
 }
 
 .header, .footer {

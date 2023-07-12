@@ -31,7 +31,7 @@ function loadArticle(article, id, i) {
                     <span class="credits">short by</span>
                     <span class="author">${article.author}</span>
                 </span>
-                <span id="likeGroup" class="likeGroup clickable" data-id="${id}">
+                <span id="likeGroup" class="likeGroup" data-id="${id}">
                     <span class="likeIcon material-symbols-rounded" style="font-variation-settings: 'FILL' ${fill};">thumb_up</span>
                     <span class="likeCounter">${article.likes}</span>
                 </span>
