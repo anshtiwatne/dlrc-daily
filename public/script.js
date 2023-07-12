@@ -1,8 +1,9 @@
 const db = firebase.firestore() 
 
 function loadArticle(article, id, i) {
-    const color_palette = ["#FBE7C6", "#A0E7E5", "#B4F8C8", "#FFAEBC"]
-    const color = color_palette[(i) % color_palette.length]
+    // const color_palette = ["#FBE7C6", "#A0E7E5", "#B4F8C8", "#FFAEBC"]
+    // const color = color_palette[(i) % color_palette.length]
+    const color = article.color
 
     let fill = 0
     if (checkCookie(id) == 1) {

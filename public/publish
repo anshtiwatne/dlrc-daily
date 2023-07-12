@@ -86,6 +86,7 @@
             console.log(imageURL)
             console.log(author, story, headline, tag)
 
+            //TODO: calculate background color based on image and store in firestore
             articles.add({
                 author: author,
                 headline: headline,
@@ -94,6 +95,7 @@
                 tag: tag,
                 publishDate: firebase.firestore.Timestamp.now(),
                 likes: 0
+                color: "#FFFFFF"
             })
         })
 
