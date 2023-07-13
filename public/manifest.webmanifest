@@ -1,6 +1,6 @@
 {
     "background_color": "#FFFFFF",
-    "description": "Daily short from news by the DLRC Newsletter",
+    "description": "Stay updated on the happenings at the DLRC campus through short articles uploaded daily by the DLRC Newsletter",
     "dir": "ltr",
     "display": "standalone",
     "name": "DLRC Daily",
