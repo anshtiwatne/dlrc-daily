@@ -15,7 +15,7 @@
     "screenshots": [
         {
             "src": "./assets/screenshots/demo1_screenshot.webp",
-            "sizes": "1080x2340",
+            "sizes": "1370x2534",
             "type":"image/webp"
         },
         {
@@ -33,7 +33,7 @@
         {
             "src": "./assets/logo.webp",
             "type": "image/webp",
-            "sizes": "1370x2534",
+            "sizes": "256x256",
             "purpose": "any"
         }
     ],
