@@ -20,12 +20,12 @@
         },
         {
             "src": "./assets/screenshots/demo2_screenshot.webp",
-            "sizes": "1080x2340",
+            "sizes": "1370x2534",
             "type":"image/webp"
         },
         {
             "src": "./assets/screenshots/demo3_screenshot.webp",
-            "sizes": "1080x2340",
+            "sizes": "1370x2534",
             "type":"image/webp"
         }
     ],
@@ -33,7 +33,7 @@
         {
             "src": "./assets/logo.webp",
             "type": "image/webp",
-            "sizes": "256x256",
+            "sizes": "1370x2534",
             "purpose": "any"
         }
     ],
