@@ -31,8 +31,8 @@
     ],
     "icons": [
         {
-            "src": "./assets/logo.gif",
-            "type": "image/gif",
+            "src": "./assets/logo.png",
+            "type": "image/png",
             "sizes": "312x276",
             "purpose": "any"
         }
