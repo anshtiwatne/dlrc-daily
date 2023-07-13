@@ -6,16 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DLRC Daily</title>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/9.23.0/firebase-app-compat.js"></script>
-    <script defer src="/__/firebase/9.23.0/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/9.18.0/firebase-analytics-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,21 +17,15 @@
 </head>
 
 <body>
-    <a class="logoGroup" href="/">
+    <a class="logoGroup clickable" href="/">
         <img class="logoImage" src="./assets/logo.webp" height="35rem">
         <span class="logoText">DLRC DAILY</span>
     </a>
-    <a href="about.html" class="infoButton material-symbols-rounded">info</a>
-    <div id="articles"></div>
-    <div id="endScreen"><span class="loader"></span></div>
-
-    <script>
-        if (typeof navigator.serviceWorker !== "undefined") {
-          navigator.serviceWorker.register("sw.js")
-        }
-    </script>
-
-    <script type="module" src="script.js"></script>
+    <a href="index.html" class="infoButton material-symbols-rounded">refresh</a>
+    <div class="about">
+        <span class="material-symbols-rounded" style="font-size: 5rem;">wifi_off</span>
+        <br><span>You Seem to be Offline</span>
+    </div>
 </body>
 
 </html>

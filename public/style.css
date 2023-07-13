@@ -179,6 +179,25 @@ a {
     animation: rotation 1s linear infinite;
 }
 
+/* about and offline page */
+.about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    font-size: min(1.10rem, 4.5vmin);;
+    color: whitesmoke;
+    padding: 0 1rem;
+}
+
+.about a {
+    color: whitesmoke;
+    text-decoration: underline;
+}
+
 @keyframes rotation {
     0% {
         transform: rotate(0deg);
