@@ -29,5 +29,9 @@
         "window-controls-overlay",
         "minimal-ui",
         "browser"
-    ]
+    ],
+    "handle_links": "not-preferred",
+    "launch_handler": {
+        "client_mode": ["navigate-existing, auto"]
+    }
 }
