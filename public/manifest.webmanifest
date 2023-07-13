@@ -12,7 +12,23 @@
     "categories": [
         "news"
     ],
-    "screenshots": [],
+    "screenshots": [
+        {
+            "src": "./assets/screenshots/demo1_screenshot.webp",
+            "sizes": "1080x2340",
+            "type":"image/webp"
+        },
+        {
+            "src": "./assets/screenshots/demo2_screenshot.webp",
+            "sizes": "1080x2340",
+            "type":"image/webp"
+        },
+        {
+            "src": "./assets/screenshots/demo3_screenshot.webp",
+            "sizes": "1080x2340",
+            "type":"image/webp"
+        }
+    ],
     "icons": [
         {
             "src": "./assets/logo.webp",
