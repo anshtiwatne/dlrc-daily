@@ -31,9 +31,9 @@
     ],
     "icons": [
         {
-            "src": "./assets/logo.webp",
-            "type": "image/webp",
-            "sizes": "256x256",
+            "src": "./assets/logo.gif",
+            "type": "image/gif",
+            "sizes": "312x276",
             "purpose": "any"
         }
     ],
