@@ -47,12 +47,12 @@
         {
             "name": "Shorts",
             "url": "/index.html",
-            "icons": [{ "src": "./assets/shortcuts/newspaper.png", "type": "image/png", "purpose": "any" }]
+            "icons": [{ "src": "./assets/shortcuts/newspaper.png", "type": "image/png", "sizes": "96x96", "purpose": "any" }]
         },
         {
             "name": "About",
             "url": "/about.html",
-            "icons": [{ "src": "./assets/shortcuts/info.png", "type": "image/png", "purpose": "any" }]
+            "icons": [{ "src": "./assets/shortcuts/info.png", "type": "image/png", "sizes": "96x96", "purpose": "any" }]
         }
     ],
     "lang": "en",
