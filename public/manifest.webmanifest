@@ -47,12 +47,12 @@
         {
             "name": "Shorts",
             "url": "/index.html",
-            "icons": [{ "src": "./assets/shortcuts/newspaper.png", "sizes": "48x48" }]
+            "icons": [{ "src": "./assets/shortcuts/newspaper.svg", "type": "image/svg+xml", "purpose": "any" }]
         },
         {
             "name": "About",
             "url": "/about.html",
-            "icons": [{ "src": "./assets/shortcuts/info.png", "sizes": "48x48" }]
+            "icons": [{ "src": "./assets/shortcuts/info.svg", "type": "image/svg+xml", "purpose": "any" }]
         }
     ],
     "lang": "en",
