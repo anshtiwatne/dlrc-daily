@@ -31,10 +31,10 @@
     ],
     "icons": [
         {
-            "src": "./assets/logo.png",
+            "src": "./assets/logos/logo.png",
             "type": "image/png",
             "sizes": "512x512",
-            "purpose": "maskable any"
+            "purpose": "any"
         }
     ],
     "shortcuts": [
