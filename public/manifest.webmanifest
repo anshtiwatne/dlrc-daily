@@ -47,7 +47,7 @@
         {
             "name": "Shorts",
             "url": "/index.html",
-            "icons": [{ "src": "./assets/shortcuts/newspaper.png", "type": "image/png", "sizes": "96x96", "purpose": "any" }]
+            "icons": [{ "src": "./assets/shortcuts/full_coverage.png", "type": "image/png", "sizes": "96x96", "purpose": "any" }]
         },
         {
             "name": "About",
