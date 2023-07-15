@@ -2,7 +2,7 @@
     "background_color": "#FFFFFF",
     "description": "Stay updated on the happenings at the DLRC campus through short articles uploaded daily by the DLRC Newsletter",
     "dir": "ltr",
-    "display": "fullscreen",
+    "display": "standalone",
     "name": "DLRC Daily",
     "orientation": "portrait-primary",
     "scope": "/",
@@ -57,8 +57,8 @@
     ],
     "lang": "en",
     "display_override": [
-        "fullscreen",
         "standalone",
+        "fullscreen",
         "window-controls-overlay",
         "minimal-ui",
         "browser"
