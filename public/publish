@@ -19,6 +19,10 @@
 </head>
 
 <style>
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+    
     input {
         width: 100%;
     }

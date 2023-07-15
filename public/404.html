@@ -20,14 +20,19 @@
 
 <body>
     <a class="logoGroup clickable" href="/">
-        <img class="logoImage" src="./assets/logo.webp" height="35rem">
+        <img class="logoImage" src="./assets/logos/logo.webp" height="35rem">
         <span class="logoText">DLRC DAILY</span>
     </a>
     <a href="about.html" class="infoButton material-symbols-rounded">info</a>
     <div class="about">
         <span class="material-symbols-rounded" style="font-size: 5rem;">warning</span>
-        <br><span style="font-size: 1.5rem; font-weight: 500;">404</span>
-        <span style="font-size: 1.25rem;">Page Not Found</span>
+        <br><span style="font-size: 1.5rem; font-weight: 500; line-height: 1;">404</span>
+        <span style="font-size: 1.25rem;">Page Not Found</span><br>
+        
+        <button onclick="location.href='./index.html'" class="fallbackButton">
+            <span class="material-symbols-rounded">home</span>
+            <span class="buttonText">Home</span>
+        </button>
     </div>
 </body>
 
