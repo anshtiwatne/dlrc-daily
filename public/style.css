@@ -149,11 +149,11 @@ a {
     padding-left: 1rem;
 }
 
-.shareIcon:hover {
-    cursor: pointer;
+.material-symbols-rounded {
+    user-select: none;
 }
 
-.likeGroup:hover {
+.material-symbols-rounded:hover {
     cursor: pointer;
 }
 
