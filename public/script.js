@@ -13,7 +13,7 @@ function loadArticle(article, id, i) {
 
     document.getElementById("articles").innerHTML +=
         /*html*/`
-        <div class="article" style="background-color: ${color};">
+        <div class="article" id="${id}" style="background-color: ${color};">
         <div class="coverImage" style="background-image: linear-gradient(to top, ${color}, transparent), url(${article.coverImage});"></div>
         <div class="textContent">
             <div>
@@ -32,15 +32,19 @@ function loadArticle(article, id, i) {
                     <span class="credits">short by</span>
                     <span class="author">${article.author}</span>
                 </span>
+                <div>
                 <span id="likeGroup" class="likeGroup" data-id="${id}">
                     <span class="likeIcon material-symbols-rounded" style="font-variation-settings: 'FILL' ${fill};">thumb_up</span>
                     <span class="likeCounter">${article.likes}</span>
                 </span>
+                <span class="shareIcon material-symbols-rounded" data-id="${id}">ios_share</span>
+                </div>
             </div>
         </div>
     </div>`
 
     updateLikes()
+    shareArticle()
 }
 
 function unhideArticles() {
@@ -49,6 +53,7 @@ function unhideArticles() {
     endScreen.innerHTML = "That's all for now :("
     endScreen.style.scrollSnapAlign = "none"
     window.scrollTo(0, 0)
+    goToSharedArticle()
 }
 
 function checkCookie(cookieName) {
@@ -100,6 +105,42 @@ function updateLikes() {
             }
         })
     })
+}
+
+function shareArticle() {
+    let shareButtons = document.querySelectorAll(".shareIcon");
+    shareButtons.forEach(function(button) {
+
+        button.addEventListener("click", () => {
+
+            const articleID = button.getAttribute("data-id")
+            const articleURL = new URL("https://dlrc-daily.web.app/")
+            articleURL.searchParams.append("article", articleID)
+
+            const docRef = db.collection("articles").doc(articleID)
+            docRef.get().then((doc) => {
+                const shareData = {
+                    title: "Dlrc Daily Article",
+                    text: doc.data().headline,
+                    url: articleURL,
+                }
+                navigator.share(shareData)
+            })
+        })
+    })
+}
+
+function goToSharedArticle() {
+    const queryString = window.location.search
+    const urlParams = new URLSearchParams(queryString)
+    const articleID = urlParams.get("article")
+    console.log(articleID)
+
+    if (articleID) {
+        const article = document.getElementById(articleID)
+        console.log(articleID, article)
+        article.scrollIntoView()
+    }
 }
 
 db.collection("articles").get().then((snapshot) => {

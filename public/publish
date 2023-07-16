@@ -111,7 +111,8 @@
         // terrible way of authentication only for demo purposes
         if (document.getElementById("psswd").value == "demo") {
             publish()
-        } else {
+        }
+        else {
             alert("Wrong password!")
         }
     })

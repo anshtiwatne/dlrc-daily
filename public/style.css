@@ -141,6 +141,14 @@ a {
     font-weight: 400;
 }
 
+.shareIcon {
+    vertical-align: text-bottom;
+    color: var(--muted-text-color);
+    font-size: min(1.5rem, 6vmin);
+    vertical-align: -0.2rem;
+    padding-left: 1rem;
+}
+
 .likeGroup:hover {
     cursor: pointer;
 }
