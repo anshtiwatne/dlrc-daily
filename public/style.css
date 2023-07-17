@@ -136,7 +136,6 @@ a {
 .likeCounter {
     color: var(--muted-text-color);
     font-size: min(1.25rem, 5vmin);
-    font-size: min(1rem, 4vmin);
     font-weight: normal;
     vertical-align: top;
 }
