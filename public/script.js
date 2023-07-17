@@ -19,10 +19,7 @@ function loadArticle(article, id, i) {
             <div>
                 <div class="header">
                     <span class="tag">${article.tag}</span>
-                    <span class="timestamp">
-                        <span class="material-symbols-rounded" style="padding-right: 0.25rem;">calendar_month</span>
-                        <span style="padding-top: 0.125rem">${article.publishDate.toDate().toLocaleDateString()}</span>
-                    </span>
+                    <span class="timestamp" style="padding-top: 0.125rem">${timeAgo(article.publishDate.toDate())}</span>
                 </div>
                 <div class="headline">${article.headline}</div>
             </div>
@@ -45,6 +42,39 @@ function loadArticle(article, id, i) {
 
     updateLikes()
     shareArticle()
+}
+
+function timeAgo(date) {
+    if (!(date instanceof Date)) {
+        throw new Error("Invalid input. Please provide a valid Date object.");
+    }
+
+    const now = new Date();
+    const diffInMillis = now - date;
+    const oneMinuteInMillis = 60 * 1000;
+    const oneHourInMillis = 60 * oneMinuteInMillis;
+    const oneDayInMillis = 24 * oneHourInMillis;
+    const oneMonthInMillis = 30 * oneDayInMillis;
+    const oneYearInMillis = 365 * oneDayInMillis;
+
+    if (diffInMillis < oneMinuteInMillis) {
+        return "Just now";
+    } else if (diffInMillis < oneHourInMillis) {
+        const minutes = Math.floor(diffInMillis / oneMinuteInMillis);
+        return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+    } else if (diffInMillis < oneDayInMillis) {
+        const hours = Math.floor(diffInMillis / oneHourInMillis);
+        return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+    } else if (diffInMillis < oneMonthInMillis) {
+        const days = Math.floor(diffInMillis / oneDayInMillis);
+        return `${days} day${days !== 1 ? 's' : ''} ago`;
+    } else if (diffInMillis < oneYearInMillis) {
+        const months = Math.floor(diffInMillis / oneMonthInMillis);
+        return `${months} month${months !== 1 ? 's' : ''} ago`;
+    } else {
+        const years = Math.floor(diffInMillis / oneYearInMillis);
+        return `${years} year${years !== 1 ? 's' : ''} ago`;
+    }
 }
 
 function unhideArticles() {

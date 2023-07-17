@@ -1,5 +1,6 @@
 :root {
     scroll-snap-type: y mandatory;
+    -webkit-tap-highlight-color: transparent;
 
     --bg-color: #2F2F2F;
     --primary-text-color: #333333;
@@ -50,6 +51,11 @@ a {
     padding: 1rem;
     top: 0;
     left: 0;
+    user-select: none !important;
+}
+
+.logoGroup:focus {
+    outline: none !important;
 }
 
 .infoButton {
@@ -93,12 +99,10 @@ a {
 }
 
 .timestamp {
-    display: flex;
     font-size: min(0.9rem, 3.5vmin);
     font-weight: 500;
     color: #5A5A5A;
     color: rgba(0, 0, 0, 0.65);
-    align-items: center;
     font-variation-settings: 'FILL' 1;
 }
 
