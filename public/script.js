@@ -28,16 +28,16 @@ function loadArticle(article, id, i) {
             </div>
             <div class="story">${article.story}</div>
             <div class="footer">
-                <span id="creditsGroup">
+                <div id="creditsGroup">
                     <span class="credits">short by</span>
                     <span class="author">${article.author}</span>
-                </span>
+                </div>
                 <div>
-                <span id="likeGroup" class="likeGroup" data-id="${id}">
-                    <span class="likeIcon material-symbols-rounded" style="font-variation-settings: 'FILL' ${fill};">thumb_up</span>
-                    <span class="likeCounter">${article.likes}</span>
-                </span>
-                <span class="shareIcon material-symbols-rounded" data-id="${id}">ios_share</span>
+                    <span class="likeGroup" data-id="${id}">
+                        <span class="likeButton material-symbols-rounded" style="font-variation-settings: 'FILL' ${fill};">thumb_up</span>
+                        <span class="likeCounter">${article.likes}</span>
+                    </span>
+                    <span class="shareButton material-symbols-rounded" style="padding-left: 1rem; transform: translateY(-10%)" data-id="${id}">ios_share</span>
                 </div>
             </div>
         </div>
@@ -108,7 +108,7 @@ function updateLikes() {
 }
 
 function shareArticle() {
-    let shareButtons = document.querySelectorAll(".shareIcon");
+    let shareButtons = document.querySelectorAll(".shareButton");
     shareButtons.forEach(function(button) {
 
         button.addEventListener("click", () => {
