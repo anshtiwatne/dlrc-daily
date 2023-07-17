@@ -32,7 +32,7 @@ function loadArticle(article, id, i) {
                         <span class="likeButton material-symbols-rounded" style="font-variation-settings: 'FILL' ${fill};">thumb_up</span>
                         <span class="likeCounter">${article.likes}</span>
                     </span>
-                    <span class="shareButton material-symbols-rounded" style="padding-left: 1rem; transform: translateY(-10%)" data-id="${id}">ios_share</span>
+                    <span class="shareButton material-symbols-rounded" style="padding-left: 0.75rem; transform: translateY(-10%)" data-id="${id}">ios_share</span>
                 </div>
             </div>
         </div>
