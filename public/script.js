@@ -17,17 +17,15 @@ function loadArticle(article, id, i) {
         <div class="coverImage" style="background-image: linear-gradient(to top, ${color}, transparent), url(${article.coverImage});"></div>
         <div class="textContent">
             <div>
-                <div class="header">
-                    <span class="tag">${article.tag}</span>
-                    <span class="timestamp" style="padding-top: 0.125rem">${timeAgo(article.publishDate.toDate())}</span>
-                </div>
+                <span class="header tag">${article.tag}</span>
                 <div class="headline">${article.headline}</div>
             </div>
             <div class="story">${article.story}</div>
             <div class="footer">
                 <div id="creditsGroup">
-                    <span class="credits">short by</span>
+                    <span class="credits">by</span>
                     <span class="author">${article.author}</span>
+                    <span class="timestamp" style="padding-left: 0.25rem">• ${timeAgo(article.publishDate.toDate())}</span>
                 </div>
                 <div>
                     <span class="likeGroup" data-id="${id}">
@@ -54,26 +52,30 @@ function timeAgo(date) {
     const oneMinuteInMillis = 60 * 1000;
     const oneHourInMillis = 60 * oneMinuteInMillis;
     const oneDayInMillis = 24 * oneHourInMillis;
+    const oneWeekInMillis = 7 * oneDayInMillis;
     const oneMonthInMillis = 30 * oneDayInMillis;
     const oneYearInMillis = 365 * oneDayInMillis;
 
     if (diffInMillis < oneMinuteInMillis) {
-        return "Just now";
+        return "now";
     } else if (diffInMillis < oneHourInMillis) {
         const minutes = Math.floor(diffInMillis / oneMinuteInMillis);
-        return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+        return `${minutes}min`;
     } else if (diffInMillis < oneDayInMillis) {
         const hours = Math.floor(diffInMillis / oneHourInMillis);
-        return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
-    } else if (diffInMillis < oneMonthInMillis) {
+        return `${hours}h`;
+    } else if (diffInMillis < oneWeekInMillis) {
         const days = Math.floor(diffInMillis / oneDayInMillis);
-        return `${days} day${days !== 1 ? 's' : ''} ago`;
+        return `${days}d`;
+    } else if (diffInMillis < oneMonthInMillis) {
+        const weeks = Math.floor(diffInMillis / oneWeekInMillis);
+        return `${weeks}w`;
     } else if (diffInMillis < oneYearInMillis) {
         const months = Math.floor(diffInMillis / oneMonthInMillis);
-        return `${months} month${months !== 1 ? 's' : ''} ago`;
+        return `${months}m`;
     } else {
         const years = Math.floor(diffInMillis / oneYearInMillis);
-        return `${years} year${years !== 1 ? 's' : ''} ago`;
+        return `${years}y`;
     }
 }
 

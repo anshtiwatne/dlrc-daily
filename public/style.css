@@ -51,11 +51,6 @@ a {
     padding: 1rem;
     top: 0;
     left: 0;
-    user-select: none !important;
-}
-
-.logoGroup:focus {
-    outline: none !important;
 }
 
 .infoButton {
@@ -134,10 +129,8 @@ a {
 }
 
 .likeButton, .shareButton {
-    vertical-align: top;
     color: var(--muted-text-color);
-    font-size: min(1.75rem, 7vmin) !important;
-    vertical-align: top;
+    vertical-align: text-bottom;
 }
 
 .likeCounter {
