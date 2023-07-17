@@ -138,7 +138,7 @@ a {
     color: var(--muted-text-color);
     font-size: min(1.125rem, 4.5vmin);
     font-weight: normal;
-    vertical-align: top;
+    vertical-align: min(0.05rem, 0.2vmin);
 }
 
 .material-symbols-rounded {
