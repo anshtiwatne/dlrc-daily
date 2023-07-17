@@ -131,11 +131,12 @@ a {
 .likeButton, .shareButton {
     color: var(--muted-text-color);
     vertical-align: text-bottom;
+    font-size: min(1.5rem, 6vmin) !important;
 }
 
 .likeCounter {
     color: var(--muted-text-color);
-    font-size: min(1.25rem, 5vmin);
+    font-size: min(1.125rem, 4.5vmin);
     font-weight: normal;
     vertical-align: top;
 }
