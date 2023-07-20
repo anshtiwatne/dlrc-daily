@@ -226,9 +226,7 @@ a {
 .appStorePromo {
     width: 10rem;
     height: auto;
-}
-
-.appStorePromo:hover {
+    box-shadow: var(--image-shadow);
     cursor: pointer;
 }
 
