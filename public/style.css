@@ -37,6 +37,7 @@ a {
     font-family: "Roboto Slab", serif;
     text-shadow: var(--text-shadow);
     animation: disappearToLeft 1s 5s forwards;
+    transition-timing-function: ease-in;
     vertical-align: 50%;
     padding-left: 0.5rem;
 
