@@ -223,6 +223,15 @@ a {
     padding: 0.5rem;
 }
 
+.appStorePromo {
+    width: 10rem;
+    height: auto;
+}
+
+.appStorePromo:hover {
+    cursor: pointer;
+}
+
 @keyframes rotation {
     0% {
         transform: rotate(0deg);
