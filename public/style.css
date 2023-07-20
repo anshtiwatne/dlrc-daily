@@ -36,7 +36,7 @@ a {
     color: rgba(255, 255, 255, 0.75);
     font-family: "Roboto Slab", serif;
     text-shadow: var(--text-shadow);
-    animation: disappearToLeft 2s 5s forwards;
+    animation: disappearToLeft 1s 5s forwards;
     vertical-align: 50%;
     padding-left: 0.5rem;
 
