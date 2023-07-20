@@ -226,7 +226,6 @@ a {
 .appStorePromo {
     width: 10rem;
     height: auto;
-    box-shadow: var(--image-shadow);
     cursor: pointer;
 }
 
