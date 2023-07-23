@@ -1,7 +1,7 @@
 :root {
     min-height: calc(100% + env(safe-area-inset-top));
     padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-    
+
     scroll-snap-type: y mandatory;
     -webkit-tap-highlight-color: transparent;
 
@@ -52,20 +52,22 @@ a {
 
 .logoGroup {
     position: fixed;
-    padding: 1rem;
+    /* padding: 1rem; */
     top: 0;
     left: 0;
+    padding: calc(env(safe-area-inset-top) + 1rem) calc(env(safe-area-inset-right) + 1rem) calc(env(safe-area-inset-bottom) + 1rem) calc(env(safe-area-inset-left) + 1rem);
 }
 
 .infoButton {
     position: fixed;
-    padding: 1rem;
-    padding-top: 1.325rem;
+    /* padding: 1rem; */
+    /* padding-top: 1.325rem; */
     top: 0;
     right: 0;
     font-variation-settings: 'FILL' 0;
     color: whitesmoke;
     text-shadow: var(--text-shadow);
+    padding: calc(env(safe-area-inset-top) + 1.325rem) calc(env(safe-area-inset-right) + 1rem) calc(env(safe-area-inset-bottom) + 1rem) calc(env(safe-area-inset-left) + 1rem);
 }
 
 .article {
