@@ -1,0 +1,14 @@
+[
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "in.dlrc.daily.twa",
+            "sha256_cert_fingerprints": [
+                "73:F2:01:19:B1:17:7F:CC:8F:D1:56:C2:D4:65:7B:69:39:09:F8:1D:77:D1:A9:B9:71:39:5F:44:AF:40:A2:BC"
+            ]
+        }
+    }
+]
