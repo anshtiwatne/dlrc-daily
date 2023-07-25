@@ -47,12 +47,26 @@
         {
             "name": "Shorts",
             "url": "/index.html",
-            "icons": [{ "src": "./assets/shortcuts/full_coverage.png", "type": "image/png", "sizes": "96x96", "purpose": "any" }]
+            "icons": [
+                {
+                    "src": "./assets/shortcuts/full_coverage.png",
+                    "type": "image/png",
+                    "sizes": "96x96",
+                    "purpose": "any"
+                }
+            ]
         },
         {
             "name": "About",
             "url": "/about.html",
-            "icons": [{ "src": "./assets/shortcuts/info.png", "type": "image/png", "sizes": "96x96", "purpose": "any" }]
+            "icons": [
+                {
+                    "src": "./assets/shortcuts/info.png",
+                    "type": "image/png",
+                    "sizes": "96x96",
+                    "purpose": "any"
+                }
+            ]
         }
     ],
     "lang": "en",
@@ -70,8 +84,15 @@
             "auto"
         ]
     },
-    "prefer_related_applications": false,
+    "prefer_related_applications": true,
     "edge_side_panel": {
         "preferred_width": 376
-    }
+    },
+    "related_applications": [
+        {
+            "platform": "play",
+            "url": "https://play.google.com/store/apps/details?id=in.dlrc.daily.twa",
+            "id": "in.dlrc.daily.twa"
+        }
+    ]
 }
