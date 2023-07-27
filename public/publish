@@ -69,6 +69,46 @@
     const db = firebase.firestore()
     const storage = firebase.storage()
 
+    function getBgColor(imageEl) {
+
+        let canvas = document.createElement('canvas'),
+
+        context = canvas.getContext && canvas.getContext('2d'),
+        imgData, width, height, length,
+        rgb = { r: 0, g: 0, b: 0 },
+        count = 0
+
+        height = canvas.height = imageEl.naturalHeight || imageEl.offsetHeight || imageEl.height
+        width = canvas.width = imageEl.naturalWidth || imageEl.offsetWidth || imageEl.width
+
+        context.drawImage(imageEl, 0, 0)
+        imgData = context.getImageData(0, 0, width, height)
+        length = imgData.data.length;
+
+        for (let i = 0; i < length; i += 4) {
+            rgb.r += imgData.data[i]
+            rgb.g += imgData.data[i + 1]
+            rgb.b += imgData.data[i + 2]
+            count++;
+        }
+
+        rgb.r = Math.floor(rgb.r / count)
+        rgb.g = Math.floor(rgb.g / count)
+        rgb.b = Math.floor(rgb.b / count)
+        
+        // if the color is too dark, lighten it
+        const sum = rgb.r + rgb.g + rgb.b
+        const multiplier = 650 / sum
+        if (sum < 650) {
+            rgb.r = Math.floor(rgb.r * multiplier)
+            rgb.g = Math.floor(rgb.g * multiplier)
+            rgb.b = Math.floor(rgb.b * multiplier)
+        }
+
+        const hex = `#${rgb.r.toString(16).padStart(2, "0")}${rgb.g.toString(16).padStart(2, "0")}${rgb.b.toString(16).padStart(2, "0")}`.toUpperCase()
+        return hex
+    }
+
     function publish() {
         const articles = db.collection("articles")
         const images = storage.ref()
@@ -87,20 +127,27 @@
         .then(imageURL => {
             const image = document.getElementById("coverImage")
             image.src = imageURL
-            console.log(imageURL)
-            console.log(author, story, headline, tag)
+            image.crossOrigin = "anonymous";
 
-            //TODO: calculate background color based on image and store in firestore
-            articles.add({
-                author: author,
-                headline: headline,
-                coverImage: imageURL,
-                story: story,
-                tag: tag,
-                publishDate: firebase.firestore.Timestamp.now(),
-                likes: 0,
-                color: "#FFFFFF"
+            let imgEl = document.createElement("img");
+            imgEl.src = imageURL;
+            imgEl.crossOrigin = "anonymous";
+            imgEl.style.display = "none";
+
+            imgEl.onload = function() {
+                const avgColor = getBgColor(imgEl)
+
+                articles.add({
+                    author: author,
+                    headline: headline,
+                    coverImage: imageURL,
+                    story: story,
+                    tag: tag,
+                    publishDate: firebase.firestore.Timestamp.now(),
+                    likes: 0,
+                    color: avgColor
             })
+            }
         })
 
         alert("Published!")

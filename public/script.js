@@ -14,7 +14,7 @@ function loadArticle(article, id, i) {
     document.getElementById("articles").innerHTML +=
         /*html*/`
         <div class="article" id="${id}" style="background-color: ${color};">
-        <div class="coverImage" style="background-image: linear-gradient(to top, ${color}, transparent), url(${article.coverImage});"></div>
+        <div class="coverImage" style="background-image: linear-gradient(to top, ${color}, transparent, transparent), url(${article.coverImage});"></div>
         <div class="textContent">
             <div>
                 <span class="header tag">${article.tag}</span>
