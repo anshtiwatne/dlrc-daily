@@ -24,6 +24,47 @@
     <meta property="og:image" content="./assets/logos/logo.webp">
 </head>
 
+<style>
+    .about {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        height: 100vh;
+        font-family: 'Poppins', sans-serif;
+        font-size: min(1.10rem, 4.5vmin);;
+        color: whitesmoke;
+        padding: 0 1rem;
+    }
+
+    .about a {
+        color: whitesmoke;
+        text-decoration: underline;
+    }
+
+    .fallbackButton {
+        -webkit-appearance: button;
+        -moz-appearance: button;
+        appearance: button;
+        text-decoration: none;
+        color: initial;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-width: 0;
+        border-radius: 0.5rem;
+        box-shadow: var(--image-shadow);
+        cursor: pointer;
+    }
+
+    .buttonText {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+</style>
+
 <body>
     <a class="logoGroup clickable" href="/">
         <img class="logoImage" src="./assets/logos/logo.webp" height="35rem">

@@ -35,6 +35,7 @@ a {
 .logoText {
     color: rgba(255, 255, 255, 0.75);
     font-family: "Roboto Slab", serif;
+    font-weight: 900;
     text-shadow: var(--text-shadow);
     animation: disappearToLeft 1s 5s forwards;
     transition-timing-function: ease-in;
