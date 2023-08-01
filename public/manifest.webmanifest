@@ -15,19 +15,24 @@
     ],
     "screenshots": [
         {
-            "src": "./assets/screenshots/demo1_screenshot.webp",
-            "sizes": "1370x2534",
-            "type": "image/webp"
+            "src": "./assets/screenshots/mobile1.png",
+            "sizes": "1140x2280",
+            "type": "image/png"
         },
         {
-            "src": "./assets/screenshots/demo2_screenshot.webp",
-            "sizes": "1370x2534",
-            "type": "image/webp"
+            "src": "./assets/screenshots/mobile2.png",
+            "sizes": "1140x2280",
+            "type": "image/png"
         },
         {
-            "src": "./assets/screenshots/demo3_screenshot.webp",
-            "sizes": "1370x2534",
-            "type": "image/webp"
+            "src": "./assets/screenshots/mobile3.png",
+            "sizes": "1140x2280",
+            "type": "image/png"
+        },
+        {
+            "src": "./assets/screenshots/mobile4.png",
+            "sizes": "1140x2280",
+            "type": "image/png"
         }
     ],
     "icons": [
@@ -95,5 +100,6 @@
             "url": "https://play.google.com/store/apps/details?id=in.dlrc.daily.twa",
             "id": "in.dlrc.daily.twa"
         }
-    ]
+    ],
+    "iarc_rating_id": "fa253567-3430-49aa-9fd3-54a3513171ce"
 }
