@@ -22,7 +22,7 @@ function loadArticle(article, id, i) {
                 <span class="header tag">${article.tag}</span>
                 <div class="headline">${article.headline}</div>
             </div>
-            <div class="story">${article.story}</div>
+            <div class="story">${linkify(article.story)}</div>
             <div class="footer">
                 <div id="creditsGroup">
                     <span class="credits">by</span>
@@ -139,6 +139,11 @@ function updateLikes() {
             }
         })
     })
+}
+
+function linkify(text) {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, url => `<a href="${url}">${new URL(url).hostname}</a>`)
 }
 
 function shareArticle() {
