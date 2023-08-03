@@ -106,8 +106,8 @@
             rgb.b = Math.floor(rgb.b * multiplier)
         }
 
-        const hex = `#${rgb.r.toString(16).padStart(2, "0")}${rgb.g.toString(16).padStart(2, "0")}${rgb.b.toString(16).padStart(2, "0")}`.toUpperCase()
-        return hex
+        const bgColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`
+        return bgColor
     }
 
     function publish() {
@@ -136,7 +136,7 @@
             imgEl.style.display = "none";
 
             imgEl.onload = function() {
-                const avgColor = getBgColor(imgEl)
+                const bgColor = getBgColor(imgEl)
 
                 articles.add({
                     author: author,
@@ -146,7 +146,7 @@
                     tag: tag,
                     publishDate: firebase.firestore.Timestamp.now(),
                     likes: 0,
-                    color: avgColor
+                    color: bgColor
             })
             }
         })
