@@ -143,7 +143,7 @@ function updateLikes() {
 
 function linkify(text) {
     const urlRegex = /(https?:\/\/[^\s]+)/g;
-    return text.replace(urlRegex, url => `<a href="${url}">${new URL(url).hostname}</a>`)
+    return text.replace(urlRegex, url => `<a class="linkified" href="${url}">${new URL(url).hostname}</a>`)
 }
 
 function shareArticle() {

@@ -27,6 +27,11 @@ a {
     text-decoration: none;
 }
 
+.linkified {
+    color: var(--secondary-text-color);
+    text-decoration: underline;
+}
+
 .logoImage {
     border-radius: 0.45rem;
     box-shadow: var(--image-shadow)
