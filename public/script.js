@@ -88,19 +88,6 @@ function unhideArticles() {
     instructionPromptCheck()
 }
 
-function checkCookie(cookieName) {
-    let cookies = document.cookie.split(';');
-  
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.indexOf(`${cookieName}=`) === 0) {
-        return true;
-      }
-    }
-  
-    return false;
-}  
-
 function updateLikes() {
     let likeButtons = document.querySelectorAll(".likeGroup");
     likeButtons.forEach(function(button) {
@@ -117,7 +104,7 @@ function updateLikes() {
                 articleDoc.update({"likes": increment})
 
                 button.setAttribute("data-clicked", 1)
-                document.cookie = localStorage.setItem(`${articleID}_liked`, "1");
+                localStorage.setItem(`${articleID}_liked`, "1");
 
                 articleLikeBtn.style = "font-variation-settings: 'FILL' 1;"
                 articleLikeCount.innerHTML = parseInt(articleLikeCount.innerHTML) + 1
