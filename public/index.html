@@ -14,7 +14,7 @@
     <script defer src="/__/firebase/9.23.0/firebase-firestore-compat.js"></script>
     <script defer src="/__/firebase/9.18.0/firebase-analytics-compat.js"></script>
     <!-- use emulator set to false-->
-    <script defer src="/__/firebase/init.js?useEmulator=false"></script>
+    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
 
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,6 +42,13 @@
 
     <div id="articles"></div>
     <div id="endScreen"><span class="loader"></span></div>
+
+    <dialog id="instructions" style="display: none;">
+        • swipe up for the next short<br>
+        • click an image to open it<br>
+        • click share to share the short<br>
+        <br><button id="dialogClose" class="closeBtn" onclick="localStorage.setItem('instructionPrompt', 1); instructions.style.display='none'">Got it!</button>
+    </dialog>
 
     <script>
         if (typeof navigator.serviceWorker !== "undefined") {

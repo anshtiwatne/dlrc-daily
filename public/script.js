@@ -5,13 +5,12 @@ function loadArticle(article, id) {
     const color = article.color
 
     let fill = 0
-    if (checkCookie(id) == 1) {
+    if (localStorage.getItem(`${id}_liked`) == 1) {
         fill = 1
     }
 
-    document.getElementById("articles").innerHTML +=
-        /*html*/`
-        <div class="article" id="${id}" style="background-color: ${color};">
+    document.getElementById("articles").innerHTML += /*html*/
+    `<div class="article" id="${id}" style="background-color: ${color};">
         <a href="${article.coverImage}">
             <div class="coverImg" style="background-image: linear-gradient(to top, ${color}, transparent, transparent), url(${article.coverImage});"></div>
         </a>
@@ -86,6 +85,7 @@ function unhideArticles() {
     endScreen.style.scrollSnapAlign = "none"
     window.scrollTo(0, 0)
     goToSharedArticle()
+    instructionPromptCheck()
 }
 
 function checkCookie(cookieName) {
@@ -112,25 +112,23 @@ function updateLikes() {
             const articleLikeBtn = button.querySelector(":nth-child(1)")
             const articleLikeCount = button.querySelector(":nth-child(2)")
 
-            if (!checkCookie(articleID)) {
+            if (["0", null].includes(localStorage.getItem(`${articleID}_liked`))) {
                 const increment = firebase.firestore.FieldValue.increment(1)
                 articleDoc.update({"likes": increment})
 
                 button.setAttribute("data-clicked", 1)
-                document.cookie = `${articleID}=; path=/`;
-                console.log(document.cookie)
+                document.cookie = localStorage.setItem(`${articleID}_liked`, "1");
 
                 articleLikeBtn.style = "font-variation-settings: 'FILL' 1;"
                 articleLikeCount.innerHTML = parseInt(articleLikeCount.innerHTML) + 1
             }
 
-            else if (checkCookie(articleID)) {
+            else if (localStorage.getItem(`${articleID}_liked`) == "1") {
                 const increment = firebase.firestore.FieldValue.increment(-1)
                 articleDoc.update({"likes": increment})
 
                 button.setAttribute("data-clicked", 0)
-                document.cookie = `${articleID}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
-                console.log(document.cookie)
+                localStorage.setItem(`${articleID}_liked`, "0");
 
                 articleLikeBtn.style = "font-variation-settings: 'FILL' 0;"
                 articleLikeCount.innerHTML = parseInt(articleLikeCount.innerHTML) - 1
@@ -139,13 +137,20 @@ function updateLikes() {
     })
 }
 
+function instructionPromptCheck() {
+    if (localStorage.getItem("instructionPrompt") == null) {
+        document.getElementById("instructions").style.display = "flex"
+    }
+    // localstorage value set in index.html
+}
+
 function linkify(text) {
     const urlRegex = /(https?:\/\/[^\s]+)/g;
     return text.replace(urlRegex, url => `<a class="linkified" href="${url}">${new URL(url).hostname}</a>`)
 }
 
 function shareArticle() {
-    let shareButtons = document.querySelectorAll(".shareBtn");
+    const shareButtons = document.querySelectorAll(".shareBtn");
     shareButtons.forEach(function(button) {
 
         button.addEventListener("click", () => {
@@ -171,11 +176,9 @@ function goToSharedArticle() {
     const queryString = window.location.search
     const urlParams = new URLSearchParams(queryString)
     const articleID = urlParams.get("article")
-    console.log(articleID)
 
     if (articleID) {
         const article = document.getElementById(articleID)
-        console.log(articleID, article)
         article.scrollIntoView()
     }
 }
