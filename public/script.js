@@ -174,7 +174,7 @@ function goToSharedArticle() {
             alert("Article not found")
         }
 
-        window.location.href = "/"
+        window.location = "/"
     }
 }
 
