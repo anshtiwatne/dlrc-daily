@@ -167,6 +167,10 @@ function goToSharedArticle() {
     if (articleID) {
         const article = document.getElementById(articleID)
         article.scrollIntoView()
+
+        if (article == null) {
+            alert("Article not found")
+        }
     }
 }
 
