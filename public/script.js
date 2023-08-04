@@ -143,7 +143,7 @@ function shareArticle() {
         button.addEventListener("click", () => {
 
             const articleID = button.getAttribute("data-id")
-            const articleURL = new URL("https://dlrc-daily.web.app/")
+            const articleURL = new URL("https://daily.dlrc.in/")
             articleURL.searchParams.append("article", articleID)
 
             const docRef = db.collection("articles").doc(articleID)
