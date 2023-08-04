@@ -173,6 +173,8 @@ function goToSharedArticle() {
         else {
             alert("Article not found")
         }
+
+        window.history.replaceState({}, document.title, "/")
     }
 }
 
