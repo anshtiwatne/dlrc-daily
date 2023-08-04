@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title>DLRC Daily</title>
+    <link href="./manifest.webmanifest" rel="manifest">
     <link rel="icon" type="image/x-icon" href="./assets/logos/favicon.ico">
 
     <link rel="stylesheet" href="style.css">
@@ -12,7 +13,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Roboto+Slab:wght@900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link href="./manifest.webmanifest" rel="manifest">
 
     <meta name="theme-color" content="#000000">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -25,60 +25,20 @@
     <meta property="og:image" content="./assets/logos/any.png">
 </head>
 
-<style>
-    .about {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        height: 100vh;
-        font-family: 'Poppins', sans-serif;
-        font-size: min(1.10rem, 4.5vmin);;
-        color: whitesmoke;
-        padding: 0 1rem;
-    }
-
-    .about a {
-        color: whitesmoke;
-        text-decoration: underline;
-    }
-
-    .fallbackButton {
-        -webkit-appearance: button;
-        -moz-appearance: button;
-        appearance: button;
-        text-decoration: none;
-        color: initial;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-width: 0;
-        border-radius: 0.5rem;
-        box-shadow: var(--image-shadow);
-        cursor: pointer;
-    }
-
-    .buttonText {
-        font-size: 1rem;
-        padding: 0.5rem;
-    }
-</style>
-
 <body>
-    <a class="logoGroup clickable" href="/">
-        <img class="logoImage" src="./assets/logos/logo.webp" height="35rem">
-        <span class="logoText">DLRC DAILY</span>
+    <a class="logo" href="/">
+        <img class="logoImg" src="./assets/logos/logo.webp" height="35rem">
+        <span class="logoTxt">DLRC DAILY</span>
     </a>
-    <a href="about.html" class="infoButton material-symbols-rounded">info</a>
+    <a href="about.html" class="infoBtn material-symbols-rounded">info</a>
+
     <div class="about">
         <span class="material-symbols-rounded" style="font-size: 5rem;">wifi_off</span>
         <br><span style="font-size: 1.25rem;">You Seem to be Offline</span><br>
 
-        <button onclick="location.href='./index.html'" class="fallbackButton">
+        <button onclick="location.href='./index.html'" class="fallbackBtn">
             <span class="material-symbols-rounded">refresh</span>
-            <span class="buttonText">Refresh</span>
+            <span class="buttonTxt">Refresh</span>
         </button>
     </div>
 </body>

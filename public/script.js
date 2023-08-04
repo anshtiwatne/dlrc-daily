@@ -1,9 +1,7 @@
 const analytics = firebase.analytics()
 const db = firebase.firestore()
 
-function loadArticle(article, id, i) {
-    // const color_palette = ["#FBE7C6", "#A0E7E5", "#B4F8C8", "#FFAEBC"]
-    // const color = color_palette[(i) % color_palette.length]
+function loadArticle(article, id) {
     const color = article.color
 
     let fill = 0
@@ -15,26 +13,26 @@ function loadArticle(article, id, i) {
         /*html*/`
         <div class="article" id="${id}" style="background-color: ${color};">
         <a href="${article.coverImage}">
-            <div class="coverImage" style="background-image: linear-gradient(to top, ${color}, transparent, transparent), url(${article.coverImage});"></div>
+            <div class="coverImg" style="background-image: linear-gradient(to top, ${color}, transparent, transparent), url(${article.coverImage});"></div>
         </a>
-        <div class="textContent">
-            <div>
-                <span class="header tag">${article.tag}</span>
+        <div class="txtContent">
+            <header>
+                <span class="title tag">${article.tag}</span>
                 <div class="headline">${article.headline}</div>
-            </div>
+            </header>
             <div class="story">${linkify(article.story)}</div>
             <div class="footer">
-                <div id="creditsGroup">
+                <div>
                     <span class="credits">by</span>
                     <span class="author">${article.author}</span>
                     <span class="timestamp" style="padding-left: 0.25rem">• ${timeAgo(article.publishDate.toDate())}</span>
                 </div>
                 <div>
                     <span class="likeGroup" data-id="${id}">
-                        <span class="likeButton material-symbols-rounded" style="font-variation-settings: 'FILL' ${fill};">thumb_up</span>
-                        <span class="likeCounter">${article.likes}</span>
+                        <span class="likeBtn material-symbols-rounded" style="font-variation-settings: 'FILL' ${fill};">thumb_up</span>
+                        <span class="likeCount">${article.likes}</span>
                     </span>
-                    <span class="shareButton material-symbols-rounded" style="padding-left: 0.75rem; transform: translateY(-10%)" data-id="${id}">ios_share</span>
+                    <span class="shareBtn material-symbols-rounded" style="padding-left: 0.75rem; transform: translateY(-10%)" data-id="${id}">ios_share</span>
                 </div>
             </div>
         </div>
@@ -111,8 +109,8 @@ function updateLikes() {
 
             const articleID = button.getAttribute("data-id")
             const articleDoc = db.collection("articles").doc(articleID)
-            const articleLikeButton = button.querySelector(":nth-child(1)")
-            const articleLikeCounter = button.querySelector(":nth-child(2)")
+            const articleLikeBtn = button.querySelector(":nth-child(1)")
+            const articleLikeCount = button.querySelector(":nth-child(2)")
 
             if (!checkCookie(articleID)) {
                 const increment = firebase.firestore.FieldValue.increment(1)
@@ -122,8 +120,8 @@ function updateLikes() {
                 document.cookie = `${articleID}=; path=/`;
                 console.log(document.cookie)
 
-                articleLikeButton.style = "font-variation-settings: 'FILL' 1;"
-                articleLikeCounter.innerHTML = parseInt(articleLikeCounter.innerHTML) + 1
+                articleLikeBtn.style = "font-variation-settings: 'FILL' 1;"
+                articleLikeCount.innerHTML = parseInt(articleLikeCount.innerHTML) + 1
             }
 
             else if (checkCookie(articleID)) {
@@ -134,8 +132,8 @@ function updateLikes() {
                 document.cookie = `${articleID}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
                 console.log(document.cookie)
 
-                articleLikeButton.style = "font-variation-settings: 'FILL' 0;"
-                articleLikeCounter.innerHTML = parseInt(articleLikeCounter.innerHTML) - 1
+                articleLikeBtn.style = "font-variation-settings: 'FILL' 0;"
+                articleLikeCount.innerHTML = parseInt(articleLikeCount.innerHTML) - 1
             }
         })
     })
@@ -147,7 +145,7 @@ function linkify(text) {
 }
 
 function shareArticle() {
-    let shareButtons = document.querySelectorAll(".shareButton");
+    let shareButtons = document.querySelectorAll(".shareBtn");
     shareButtons.forEach(function(button) {
 
         button.addEventListener("click", () => {
@@ -196,7 +194,7 @@ db.collection("articles").get().then((snapshot) => {
     articles.sort((a, b) => a[2] - b[2]).reverse() // sorting the articles by publishDate
     articles.forEach(article => {
         i++
-        loadArticle(article[0], article[1], i)
+        loadArticle(article[0], article[1])
     })
 
     if (i !== -1) {

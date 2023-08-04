@@ -6,17 +6,17 @@
     --primary-text-color: #333333;
     --secondary-text-color: #3C3C3C;
     --muted-text-color: #4F4F4F;
-    --translucent-text-color: rgba(0, 0, 0, 0.75); 
+    --translucent-text-color: rgba(0, 0, 0, 0.75);
     --text-shadow: 0.1rem 0.1rem 1rem black;
     --image-shadow: 0.1rem 0.1rem 1rem rgba(0, 0, 0, 0.5);
 }
 
 body {
     margin: 0;
+    background-color: var(--bg-color);
     font-family: 'Poppins', sans-serif;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    background-color: var(--bg-color);
 }
 
 body::-webkit-scrollbar {
@@ -32,12 +32,19 @@ a {
     text-decoration: underline;
 }
 
-.logoImage {
+.logo {
+    position: fixed;
+    padding: 1rem;
+    top: 0;
+    left: 0;
+}
+
+.logo>.logoImg {
     border-radius: 0.45rem;
     box-shadow: var(--image-shadow)
 }
 
-.logoText {
+.logo>.logoTxt {
     color: rgba(255, 255, 255, 0.75);
     font-family: "Roboto Slab", serif;
     font-weight: 900;
@@ -53,14 +60,7 @@ a {
     padding: 0.5rem 0 0 0.75rem;
 }
 
-.logoGroup {
-    position: fixed;
-    padding: 1rem;
-    top: 0;
-    left: 0;
-}
-
-.infoButton {
+.infoBtn {
     position: fixed;
     padding: 1rem;
     padding-top: 1.325rem;
@@ -79,38 +79,19 @@ a {
     scroll-snap-stop: always;
 }
 
-.textContent {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    height: 60vh;
-    margin: -5vh 1rem 0;
-}
-
-.coverImage {
+.coverImg {
     height: 40vh;
     width: 100vw;
     background-size: cover;
     background-position: center;
 }
 
-.headline {
-    font-size: min(1.25rem, 5vmin);
-    font-weight: 600;
-    color: var(--primary-text-color);
-}
-
-.timestamp {
-    font-size: min(0.9rem, 3.5vmin);
-    font-weight: 500;
-    color: #5A5A5A;
-    color: rgba(0, 0, 0, 0.65);
-    font-variation-settings: 'FILL' 1;
-}
-
-.story {
-    font-size: min(1.10rem, 4.5vmin);
-    color: var(--secondary-text-color);
+.txtContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 60vh;
+    margin: -5vh 1rem 0;
 }
 
 .tag {
@@ -124,6 +105,17 @@ a {
     text-underline-offset: 0.3rem;
 }
 
+.headline {
+    font-size: min(1.25rem, 5vmin);
+    font-weight: 600;
+    color: var(--primary-text-color);
+}
+
+.story {
+    font-size: min(1.10rem, 4.5vmin);
+    color: var(--secondary-text-color);
+}
+
 .credits {
     font-size: min(0.9rem, 3.5vmin);
     color: var(--primary-text-color);
@@ -135,13 +127,21 @@ a {
     color: var(--muted-text-color);
 }
 
-.likeButton, .shareButton {
+.timestamp {
+    font-size: min(0.9rem, 3.5vmin);
+    font-weight: 500;
+    color: #5A5A5A;
+    font-variation-settings: 'FILL' 1;
+}
+
+.likeBtn,
+.shareBtn {
     color: var(--muted-text-color);
     vertical-align: text-bottom;
     font-size: min(1.5rem, 6vmin) !important;
 }
 
-.likeCounter {
+.likeCount {
     color: var(--muted-text-color);
     font-size: min(1.125rem, 4.5vmin);
     font-weight: normal;
@@ -156,7 +156,8 @@ a {
     cursor: pointer;
 }
 
-.header, .footer {
+.title,
+.footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -164,7 +165,7 @@ a {
     vertical-align: middle;
 }
 
-.header {
+.title {
     padding-bottom: min(0.9rem, 3.5vmin);
 }
 
@@ -190,6 +191,28 @@ a {
     animation: rotation 1s linear infinite;
 }
 
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
+@keyframes disappearToLeft {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(-7.5%);
+        opacity: 0;
+    }
+}
+
 /* about and offline page */
 .about {
     display: flex;
@@ -199,7 +222,7 @@ a {
     text-align: center;
     height: 100vh;
     font-family: 'Poppins', sans-serif;
-    font-size: min(1.10rem, 4.5vmin);;
+    font-size: min(1.10rem, 4.5vmin);
     color: whitesmoke;
     padding: 0 1rem;
 }
@@ -209,13 +232,12 @@ a {
     text-decoration: underline;
 }
 
-.fallbackButton {
+.fallbackBtn {
     -webkit-appearance: button;
     -moz-appearance: button;
     appearance: button;
     text-decoration: none;
     color: initial;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -225,7 +247,7 @@ a {
     cursor: pointer;
 }
 
-.buttonText {
+.buttonTxt {
     font-size: 1rem;
     padding: 0.5rem;
 }
@@ -236,30 +258,8 @@ a {
     cursor: pointer;
 }
 
-@keyframes rotation {
-    0% {
-        transform: rotate(0deg);
-
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes disappearToLeft {
-    0% {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    100% {
-      transform: translateX(-7.5%);
-      opacity: 0;
-    }
-}
-
 @media (min-width: 500px) {
-    .textContent {
+    .txtContent {
         justify-content: normal;
         margin: 0 auto;
         padding: 1rem;
