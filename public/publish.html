@@ -91,12 +91,12 @@
 
             h /= 6;
         }
-        
+
         h = Math.round(360 * h)
         s = Math.round(100 * s)
         l = Math.round(100 * l)
 
-        return {h: h, s: s, l: l};
+        return { h: h, s: s, l: l };
     }
 
     function getBgColor(imageEl) {
@@ -127,17 +127,14 @@
         rgb.b = Math.floor(rgb.b / count)
         console.log(rgb.r, rgb.g, rgb.b)
         let hsl = toHSL(rgb.r, rgb.g, rgb.b)
-        // increase luminosity if too dark
-        if (hsl.l < 85) {
-            hsl.l = 85
-        }
-        // increase saturation if too dull
-        if (hsl.s < 50) {
-            hsl.s = 50
+        // increase luminosity and saturation if too dark
+        if (hsl.l < 75) {
+            hsl.s = Math.round((hsl.l / 75 + 1) * 25)
+            hsl.l = 75
         }
 
         const bgColor = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`
-        console.log(bgColor)
+        
         return bgColor
     }
 
