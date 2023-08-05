@@ -70,6 +70,45 @@
     const db = firebase.firestore()
     const storage = firebase.storage()
 
+    function getHue(r, g, b) {
+        r /= 255, g /= 255, b /= 255
+
+        var max = Math.max(r, g, b)
+        var min = Math.min(r, g, b)
+        var c = max - min
+        var hue
+
+        if (c == 0) {
+            hue = 0
+        }
+        else {
+            switch(max) {
+
+            case r:
+                var segment = (g - b) / c
+                var shift = 0 / 60
+                if (segment < 0) {
+                    shift = 360 / 60
+                }
+                hue = segment + shift
+                break
+
+            case g:
+                var segment = (b - r) / c
+                var shift   = 120 / 60
+                hue = segment + shift
+                break
+
+            case b:
+                var segment = (r - g) / c
+                var shift   = 240 / 60
+                hue = segment + shift
+                break
+            }
+        }
+        return hue * 60
+    }
+
     function getBgColor(imageEl) {
 
         let canvas = document.createElement('canvas'),
@@ -96,17 +135,12 @@
         rgb.r = Math.floor(rgb.r / count)
         rgb.g = Math.floor(rgb.g / count)
         rgb.b = Math.floor(rgb.b / count)
-        
-        // if the color is too dark, lighten it
-        const sum = rgb.r + rgb.g + rgb.b
-        const multiplier = 650 / sum
-        if (sum < 650) {
-            rgb.r = Math.floor(rgb.r * multiplier)
-            rgb.g = Math.floor(rgb.g * multiplier)
-            rgb.b = Math.floor(rgb.b * multiplier)
-        }
 
-        const bgColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`
+        const hue = Math.round(getHue(rgb.r, rgb.g, rgb.b))
+        const hsl = {h: hue, s: "50%", l: "80%"}
+
+        const bgColor = `hsl(${hsl.h}, ${hsl.s}, ${hsl.l}))`
+        console.log(bgColor)
         return bgColor
     }
 
