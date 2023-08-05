@@ -11,13 +11,16 @@ function loadArticle(article, id) {
 
     document.getElementById("articles").innerHTML += /*html*/
     `<div class="article" id="${id}" style="background-color: ${color};">
-        <a href="${article.coverImage}">
-            <div class="coverImg" style="background-image: linear-gradient(to top, ${color}, transparent, transparent), url(${article.coverImage});"></div>
-        </a>
+        <div class="coverImg" style="background-image: linear-gradient(to top, ${color}, transparent, transparent), url(${article.coverImage});"></div>
         <div class="txtContent">
             <header>
-                <span class="title tag">${article.tag}</span>
-                <div class="headline">${article.headline}</div>
+                <div class="title">
+                    <span class="tag">${article.tag}</span>
+                    <a href="${article.coverImage}">
+                        <span class="fullscreenBtn material-symbols-rounded">fullscreen</span>
+                    </a>
+                </div>
+                    <div class="headline">${article.headline}</div>
             </header>
             <div class="story">${linkify(article.story)}</div>
             <div class="footer">

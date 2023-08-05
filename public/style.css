@@ -134,6 +134,7 @@ a {
     font-variation-settings: 'FILL' 1;
 }
 
+.fullscreenBtn,
 .likeBtn,
 .shareBtn {
     color: var(--muted-text-color);
