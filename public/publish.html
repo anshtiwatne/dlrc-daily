@@ -104,8 +104,8 @@
 
     function getBgColor(imgEl) {
 
-        dominantColor = colorThief.getColor(imgEl, 1)
-        rgb = { r: dominantColor[0], g: dominantColor[1], b: dominantColor[2] }
+        const dominantColor = colorThief.getColor(imgEl, 1)
+        const rgb = { r: dominantColor[0], g: dominantColor[1], b: dominantColor[2] }
         let hsl = toHSL(rgb.r, rgb.g, rgb.b)
         // increase luminosity and saturation if too dark
         if (hsl.l < 75) {
