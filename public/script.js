@@ -9,27 +9,42 @@ function loadArticle(article, id) {
         fill = 1
     }
 
+    if (article.isTextLight === true) {
+        primaryTextColor = "#FFFFFF"
+        secondaryTextColor = "#F5F5F5"
+        mutedTextColor = "#E3E3E3"
+        translucentTextColor = "rgba(255, 255, 255, 0.75)"
+        timestampColor = "#C4C7C5"
+    }
+    else {
+        primaryTextColor = "#333333"
+        secondaryTextColor = "#3C3C3C"
+        mutedTextColor = "#4F4F4F"
+        translucentTextColor = "rgba(0, 0, 0, 0.75)"
+        timestampColor = "#5A5A5A"
+    }
+
     document.getElementById("articles").innerHTML += /*html*/
     `<div class="article" id="${id}" style="background-color: ${color};">
         <div class="coverImg" style="background-image: linear-gradient(to top, ${color}, transparent, transparent), url(${article.coverImage});"></div>
         <div class="txtContent">
             <header>
                 <div class="title">
-                    <span class="tag">${article.tag}</span>
+                    <span class="tag" style="color: ${translucentTextColor};">${article.tag}</span>
                     <a href="${article.coverImage}">
-                        <span class="fullscreenBtn material-symbols-rounded">fullscreen</span>
+                        <span class="fullscreenBtn material-symbols-rounded" style="color: ${mutedTextColor};"}>fullscreen</span>
                     </a>
                 </div>
-                    <div class="headline">${article.headline}</div>
+                    <div class="headline" style="color: ${primaryTextColor};">${article.headline}</div>
             </header>
-            <div class="story">${linkify(article.story)}</div>
+            <div class="story" style="color: ${secondaryTextColor};">${linkify(article.story)}</div>
             <div class="footer">
                 <div>
-                    <span class="credits">by</span>
-                    <span class="author">${article.author}</span>
-                    <span class="timestamp" style="padding-left: 0.25rem">• ${timeAgo(article.publishDate.toDate())}</span>
+                    <span class="credits" style="color: ${primaryTextColor};">by</span>
+                    <span class="author" style="color: ${mutedTextColor};">${article.author}</span>
+                    <span class="timestamp" style="padding-left: 0.25rem; color: ${timestampColor};">• ${timeAgo(article.publishDate.toDate())}</span>
                 </div>
-                <div>
+                <div style="color: ${mutedTextColor};">
                     <span class="likeGroup" data-id="${id}">
                         <span class="likeBtn material-symbols-rounded" style="font-variation-settings: 'FILL' ${fill};">thumb_up</span>
                         <span class="likeCount">${article.likes}</span>

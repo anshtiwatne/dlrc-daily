@@ -8,6 +8,8 @@
     <link rel="icon" type="image/x-icon" href="./assets/logos/favicon.ico">
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
+
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/9.23.0/firebase-app-compat.js"></script>
     <script defer src="/__/firebase/9.23.0/firebase-firestore-compat.js"></script>
@@ -69,73 +71,29 @@
 <script type="module">
     const db = firebase.firestore()
     const storage = firebase.storage()
+    const colorThief = new ColorThief()
+    
+    function isTextLight(color) {
+        // per ITU-R BT.709
+        for (const i in color) {
+            let component = color[i] / 255
 
-    function toHSL(r, g, b) {
-        r /= 255, g /= 255, b /= 255
-
-        var max = Math.max(r, g, b), min = Math.min(r, g, b)
-        var h, s, l = (max + min) / 2
-
-        if (max == min) {
-            h = s = 0
-        }
-        else {
-            var d = max - min;
-            s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
-
-            switch (max) {
-                case r: h = (g - b) / d + (g < b ? 6 : 0); break
-                case g: h = (b - r) / d + 2; break
-                case b: h = (r - g) / d + 4; break
+            if (component <= 0.04045) {
+                component = component / 12.92
+            }
+            else {
+                component = ((component + 0.055) / 1.055) ** 2.4
             }
 
-            h /= 6;
+            color[i] = component
         }
-
-        h = Math.round(360 * h)
-        s = Math.round(100 * s)
-        l = Math.round(100 * l)
-
-        return { h: h, s: s, l: l };
-    }
-
-    function getBgColor(imageEl) {
-
-        let canvas = document.createElement('canvas'),
-
-            context = canvas.getContext && canvas.getContext('2d'),
-            imgData, width, height, length,
-            rgb = { r: 0, g: 0, b: 0 },
-            count = 0
-
-        height = canvas.height = imageEl.naturalHeight || imageEl.offsetHeight || imageEl.height
-        width = canvas.width = imageEl.naturalWidth || imageEl.offsetWidth || imageEl.width
-
-        context.drawImage(imageEl, 0, 0)
-        imgData = context.getImageData(0, 0, width, height)
-        length = imgData.data.length;
-
-        for (let i = 0; i < length; i += 4) {
-            rgb.r += imgData.data[i]
-            rgb.g += imgData.data[i + 1]
-            rgb.b += imgData.data[i + 2]
-            count++;
-        }
-
-        rgb.r = Math.floor(rgb.r / count)
-        rgb.g = Math.floor(rgb.g / count)
-        rgb.b = Math.floor(rgb.b / count)
-        console.log(rgb.r, rgb.g, rgb.b)
-        let hsl = toHSL(rgb.r, rgb.g, rgb.b)
-        // increase luminosity and saturation if too dark
-        if (hsl.l < 75) {
-            hsl.s = Math.round((hsl.l / 75 + 1) * 25)
-            hsl.l = 75
-        }
-
-        const bgColor = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`
         
-        return bgColor
+        const L = 0.2126*color[0] + 0.7152*color[1] + 0.0722*color[2]
+        if (L > 0.179) {
+            return false
+        } else {
+            return true
+        }
     }
 
     function publish() {
@@ -164,7 +122,7 @@
             imgEl.style.display = "none";
 
             imgEl.onload = function() {
-                const bgColor = getBgColor(imgEl)
+                const color = colorThief.getColor(imgEl, 1)
 
                 articles.add({
                     author: author,
@@ -174,13 +132,14 @@
                     tag: tag,
                     publishDate: firebase.firestore.Timestamp.now(),
                     likes: 0,
-                    color: bgColor
-            })
+                    color: color,
+                    isTextLight: isTextLight(color)
+                })
+
+                alert("Published!")
+                document.getElementById("publishForm").reset()
             }
         })
-
-        alert("Published!")
-        document.getElementById("publishForm").reset()
     }
 
     document.getElementById("publishForm").addEventListener("submit", () => {

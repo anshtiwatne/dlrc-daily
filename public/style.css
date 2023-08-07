@@ -7,6 +7,7 @@
     --secondary-text-color: #3C3C3C;
     --muted-text-color: #4F4F4F;
     --translucent-text-color: rgba(0, 0, 0, 0.75);
+    --timestamp-color: #5A5A5A;
     --text-shadow: 0.1rem 0.1rem 1rem black;
     --image-shadow: 0.1rem 0.1rem 1rem rgba(0, 0, 0, 0.5);
 }
@@ -130,7 +131,7 @@ a {
 .timestamp {
     font-size: min(0.9rem, 3.5vmin);
     font-weight: 500;
-    color: #5A5A5A;
+    color: var(--timestamp-color);
     font-variation-settings: 'FILL' 1;
 }
 
