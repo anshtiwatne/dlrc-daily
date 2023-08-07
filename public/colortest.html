@@ -1,0 +1,45 @@
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
+</head>
+
+<body>
+    <img src="https://firebasestorage.googleapis.com/v0/b/dlrc-daily.appspot.com/o/coverImages%2F1690960499993?alt=media&token=faa1287b-e3ff-41c9-8504-3597b8810ce3"
+        crossorigin="anonymous">
+</body>
+
+<script>
+    const colorThief = new ColorThief()
+
+    function isTextLight(color) {
+        // per ITU-R BT.709
+        for (const i in color) {
+            let component = color[i] / 255
+
+            if (component <= 0.04045) {
+                component = component / 12.92
+            }
+            else {
+                component = ((component + 0.055) / 1.055) ** 2.4
+            }
+
+            color[i] = component
+        }
+        
+        const L = 0.2126*color[0] + 0.7152*color[1] + 0.0722*color[2]
+        if (L > 0.179) {
+            return false
+        }
+        else {
+            return true
+        }
+    }
+
+    imgEl = document.querySelector('img')
+
+    imgEl.onload = function () {
+        const color = colorThief.getColor(imgEl, 1)
+        const colorString = `rgb(${color[0]}, ${color[1]}, ${color[2]})`
+        document.body.style.backgroundColor = colorString
+        console.log(isTextLight(color), colorString)
+    }
+</script>

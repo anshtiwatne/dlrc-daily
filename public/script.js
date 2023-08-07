@@ -9,20 +9,24 @@ function loadArticle(article, id) {
         fill = 1
     }
 
-    if (article.isTextLight === true) {
-        const primaryTextColor = "#FFFFFF"
-        const secondaryTextColor = "#F5F5F5"
-        const mutedTextColor = "#E3E3E3"
-        const translucentTextColor = "rgba(255, 255, 255, 0.75)"
-        const timestampColor = "#C4C7C5"
+    console.log(article.isTextLight)
+
+    if (article.isTextLight == true) {
+        var primaryTextColor = "#FFFFFF"
+        var secondaryTextColor = "#F5F5F5"
+        var mutedTextColor = "#E3E3E3"
+        var translucentColor = "rgba(255, 255, 255, 0.75)"
+        var timestampColor = "#C4C7C5"
     }
     else {
-        const primaryTextColor = "#333333"
-        const secondaryTextColor = "#3C3C3C"
-        const mutedTextColor = "#4F4F4F"
-        const translucentTextColor = "rgba(0, 0, 0, 0.75)"
-        const timestampColor = "#5A5A5A"
+        var primaryTextColor = "#333333"
+        var secondaryTextColor = "#3C3C3C"
+        var mutedTextColor = "#4F4F4F"
+        var translucentColor = "rgba(0, 0, 0, 0.75)"
+        var timestampColor = "#5A5A5A"
     }
+
+    console.log(translucentColor)
 
     document.getElementById("articles").innerHTML += /*html*/
     `<div class="article" id="${id}" style="background-color: ${color};">
@@ -30,7 +34,7 @@ function loadArticle(article, id) {
         <div class="txtContent">
             <header>
                 <div class="title">
-                    <span class="tag" style="color: ${translucentTextColor};">${article.tag}</span>
+                    <span class="tag" style="color: ${primaryTextColor}; text-decoration-color: ${translucentColor};">${article.tag}</span>
                     <a href="${article.coverImage}">
                         <span class="fullscreenBtn material-symbols-rounded" style="color: ${mutedTextColor};"}>fullscreen</span>
                     </a>
@@ -44,12 +48,12 @@ function loadArticle(article, id) {
                     <span class="author" style="color: ${mutedTextColor};">${article.author}</span>
                     <span class="timestamp" style="padding-left: 0.25rem; color: ${timestampColor};">• ${timeAgo(article.publishDate.toDate())}</span>
                 </div>
-                <div style="color: ${mutedTextColor};">
+                <div>
                     <span class="likeGroup" data-id="${id}">
-                        <span class="likeBtn material-symbols-rounded" style="font-variation-settings: 'FILL' ${fill};">thumb_up</span>
-                        <span class="likeCount">${article.likes}</span>
+                        <span class="likeBtn material-symbols-rounded" style="font-variation-settings: 'FILL' ${fill}; color: ${mutedTextColor};">thumb_up</span>
+                        <span class="likeCount" style="color: ${mutedTextColor};">${article.likes}</span>
                     </span>
-                    <span class="shareBtn material-symbols-rounded" style="padding-left: 0.75rem; transform: translateY(-10%)" data-id="${id}">ios_share</span>
+                    <span class="shareBtn material-symbols-rounded" style="padding-left: 0.75rem; transform: translateY(-10%); color: ${mutedTextColor};" data-id="${id}">ios_share</span>
                 </div>
             </div>
         </div>

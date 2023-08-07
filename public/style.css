@@ -6,7 +6,7 @@
     --primary-text-color: #333333;
     --secondary-text-color: #3C3C3C;
     --muted-text-color: #4F4F4F;
-    --translucent-text-color: rgba(0, 0, 0, 0.75);
+    --translucent-color: rgba(0, 0, 0, 0.7);
     --timestamp-color: #5A5A5A;
     --text-shadow: 0.1rem 0.1rem 1rem black;
     --image-shadow: 0.1rem 0.1rem 1rem rgba(0, 0, 0, 0.5);
@@ -98,7 +98,7 @@ a {
 .tag {
     font-size: min(0.9rem, 3.5vmin);
     font-weight: 600;
-    color: var(--translucent-text-color);
+    color: var(--primary-text-color);
     text-transform: uppercase;
     text-decoration: underline;
     text-decoration-color: rgba(0, 0, 0, 0.7);
