@@ -71,6 +71,7 @@
 <script type="module">
     const db = firebase.firestore()
     const storage = firebase.storage()
+    const colorThief = new ColorThief()
 
     function toHSL(r, g, b) {
         r /= 255, g /= 255, b /= 255
@@ -103,7 +104,7 @@
 
     function getBgColor(imgEl) {
 
-        dominantColor =colorThief.getColor(imgEl, 1)
+        dominantColor = colorThief.getColor(imgEl, 1)
         rgb = { r: dominantColor[0], g: dominantColor[1], b: dominantColor[2] }
         let hsl = toHSL(rgb.r, rgb.g, rgb.b)
         // increase luminosity and saturation if too dark
