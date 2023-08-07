@@ -10,18 +10,18 @@ function loadArticle(article, id) {
     }
 
     if (article.isTextLight === true) {
-        primaryTextColor = "#FFFFFF"
-        secondaryTextColor = "#F5F5F5"
-        mutedTextColor = "#E3E3E3"
-        translucentTextColor = "rgba(255, 255, 255, 0.75)"
-        timestampColor = "#C4C7C5"
+        const primaryTextColor = "#FFFFFF"
+        const secondaryTextColor = "#F5F5F5"
+        const mutedTextColor = "#E3E3E3"
+        const translucentTextColor = "rgba(255, 255, 255, 0.75)"
+        const timestampColor = "#C4C7C5"
     }
     else {
-        primaryTextColor = "#333333"
-        secondaryTextColor = "#3C3C3C"
-        mutedTextColor = "#4F4F4F"
-        translucentTextColor = "rgba(0, 0, 0, 0.75)"
-        timestampColor = "#5A5A5A"
+        const primaryTextColor = "#333333"
+        const secondaryTextColor = "#3C3C3C"
+        const mutedTextColor = "#4F4F4F"
+        const translucentTextColor = "rgba(0, 0, 0, 0.75)"
+        const timestampColor = "#5A5A5A"
     }
 
     document.getElementById("articles").innerHTML += /*html*/
