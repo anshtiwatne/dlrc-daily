@@ -3,43 +3,61 @@
 </head>
 
 <body>
-    <img src="https://firebasestorage.googleapis.com/v0/b/dlrc-daily.appspot.com/o/coverImages%2F1690960499993?alt=media&token=faa1287b-e3ff-41c9-8504-3597b8810ce3"
+    <img src="https://firebasestorage.googleapis.com/v0/b/dlrc-daily.appspot.com/o/coverImages%2F1691214526111?alt=media&token=db5595a4-b64d-4611-b5da-caa91c7a6c4d"
         crossorigin="anonymous">
 </body>
 
 <script>
     const colorThief = new ColorThief()
 
-    function isTextLight(color) {
-        // per ITU-R BT.709
-        for (const i in color) {
-            let component = color[i] / 255
+    function toHSL(r, g, b) {
+        r /= 255, g /= 255, b /= 255
 
-            if (component <= 0.04045) {
-                component = component / 12.92
-            }
-            else {
-                component = ((component + 0.055) / 1.055) ** 2.4
-            }
+        var max = Math.max(r, g, b), min = Math.min(r, g, b)
+        var h, s, l = (max + min) / 2
 
-            color[i] = component
-        }
-        
-        const L = 0.2126*color[0] + 0.7152*color[1] + 0.0722*color[2]
-        if (L > 0.179) {
-            return false
+        if (max == min) {
+            h = s = 0
         }
         else {
-            return true
+            var d = max - min;
+            s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+
+            switch (max) {
+                case r: h = (g - b) / d + (g < b ? 6 : 0); break
+                case g: h = (b - r) / d + 2; break
+                case b: h = (r - g) / d + 4; break
+            }
+
+            h /= 6;
         }
+
+        h = Math.round(360 * h)
+        s = Math.round(100 * s)
+        l = Math.round(100 * l)
+
+        return { h: h, s: s, l: l };
     }
 
-    imgEl = document.querySelector('img')
+    function getBgColor(imgEl) {
 
-    imgEl.onload = function () {
-        const color = colorThief.getColor(imgEl, 1)
-        const colorString = `rgb(${color[0]}, ${color[1]}, ${color[2]})`
-        document.body.style.backgroundColor = colorString
-        console.log(isTextLight(color), colorString)
+        dominantColor =colorThief.getColor(imgEl, 1)
+        rgb = { r: dominantColor[0], g: dominantColor[1], b: dominantColor[2] }
+        let hsl = toHSL(rgb.r, rgb.g, rgb.b)
+        // increase luminosity and saturation if too dark
+        if (hsl.l < 75) {
+            hsl.s = Math.round((hsl.l / 75 + 1) * 25)
+            hsl.l = 75
+        }
+
+        const bgColor = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`
+        return bgColor
+    }
+
+    const image = document.querySelector('img')
+    image.onload = () => {
+        const color = getBgColor(image)
+        console.log(color)
+        document.body.style.backgroundColor = color
     }
 </script>

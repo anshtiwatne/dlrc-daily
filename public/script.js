@@ -9,51 +9,32 @@ function loadArticle(article, id) {
         fill = 1
     }
 
-    console.log(article.isTextLight)
-
-    if (article.isTextLight == true) {
-        var primaryTextColor = "#FFFFFF"
-        var secondaryTextColor = "#F5F5F5"
-        var mutedTextColor = "#E3E3E3"
-        var translucentColor = "rgba(255, 255, 255, 0.75)"
-        var timestampColor = "#C4C7C5"
-    }
-    else {
-        var primaryTextColor = "#333333"
-        var secondaryTextColor = "#3C3C3C"
-        var mutedTextColor = "#4F4F4F"
-        var translucentColor = "rgba(0, 0, 0, 0.75)"
-        var timestampColor = "#5A5A5A"
-    }
-
-    console.log(translucentColor)
-
     document.getElementById("articles").innerHTML += /*html*/
     `<div class="article" id="${id}" style="background-color: ${color};">
         <div class="coverImg" style="background-image: linear-gradient(to top, ${color}, transparent, transparent), url(${article.coverImage});"></div>
         <div class="txtContent">
             <header>
                 <div class="title">
-                    <span class="tag" style="color: ${primaryTextColor}; text-decoration-color: ${translucentColor};">${article.tag}</span>
+                    <span class="tag">${article.tag}</span>
                     <a href="${article.coverImage}">
-                        <span class="fullscreenBtn material-symbols-rounded" style="color: ${mutedTextColor};"}>fullscreen</span>
+                        <span class="fullscreenBtn material-symbols-rounded">fullscreen</span>
                     </a>
                 </div>
-                    <div class="headline" style="color: ${primaryTextColor};">${article.headline}</div>
+                    <div class="headline">${article.headline}</div>
             </header>
-            <div class="story" style="color: ${secondaryTextColor};">${linkify(article.story)}</div>
+            <div class="story">${linkify(article.story)}</div>
             <div class="footer">
                 <div>
-                    <span class="credits" style="color: ${primaryTextColor};">by</span>
-                    <span class="author" style="color: ${mutedTextColor};">${article.author}</span>
-                    <span class="timestamp" style="padding-left: 0.25rem; color: ${timestampColor};">• ${timeAgo(article.publishDate.toDate())}</span>
+                    <span class="credits">by</span>
+                    <span class="author">${article.author}</span>
+                    <span class="timestamp" style="padding-left: 0.25rem">• ${timeAgo(article.publishDate.toDate())}</span>
                 </div>
                 <div>
                     <span class="likeGroup" data-id="${id}">
-                        <span class="likeBtn material-symbols-rounded" style="font-variation-settings: 'FILL' ${fill}; color: ${mutedTextColor};">thumb_up</span>
-                        <span class="likeCount" style="color: ${mutedTextColor};">${article.likes}</span>
+                        <span class="likeBtn material-symbols-rounded" style="font-variation-settings: 'FILL' ${fill};">thumb_up</span>
+                        <span class="likeCount">${article.likes}</span>
                     </span>
-                    <span class="shareBtn material-symbols-rounded" style="padding-left: 0.75rem; transform: translateY(-10%); color: ${mutedTextColor};" data-id="${id}">ios_share</span>
+                    <span class="shareBtn material-symbols-rounded" style="padding-left: 0.75rem; transform: translateY(-10%)" data-id="${id}">ios_share</span>
                 </div>
             </div>
         </div>
