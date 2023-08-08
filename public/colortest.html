@@ -3,7 +3,7 @@
 </head>
 
 <body>
-    <img src="https://firebasestorage.googleapis.com/v0/b/dlrc-daily.appspot.com/o/coverImages%2F1691214526111?alt=media&token=db5595a4-b64d-4611-b5da-caa91c7a6c4d"
+    <img src="https://firebasestorage.googleapis.com/v0/b/dlrc-daily.appspot.com/o/coverImages%2F1691487962769?alt=media&token=04b6fc98-08ad-49c9-8200-38fc96211605"
         crossorigin="anonymous">
 </body>
 
@@ -39,10 +39,33 @@
         return { h: h, s: s, l: l };
     }
 
-    function getBgColor(imgEl) {
+    function getBgColor(imageEl) {
 
-        dominantColor =colorThief.getColor(imgEl, 1)
-        rgb = { r: dominantColor[0], g: dominantColor[1], b: dominantColor[2] }
+        let canvas = document.createElement('canvas'),
+
+            context = canvas.getContext && canvas.getContext('2d'),
+            imgData, width, height, length,
+            rgb = { r: 0, g: 0, b: 0 },
+            count = 0
+
+        height = canvas.height = imageEl.naturalHeight || imageEl.offsetHeight || imageEl.height
+        width = canvas.width = imageEl.naturalWidth || imageEl.offsetWidth || imageEl.width
+
+        context.drawImage(imageEl, 0, 0)
+        imgData = context.getImageData(0, 0, width, height)
+        length = imgData.data.length;
+
+        for (let i = 0; i < length; i += 4) {
+            rgb.r += imgData.data[i]
+            rgb.g += imgData.data[i + 1]
+            rgb.b += imgData.data[i + 2]
+            count++;
+        }
+
+        rgb.r = Math.floor(rgb.r / count)
+        rgb.g = Math.floor(rgb.g / count)
+        rgb.b = Math.floor(rgb.b / count)
+        console.log(rgb.r, rgb.g, rgb.b)
         let hsl = toHSL(rgb.r, rgb.g, rgb.b)
         // increase luminosity and saturation if too dark
         if (hsl.l < 75) {
@@ -51,6 +74,7 @@
         }
 
         const bgColor = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`
+        
         return bgColor
     }
 
