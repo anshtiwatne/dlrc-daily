@@ -1,4 +1,6 @@
 :root {
+    height: 100%;
+    position: fixed;
     scroll-snap-type: y mandatory;
     -webkit-tap-highlight-color: transparent;
 
