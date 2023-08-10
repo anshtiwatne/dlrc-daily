@@ -39,9 +39,6 @@ function loadArticle(article, id) {
             </div>
         </div>
     </div>`
-
-    updateLikes()
-    shareArticle()
 }
 
 function timeAgo(date) {
@@ -87,8 +84,6 @@ function unhideArticles() {
     endScreen.innerHTML = "That's all for now :("
     endScreen.style.scrollSnapAlign = "none"
     window.scrollTo(0, 0)
-    goToSharedArticle()
-    instructionPromptCheck()
 }
 
 function updateLikes() {
@@ -181,6 +176,21 @@ function goToSharedArticle() {
     }
 }
 
+function getArticleInView() {
+    const elements = document.querySelectorAll(".article")
+  
+    elements.forEach(element => {
+      const rect = element.getBoundingClientRect()
+  
+        if (rect.top >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)) {
+            const articleID = element.id
+            window.history.pushState({}, document.title, `/?article=${articleID}`)
+        }
+    })
+  }
+  
+  
+
 db.collection("articles").get().then((snapshot) => {
     let articles = []
     let i = -1
@@ -199,6 +209,13 @@ db.collection("articles").get().then((snapshot) => {
     })
 
     if (i !== -1) {
-        setTimeout(unhideArticles, 250)
+        setTimeout(function () {
+            unhideArticles()
+            goToSharedArticle()
+            instructionPromptCheck()
+            updateLikes()
+            shareArticle()
+            window.addEventListener("scroll", getArticleInView)
+        }, 250)
     }
 })
