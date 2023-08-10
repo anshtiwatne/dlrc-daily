@@ -155,12 +155,13 @@
                     publishDate: firebase.firestore.Timestamp.now(),
                     likes: 0,
                     color: bgColor
-            })
+                })
+                .then(() => {
+                    alert("Published!")
+                    document.getElementById("publishForm").reset()
+                })
             }
         })
-
-        alert("Published!")
-        document.getElementById("publishForm").reset()
     }
 
     document.getElementById("publishForm").addEventListener("submit", () => {
