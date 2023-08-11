@@ -187,9 +187,7 @@ function getArticleInView() {
             window.history.pushState({}, document.title, `/?article=${articleID}`)
         }
     })
-  }
-  
-  
+}
 
 db.collection("articles").get().then((snapshot) => {
     let articles = []
