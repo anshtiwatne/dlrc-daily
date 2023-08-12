@@ -214,7 +214,6 @@ db.collection("articles").get().then((snapshot) => {
             updateLikes()
             shareArticle()
             window.addEventListener("scroll", getArticleInView)
-            window.onload = function () {window.history.pushState({}, document.title, "/")}
         }, 250)
     }
 })
