@@ -214,7 +214,7 @@ db.collection("articles").get().then((snapshot) => {
             updateLikes()
             shareArticle()
             window.addEventListener("scroll", getArticleInView)
-            window.onbeforeunload = function () {window.scrollTo(0, 0)}
+            window.onload = function () {window.scrollTo(0, 0)}
         }, 250)
     }
 })
