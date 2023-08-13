@@ -190,13 +190,13 @@ function getArticleInView() {
     })
 }
 
-function notifyMe() {
-    if (("Notification" in window) && (Notification.permission !== "denied")) {
-        Notification.requestPermission()
-    }
-}   
+// function notifyMe() {
+//     if (("Notification" in window) && (Notification.permission !== "denied")) {
+//         Notification.requestPermission()
+//     }
+// }
 
-notifyMe()
+// notifyMe()
 
 db.collection("articles").get().then((snapshot) => {
     let articles = []
