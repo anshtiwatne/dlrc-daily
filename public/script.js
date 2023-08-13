@@ -1,5 +1,21 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js"
+import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-messaging.js"
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCO145OUsjafOByFoghuIQdY1HamdYuO0s",
+    authDomain: "dlrc-daily.firebaseapp.com",
+    projectId: "dlrc-daily",
+    storageBucket: "dlrc-daily.appspot.com",
+    messagingSenderId: "235007567187",
+    appId: "1:235007567187:web:91c604b6d82632c036ada6",
+    measurementId: "G-Y8SV4T6C2B"
+}
+
+const app = initializeApp(firebaseConfig)
+
 const analytics = firebase.analytics()
 const db = firebase.firestore()
+const messaging = firebase.messaging()
 
 function loadArticle(article, id) {
     const color = article.color
@@ -217,3 +233,41 @@ db.collection("articles").get().then((snapshot) => {
         }, 250)
     }
 })
+
+function getFCMToken() {
+    messaging.getToken(messaging, { vapidKey: "BL1R4Annaua2hasnfjxlLFYoZIn6NaoM45RfddzZxsjby1SQEa-l3mMapA4__Q5zFa5YYvgdPi3NT6tZtUOicxE" })
+        .then((currentToken) => {
+            if (currentToken) {
+                subscribeToNotifications(currentToken)
+            }
+        })
+}
+
+function subscribeToNotifications(token) {
+    db.collection("FCMTokens").doc(token).set({
+        token: token,
+        timestamp: firebase.firestore.Timestamp.now()
+    })
+}
+
+function notifyMe() {
+    if (!("Notification" in window)) {
+        // Notifications not supported in this browser
+    }
+    else if (Notification.permission === "granted") {
+        getFCMToken()
+        // new Notification("You'll be notified when a new article is published")
+    }
+    else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then((permission) => {
+        
+            if (permission === "granted") {
+                getFCMToken()
+                // new Notification("You'll be notified when a new article is published")
+            }
+        })
+    }
+}
+
+notifyMe()
+      
