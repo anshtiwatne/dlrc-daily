@@ -225,6 +225,7 @@ function getFCMToken() {
         .then((currentToken) => {
             if (currentToken) {
                 subscribeToNotifications(currentToken)
+                console.log(currentToken)
             }
         })
 }
