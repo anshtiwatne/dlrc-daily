@@ -214,6 +214,7 @@ function getFCMToken() {
 }
 
 function notifyMe() {
+    console.log(Notification.permission)
     if (!("Notification" in window)) {
         //  not supported in this browser
     }
