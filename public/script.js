@@ -214,10 +214,7 @@ function getFCMToken() {
 }
 
 function notifyMe() {
-    if (!("Notification" in window)) {
-        // notifications not supported
-    }
-    else if (Notification.permission === "granted") {
+    if (Notification.permission === "granted") {
         getFCMToken()
     }
     else if (Notification.permission !== "denied") {
