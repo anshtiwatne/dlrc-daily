@@ -231,14 +231,11 @@ function getFCMToken() {
 //
 
 function promptInstallIfWeb() {
-    console.log(navigator.userAgent)
-    console.log(/iPhone|iPod|iPad|Android/i.test(navigator.userAgent))
     if (/iPhone|iPod|iPad|Android/i.test(navigator.userAgent)) {
         if (localStorage.getItem("installPrompt") != null) {
             return true // value set to 1 when user clicks close on /install.html
         }
         if (!window.matchMedia('(display-mode: standalone)').matches) {
-            console.log("not PWA")
             window.location.replace("/install.html")
             return false
         }
