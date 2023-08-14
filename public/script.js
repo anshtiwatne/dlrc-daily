@@ -208,29 +208,31 @@ function getFCMToken() {
         .then((currentToken) => {
             if (currentToken) {
                 subscribeToNotifications(currentToken)
+                console.log(currentToken)
             }
-            console.log(currentToken)
         })
 }
 
 function notifyMe() {
     if (!("Notification" in window)) {
-        // notifications not supported
+        //  not supported in this browser
     }
     else if (Notification.permission === "granted") {
         getFCMToken()
+        // new Notification("You'll be notified when a new article is published")
     }
     else if (Notification.permission !== "denied") {
         Notification.requestPermission().then((permission) => {
 
             if (permission === "granted") {
                 getFCMToken()
+                // new Notification("You'll be notified when a new article is published")
             }
         })
     }
 }
 
-getFCMToken()
+notifyMe()
 //
 
 function promptInstallIfWeb() {
@@ -251,7 +253,7 @@ function main() {
         return false
     }
 
-    notifyMe()
+    // notifyMe()
     db.collection("articles").get().then((snapshot) => {
         let articles = []
         let i = -1
