@@ -126,8 +126,7 @@ function updateLikes() {
 function instructionPromptCheck() {
     if (localStorage.getItem("instructionPrompt") == null) {
         document.getElementById("instructions").style.display = "flex"
-    }
-    // localstorage value set in index.html
+    } // localstorage value set in index.html
 }
 
 function linkify(text) {
@@ -190,74 +189,61 @@ function getArticleInView() {
     })
 }
 
-// function notifyMe() {
-//     if (("Notification" in window) && (Notification.permission !== "denied")) {
-//         Notification.requestPermission()
-//     }
-// }
-
-// notifyMe()
-
-db.collection("articles").get().then((snapshot) => {
-    let articles = []
-    let i = -1
-
-    snapshot.docs.forEach(doc => {
-        let article = doc.data()
-        let id = doc.id
-        let publishDate = article.publishDate.toDate()
-        articles.push([article, id, publishDate])
-    })
-
-    articles.sort((a, b) => a[2] - b[2]).reverse() // sorting the articles by publishDate
-    articles.forEach(article => {
-        i++
-        loadArticle(article[0], article[1])
-    })
-
-    if (i !== -1) {
-        setTimeout(function () {
-            unhideArticles()
-            goToSharedArticle()
-            instructionPromptCheck()
-            updateLikes()
-            shareArticle()
-            window.addEventListener("scroll", getArticleInView)
-        }, 250)
-    }
-})
-
-// temporary
-function getFCMToken() {
-    messaging.getToken(messaging, { vapidKey: "BL1R4Annaua2hasnfjxlLFYoZIn6NaoM45RfddzZxsjby1SQEa-l3mMapA4__Q5zFa5YYvgdPi3NT6tZtUOicxE" })
-        .then((currentToken) => {
-            if (currentToken) {
-                subscribeToNotifications(currentToken)
-            }
-        })
-}
-
-function subscribeToNotifications(token) {
-    db.collection("FCMTokens").doc(token).set({
-        token: token,
-        lastOpened: firebase.firestore.Timestamp.now()
-    })
-}
-
 function notifyMe() {
-    if (!("Notification" in window)) {
-    }
-    else if (Notification.permission === "granted") {
-        getFCMToken()
-    }
-    else if (Notification.permission !== "denied") {
-        Notification.requestPermission().then((permission) => {
-
-            if (permission === "granted") {
-                getFCMToken()
-            }
-        })
+    if (("Notification" in window) && (Notification.permission !== "denied")) {
+        Notification.requestPermission()
     }
 }
 
-notifyMe()
+function promptInstallIfWeb() {
+    alert(localStorage.getItem("installPrompt"))
+    if (["iPhone", "iPad", "iPod", "Android"].includes(navigator.platform)) {
+        if (localStorage.getItem("installPrompt") != null) {
+            return true // value set to 1 when user clicks close on /install.html
+        }
+        if (!window.matchMedia('(display-mode: standalone)').matches) {
+            console.log("not PWA")
+            window.location.replace("/install.html")
+            return false
+        }
+    }
+    return true
+}
+
+function main() {
+    if (!promptInstallIfWeb()) {
+        return false
+    }
+
+    notifyMe()
+    db.collection("articles").get().then((snapshot) => {
+        let articles = []
+        let i = -1
+
+        snapshot.docs.forEach(doc => {
+            let article = doc.data()
+            let id = doc.id
+            let publishDate = article.publishDate.toDate()
+            articles.push([article, id, publishDate])
+        })
+
+        articles.sort((a, b) => a[2] - b[2]).reverse() // sorting the articles by publishDate
+        articles.forEach(article => {
+            i++
+            loadArticle(article[0], article[1])
+        })
+
+        if (i !== -1) {
+            setTimeout(function () {
+                unhideArticles()
+                goToSharedArticle()
+                instructionPromptCheck()
+                updateLikes()
+                shareArticle()
+                window.addEventListener("scroll", getArticleInView)
+            }, 250)
+        }
+    })
+}
+
+main()
