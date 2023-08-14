@@ -189,11 +189,46 @@ function getArticleInView() {
     })
 }
 
+// function notifyMe() {
+//     if (("Notification" in window) && (Notification.permission !== "denied")) {
+//         Notification.requestPermission()
+//     }
+// }
+
+// temporary
 function notifyMe() {
-    if (("Notification" in window) && (Notification.permission !== "denied")) {
-        Notification.requestPermission()
+    if (!("Notification" in window)) {
+        // notifications not supported
+    }
+    else if (Notification.permission === "granted") {
+        getFCMToken()
+    }
+    else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then((permission) => {
+
+            if (permission === "granted") {
+                getFCMToken()
+            }
+        })
     }
 }
+
+function subscribeToNotifications(token) {
+    db.collection("FCMTokens").doc(token).set({
+        token: token,
+        lastOpened: firebase.firestore.Timestamp.now()
+    })
+}
+
+function getFCMToken() {
+    messaging.getToken(messaging, { vapidKey: "BL1R4Annaua2hasnfjxlLFYoZIn6NaoM45RfddzZxsjby1SQEa-l3mMapA4__Q5zFa5YYvgdPi3NT6tZtUOicxE" })
+        .then((currentToken) => {
+            if (currentToken) {
+                subscribeToNotifications(currentToken)
+            }
+        })
+}
+//
 
 function promptInstallIfWeb() {
     console.log(navigator.userAgent)
