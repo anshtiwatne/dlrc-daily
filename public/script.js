@@ -196,7 +196,6 @@ function notifyMe() {
 }
 
 function promptInstallIfWeb() {
-    alert(localStorage.getItem("installPrompt"))
     if (["iPhone", "iPad", "iPod", "Android"].includes(navigator.platform)) {
         if (localStorage.getItem("installPrompt") != null) {
             return true // value set to 1 when user clicks close on /install.html
