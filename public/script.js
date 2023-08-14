@@ -215,23 +215,9 @@ function getFCMToken() {
 
 function notifyMe() {
     console.log(Notification.permission)
-    Notification.requestPermission()
-    if (!("Notification" in window)) {
-        //  not supported in this browser
-    }
-    else if (Notification.permission === "granted") {
-        getFCMToken()
-        // new Notification("You'll be notified when a new article is published")
-    }
-    else if (Notification.permission !== "denied") {
-        Notification.requestPermission().then((permission) => {
-
-            if (permission === "granted") {
-                getFCMToken()
-                // new Notification("You'll be notified when a new article is published")
-            }
-        })
-    }
+    Notification.requestPermission(function(status) {
+        console.log('Notification permission status:', status)
+    })
 }
 
 notifyMe()
