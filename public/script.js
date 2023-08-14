@@ -196,6 +196,23 @@ function getArticleInView() {
 // }
 
 // temporary
+function subscribeToNotifications(token) {
+    db.collection("FCMTokens").doc(token).set({
+        token: token,
+        lastOpened: firebase.firestore.Timestamp.now()
+    })
+}
+
+function getFCMToken() {
+    messaging.getToken(messaging, { vapidKey: "BL1R4Annaua2hasnfjxlLFYoZIn6NaoM45RfddzZxsjby1SQEa-l3mMapA4__Q5zFa5YYvgdPi3NT6tZtUOicxE" })
+        .then((currentToken) => {
+            if (currentToken) {
+                subscribeToNotifications(currentToken)
+            }
+            console.log(currentToken)
+        })
+}
+
 function notifyMe() {
     if (!("Notification" in window)) {
         // notifications not supported
@@ -211,23 +228,6 @@ function notifyMe() {
             }
         })
     }
-}
-
-function subscribeToNotifications(token) {
-    db.collection("FCMTokens").doc(token).set({
-        token: token,
-        lastOpened: firebase.firestore.Timestamp.now()
-    })
-}
-
-function getFCMToken() {
-    messaging.getToken(messaging, { vapidKey: "BL1R4Annaua2hasnfjxlLFYoZIn6NaoM45RfddzZxsjby1SQEa-l3mMapA4__Q5zFa5YYvgdPi3NT6tZtUOicxE" })
-        .then((currentToken) => {
-            if (currentToken) {
-                subscribeToNotifications(currentToken)
-                console.log(currentToken)
-            }
-        })
 }
 //
 
