@@ -172,7 +172,7 @@ function goToSharedArticle() {
             alert("Article not found")
         }
 
-        window.history.pushState({}, document.title, "/")
+        window.history.replaceState({}, document.title, "/")
     }
 }
 
@@ -184,7 +184,7 @@ function getArticleInView() {
   
         if (rect.top >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)) {
             const articleID = element.id
-            window.history.pushState({}, document.title, `/?article=${articleID}`)
+            window.history.replaceState({}, document.title, `/?article=${articleID}`)
         }
     })
 }
