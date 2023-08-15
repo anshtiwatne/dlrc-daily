@@ -189,6 +189,24 @@ function getArticleInView() {
     })
 }
 
+function registerSW() {
+    if (typeof navigator.serviceWorker !== "undefined") {
+        navigator.serviceWorker.register("sw.js")
+        .then(function(registration) {
+            messaging.onMessage((payload) => {
+                payload = JSON.parse(JSON.stringify(payload))
+                console.log(payload)
+                registration.showNotification(payload.notification.title,
+                    {
+                        body: payload.notification.body,
+                        image: payload.notification.image
+                    }
+                )
+            })
+        })
+    }
+}
+
 function getFCMToken() {
     messaging.getToken(messaging, { vapidKey: "BL1R4Annaua2hasnfjxlLFYoZIn6NaoM45RfddzZxsjby1SQEa-l3mMapA4__Q5zFa5YYvgdPi3NT6tZtUOicxE" })
         .then((currentToken) => {
@@ -199,6 +217,7 @@ function getFCMToken() {
 function notifyMe() {
     Notification.requestPermission(function(status) {
         console.log('Notification permission status:', status)
+        registerSW()
         getFCMToken()
     })
 }
