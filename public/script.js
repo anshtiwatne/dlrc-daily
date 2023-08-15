@@ -201,17 +201,6 @@ function notifyMe() {
         console.log('Notification permission status:', status)
         getFCMToken()
     })
-
-    messaging.onMessage((payload) => {
-        payload = JSON.parse(JSON.stringify(payload))
-        console.log(payload)
-        navigator.serviceWorker.showNotification(payload.notification.title,
-            {
-                body: payload.notification.body,
-                image: payload.notification.image
-            }
-        )
-    })
 }
 
 function promptInstallIfWeb() {
