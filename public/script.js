@@ -205,7 +205,7 @@ function notifyMe() {
     messaging.onMessage((payload) => {
         payload = JSON.parse(JSON.stringify(payload))
         console.log(payload)
-        ServiceWorkerRegistration.showNotification(payload.notification.title,
+        navigator.serviceWorker.showNotification(payload.notification.title,
             {
                 body: payload.notification.body,
                 image: payload.notification.image
