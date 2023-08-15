@@ -201,6 +201,10 @@ function notifyMe() {
         console.log('Notification permission status:', status)
         getFCMToken()
     })
+
+    messaging.onMessage((payload) => {
+        console.log(`Message received ${payload}`)
+    })
 }
 
 function promptInstallIfWeb() {
