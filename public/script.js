@@ -189,9 +189,17 @@ function getArticleInView() {
     })
 }
 
+function getFCMToken() {
+    messaging.getToken(messaging, { vapidKey: "BL1R4Annaua2hasnfjxlLFYoZIn6NaoM45RfddzZxsjby1SQEa-l3mMapA4__Q5zFa5YYvgdPi3NT6tZtUOicxE" })
+        .then((currentToken) => {
+            console.log(currentToken)
+        })
+}
+
 function notifyMe() {
     Notification.requestPermission(function(status) {
         console.log('Notification permission status:', status)
+        getFCMToken()
     })
 }
 
