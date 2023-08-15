@@ -203,7 +203,11 @@ function notifyMe() {
     })
 
     messaging.onMessage((payload) => {
-        console.log(`Message received ${JSON.stringify(payload)}`)
+        payload = JSON.parse(JSON.stringify(payload))
+        new Notification(payload.notification.title, {
+            body: payload.notification.body,
+            image: payload.notification.image
+        })
     })
 }
 
