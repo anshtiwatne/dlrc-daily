@@ -203,7 +203,7 @@ function notifyMe() {
     })
 
     messaging.onMessage((payload) => {
-        console.log(`Message received ${payload}`)
+        console.log(`Message received ${JSON.stringify(payload)}`)
     })
 }
 
