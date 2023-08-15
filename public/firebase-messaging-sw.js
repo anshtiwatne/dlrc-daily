@@ -22,4 +22,4 @@ if ('serviceWorker' in navigator) {
         })
 }
 
-const initMessaging = firebase.messaging()
+const messaging = firebase.messaging()
