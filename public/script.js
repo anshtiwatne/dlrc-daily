@@ -232,7 +232,7 @@ function notifyMe() {
 
 function promptInstallIfWeb() {
     if (/iPhone|iPod|iPad|Android/i.test(navigator.userAgent)) {
-        if (localStorage.getItem("installPrompt") != null) {
+        if (localStorage.getItem("installPrompt") == null) {
             return true // value set to 1 when user clicks close on /install.html
         }
         if (!window.matchMedia('(display-mode: standalone)').matches) {
