@@ -224,6 +224,10 @@ function notifyMe() {
             }
         })
     }
+    else if (localStorage.getItem("notificationAlert" != null)) {
+        alert("Enable notifications form app settings to receive notifications")
+        localStorage.setItem("notificationAlert", "1")
+    }
 }
 
 function promptInstallIfWeb() {
