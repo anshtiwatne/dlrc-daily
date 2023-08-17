@@ -125,7 +125,7 @@ function updateLikes() {
 
 function instructionPromptCheck() {
     if (localStorage.getItem("instructionPrompt") == null) {
-        alert("• Swipe up for the next short\n• Click fullscreen to open an image\n• Click share to share the short")
+        setTimeout(alert("• Swipe up for the next short\n• Click fullscreen to open an image\n• Click share to share the short"))
         localStorage.setItem("instructionPrompt", "1")
     }
 }
@@ -223,7 +223,7 @@ function notifyMe() {
         }
     })
     if (!(Notification in window) && (window.matchMedia('(display-mode: standalone)').matches) && (localStorage.getItem("notificationAlert") == null)) {
-        alert("To receive notifications enable them in the app settings")
+        setTimeout(alert("To receive notifications enable them in the app settings"))
         localStorage.setItem("notificationAlert", "1")
     }
 }
