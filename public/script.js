@@ -224,7 +224,7 @@ function notifyMe() {
             }
         })
     }
-    else if (localStorage.getItem("notificationAlert" == null)) {
+    else if (localStorage.getItem("notificationAlert") == null) {
         alert("To receive notifications enable them in the app settings")
         localStorage.setItem("notificationAlert", "1")
     }
