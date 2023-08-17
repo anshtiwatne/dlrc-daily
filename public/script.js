@@ -125,8 +125,9 @@ function updateLikes() {
 
 function instructionPromptCheck() {
     if (localStorage.getItem("instructionPrompt") == null) {
-        document.getElementById("instructions").style.display = "flex"
-    } // localstorage value set in index.html
+        alert("• Swipe up for the next short\n• Click fullscreen to open an image\n• Click share to share the short")
+        localStorage.setItem("instructionPrompt", "1")
+    }
 }
 
 function linkify(text) {
