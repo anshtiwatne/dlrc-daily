@@ -189,10 +189,9 @@ function getArticleInView() {
     })
 }
 
-function registerSW() {
+function showForegroundNotification() {
     if (typeof navigator.serviceWorker !== "undefined") {
-        navigator.serviceWorker.register("sw.js")
-        .then(function(registration) {
+        navigator.serviceWorker.ready.then((registration) => {
             messaging.onMessage((payload) => {
                 payload = JSON.parse(JSON.stringify(payload))
                 console.log(payload)
@@ -215,9 +214,15 @@ function getFCMToken() {
 }
 
 function notifyMe() {
+    navigator.serviceWorker.ready.then((registration) => {
+        console.log('Notification permission status:', status)
+        registration.pushManager.subscribe()
+        showForegroundNotification()
+        getFCMToken()
+    })
     Notification.requestPermission(function(status) {
         console.log('Notification permission status:', status)
-        registerSW()
+        showForegroundNotification()
         getFCMToken()
     })
 }
