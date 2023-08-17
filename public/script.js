@@ -222,7 +222,7 @@ function notifyMe() {
             getFCMToken()
         }
     })
-    if (!(Notification in window) && (localStorage.getItem("notificationAlert") == null)) {
+    if (!(Notification in window) && (window.matchMedia('(display-mode: standalone)').matches) && (localStorage.getItem("notificationAlert") == null)) {
         alert("To receive notifications enable them in the app settings")
         localStorage.setItem("notificationAlert", "1")
     }
