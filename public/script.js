@@ -214,11 +214,16 @@ function getFCMToken() {
 }
 
 function notifyMe() {
-    window.Notification.requestPermission((status) => {
-        console.log('Notification permission status:', status)
-        showForegroundNotification()
-        getFCMToken()
-    })
+    if (Notification in window) {
+        Notification.requestPermission((status) => {
+            console.log('Notification permission status:', status)
+
+            if (status === "granted") {
+                showForegroundNotification()
+                getFCMToken()
+            }
+        })
+    }
 }
 
 function promptInstallIfWeb() {
