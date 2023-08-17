@@ -216,7 +216,7 @@ function getFCMToken() {
 function notifyMe() {
     navigator.serviceWorker.ready.then((registration) => {
         console.log('Notification permission status:', status)
-        registration.pushManager.subscribe()
+        registration.pushManager.subscribe({userVisibleOnly: true})
         showForegroundNotification()
         getFCMToken()
     })
