@@ -208,24 +208,21 @@ function showForegroundNotification() {
 }
 
 function getFCMToken() {
-    messaging.getToken(messaging, { vapidKey: "BL1R4Annaua2hasnfjxlLFYoZIn6NaoM45RfddzZxsjby1SQEa-l3mMapA4__Q5zFa5YYvgdPi3NT6tZtUOicxE" })
-        .then((currentToken) => {
-            console.log(currentToken)
-        })
+    messaging.getToken(messaging, { vapidKey: "BL1R4Annaua2hasnfjxlLFYoZIn6NaoM45RfddzZxsjby1SQEa-l3mMapA4__Q5zFa5YYvgdPi3NT6tZtUOicxE" }).then((currentToken) => {
+        console.log(currentToken)
+    })
 }
 
 function notifyMe() {
-    if (Notification in window) {
-        Notification.requestPermission((status) => {
-            console.log('Notification permission status:', status)
+    Notification.requestPermission((status) => {
+        console.log('Notification permission status:', status)
 
-            if (status === "granted") {
-                showForegroundNotification()
-                getFCMToken()
-            }
-        })
-    }
-    else if (localStorage.getItem("notificationAlert") == null) {
+        if (status === "granted") {
+            showForegroundNotification()
+            getFCMToken()
+        }
+    })
+    if (!(Notification in window) && (localStorage.getItem("notificationAlert") == null)) {
         alert("To receive notifications enable them in the app settings")
         localStorage.setItem("notificationAlert", "1")
     }
