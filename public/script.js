@@ -252,10 +252,12 @@ function main() {
         let i = -1
 
         snapshot.docs.forEach(doc => {
-            let article = doc.data()
-            let id = doc.id
-            let publishDate = article.publishDate.toDate()
-            articles.push([article, id, publishDate])
+            const article = doc.data()
+            if (!article.hidden) {
+                const id = doc.id
+                const publishDate = article.publishDate.toDate()
+                articles.push([article, id, publishDate])
+            }
         })
 
         articles.sort((a, b) => a[2] - b[2]).reverse() // sorting the articles by publishDate
