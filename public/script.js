@@ -229,16 +229,13 @@ function notifyMe() {
 }
 
 function promptInstallIfWeb() {
-    if (/iPhone|iPod|iPad|Android/i.test(navigator.userAgent)) {
-        if (localStorage.getItem("installPrompt") == null) {
-            return true // value set to 1 when user clicks close on /install.html
-        }
-        if (!window.matchMedia('(display-mode: standalone)').matches) {
-            window.location.replace("/install.html")
-            return false
-        }
+    const isMobile = /iPhone|iPod|iPad|Android/i.test(navigator.userAgent)
+    const isPWA = window.matchMedia("(display-mode: standalone)").matches
+    const promptIgnored = localStorage.getItem("installPrompt") == "1"
+
+    if (isMobile && !isPWA && !promptIgnored) {
+        window.location.replace("/install.html")
     }
-    return true
 }
 
 function main() {
