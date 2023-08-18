@@ -235,7 +235,10 @@ function promptInstallIfWeb() {
 
     if (isMobile && !isPWA && !promptIgnored) {
         window.location.replace("/install.html")
+        return false
     }
+
+    return true
 }
 
 function main() {
