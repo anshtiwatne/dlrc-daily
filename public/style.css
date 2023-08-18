@@ -73,7 +73,7 @@ a {
 }
 
 .article {
-    height: 100vh;
+    height: 100%;
     margin: 0 auto;
     box-sizing: border-box;
     scroll-snap-align: start;
@@ -167,36 +167,6 @@ a {
     vertical-align: middle;
 }
 
-/* modal */
-.title {
-    padding-bottom: min(0.9rem, 3.5vmin);
-}
-
-dialog {
-    position: fixed;
-    top: 50%; left: 0;
-    transform: translate(0, -50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-width: 0;
-    border-radius: 0.5rem;
-    background-color: rgba(47, 47, 47, 0.95);
-    color: whitesmoke;
-    font-family: "Poppins";
-    font-size: 4vmin;
-}
-
-.closeBtn {
-    border-width: 0;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    font-family: "Poppins";
-    font-size: 4.125vmin;
-    color: var(--primary-text-color);
-}
-
 #endScreen {
     scroll-snap-align: start;
     display: flex;
@@ -248,7 +218,7 @@ dialog {
     align-items: center;
     justify-content: center;
     text-align: center;
-    height: 100vh;
+    height: 100%;
     font-family: 'Poppins', sans-serif;
     font-size: min(1.10rem, 4.5vmin);
     color: whitesmoke;
