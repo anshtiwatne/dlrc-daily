@@ -73,7 +73,7 @@ a {
 }
 
 .article {
-    height: 100dvh;
+    height: 100vh;
     margin: 0 auto;
     box-sizing: border-box;
     scroll-snap-align: start;
@@ -218,7 +218,7 @@ a {
     justify-content: center;
     align-items: center;
     text-align: center;
-    min-height: 100dvh;
+    min-height: 100vh;
     font-family: 'Poppins', sans-serif;
     font-size: min(1.10rem, 4.5vmin);
     color: whitesmoke;
