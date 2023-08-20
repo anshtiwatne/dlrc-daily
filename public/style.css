@@ -218,7 +218,7 @@ a {
     justify-content: center;
     align-items: center;
     text-align: center;
-    min-height: 100vh;
+    min-height: 100dvh;
     font-family: 'Poppins', sans-serif;
     font-size: min(1.10rem, 4.5vmin);
     color: whitesmoke;
