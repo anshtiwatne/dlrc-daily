@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insights</title>
+    <script defer src="/__/firebase/10.1.0/firebase-app-compat.js"></script>
+    <script defer src="/__/firebase/10.1.0/firebase-firestore-compat.js"></script>
+    <script src='https://cdn.plot.ly/plotly-2.25.2.min.js'></script>
+</head>
+<body>
+    <div id="histogram"></div>
+</body>
+<script type="module">
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCO145OUsjafOByFoghuIQdY1HamdYuO0s",
+        authDomain: "dlrc-daily.firebaseapp.com",
+        projectId: "dlrc-daily",
+        storageBucket: "dlrc-daily.appspot.com",
+        messagingSenderId: "235007567187",
+        appId: "1:235007567187:web:91c604b6d82632c036ada6",
+        measurementId: "G-Y8SV4T6C2B"
+    }
+    const app = firebase.initializeApp(firebaseConfig)
+
+    const db = firebase.firestore()
+
+    db.collection("articles").get().then((snapshot) => {
+        let articles = []
+        let i = -1
+        let dates = []
+
+        snapshot.docs.forEach(doc => {
+            const article = doc.data()
+            if (!article.hidden) {
+                const id = doc.id
+                const publishDate = article.publishDate.toDate()
+                articles.push([article, id, publishDate])
+            }
+        })
+
+        articles.sort((a, b) => a[2] - b[2]) // sorting the articles by publishDate
+        articles.forEach(article => {
+            i++
+            const [publishDate] = new Date(article[2]).toISOString().split("T")
+            dates.push(publishDate)
+        })
+
+        function Counter(array) {
+            var count = {}
+            array.forEach(val => count[val] = (count[val] || 0) + 1)
+            return count
+        }
+
+        dates = Counter(dates)
+        console.log(dates)
+        console.log(Object.keys(dates))
+
+        const trace = {x: Object.keys(dates), y: Object.values(dates), type: "bar"}
+        const data = [trace]
+        Plotly.newPlot("histogram", data, {title: {text: "Shorts Histogram"}, xaxis: {type: 'date'}})
+    })
+
+</script>
+</html>
