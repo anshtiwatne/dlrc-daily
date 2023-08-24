@@ -1,4 +1,4 @@
-https://daily.dlrc.in/index.html
-https://daily.dlrc.in/about.html
-https://daily.dlrc.in/privacy.html
-https://daily.dlrc.in/publish.html
+https://daily.dlrc.in/index
+https://daily.dlrc.in/about
+https://daily.dlrc.in/privacy
+https://daily.dlrc.in/publish
