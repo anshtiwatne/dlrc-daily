@@ -56,7 +56,7 @@
         dates = Counter(dates)
         const trace = { x: Object.keys(dates), y: Object.values(dates), type: "bar" }
         const data = [trace]
-        const layout = { title: { text: "Shorts Histogram" }, xaxis: { type: "date", range: [new Date("2023-08-01")/1, Date.now()] } }
+        const layout = { title: { text: "Shorts Histogram" }, xaxis: { type: "date", range: [new Date("2023-08-01")/1, Date.now()], dtick: "D1", tickformat: "%e\n%B" } }
         Plotly.newPlot("histogram", data, layout)
     })
 
