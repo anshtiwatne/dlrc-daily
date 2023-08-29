@@ -8,8 +8,9 @@
     <script defer src="/__/firebase/10.3.0/firebase-firestore-compat.js"></script>
     <script src='https://cdn.plot.ly/plotly-2.25.2.min.js'></script>
 </head>
-<body>
-    <div id="histogram"></div>
+<body style="width: 95%; margin-left: 1.75%; display: flex; justify-content: center; flex-direction: column;">
+    <div id="shortsHistogram"></div>
+    <div id="likesTrend"></div>
 </body>
 <script type="module">
 
@@ -30,21 +31,23 @@
         let articles = []
         let i = -1
         let dates = []
+        let likes = {}
 
         snapshot.docs.forEach(doc => {
             const article = doc.data()
             if (!article.hidden) {
                 const id = doc.id
                 const publishDate = article.publishDate.toDate()
-                articles.push([article, id, publishDate])
+                articles.push({id: id, publishDate: publishDate, likes: article.likes})
             }
         })
 
-        articles.sort((a, b) => a[2] - b[2]) // sorting the articles by publishDate
+        articles.sort((a, b) => a.publishDate - b.publishDate) // sorting the articles by publishDate
         articles.forEach(article => {
             i++
-            const [publishDate] = new Date(article[2]).toISOString().split("T")
+            const [publishDate] = new Date(article.publishDate).toISOString().split("T")
             dates.push(publishDate)
+            likes[publishDate] = article.likes
         })
 
         function Counter(array) {
@@ -53,11 +56,17 @@
             return count
         }
 
+        const config = { displayModeBar: false }
+
         dates = Counter(dates)
-        const trace = { x: Object.keys(dates), y: Object.values(dates), type: "bar" }
-        const data = [trace]
-        const layout = { title: { text: "Shorts Histogram" }, xaxis: { type: "date", range: [new Date("2023-08-01")/1, Date.now()], dtick: "D1", tickformat: "%e\n%B" } }
-        Plotly.newPlot("histogram", data, layout)
+        const shortsHistogramData = [{ x: Object.keys(dates), y: Object.values(dates), type: "bar" }]
+        const shortsHistogramLayout = { title: { text: "Shorts Histogram" }, xaxis: { type: "date", range: [new Date("2023-08-01")/1, Date.now()], dtick: "D1", tickformat: "%e\n%B" } }
+        Plotly.newPlot("shortsHistogram", shortsHistogramData, shortsHistogramLayout, config)
+
+        const likesTrendData = [{ x: Object.keys(likes), y: Object.values(likes), type: "line" }]
+        const likesTrendLayout = { title: { text: "Likes Trend" }, xaxis: { type: "date", range: [new Date("2023-08-01")/1, Date.now()], dtick: "D1", tickformat: "%e\n%B" } }
+        Plotly.newPlot("likesTrend", likesTrendData, likesTrendLayout, config)
+
     })
 
 </script>
