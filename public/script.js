@@ -2,7 +2,7 @@ const analytics = firebase.analytics()
 const db = firebase.firestore()
 const messaging = firebase.messaging()
 
-function loadArticle(article, id) {
+function loadArticle(article, id, hidden=false) {
     const color = article.color
 
     let fill = 0
@@ -11,7 +11,7 @@ function loadArticle(article, id) {
     }
 
     document.getElementById("articles").innerHTML += /*html*/
-    `<div class="article" id="${id}" style="background-color: ${color};">
+    `<div class="article" id="${id}" style="background-color: ${color};" ${hidden ? "hidden" : ""}>
         <div class="coverImg" style="background-image: linear-gradient(to top, ${color}, transparent, transparent), url(${article.coverImage});"></div>
         <div class="txtContent">
             <header>
@@ -165,8 +165,12 @@ function goToSharedArticle() {
 
     if (articleID) {
         const article = document.getElementById(articleID)
+        console.log(article)
 
         if (article != null) {
+            if (article.hidden === true) {
+                article.hidden = false
+            }
             article.scrollIntoView()
         }
         else {
@@ -178,14 +182,16 @@ function goToSharedArticle() {
 }
 
 function getArticleInView() {
-    const elements = document.querySelectorAll(".article")
+    let elements = document.querySelectorAll(".article")
   
     elements.forEach(element => {
-      const rect = element.getBoundingClientRect()
-  
-        if (rect.top >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)) {
-            const articleID = element.id
-            window.history.replaceState({}, document.title, `/?article=${articleID}`)
+        if (element.hidden !== true) {
+            const rect = element.getBoundingClientRect()
+    
+            if (rect.top >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)) {
+                const articleID = element.id
+                window.history.replaceState({}, document.title, `/?article=${articleID}`)
+            }
         }
     })
 }
@@ -252,18 +258,25 @@ function main() {
         let i = -1
 
         snapshot.docs.forEach(doc => {
-            const article = doc.data()
-            if (!article.hidden) {
+            const articleData = doc.data()
+            const id = doc.id
+            const publishDate = articleData.publishDate.toDate()
+            if (!articleData.hidden) {
+                const article = {data: articleData, id: id, publishDate: publishDate}
+                articles.push(article)
+            }
+            else {
                 const id = doc.id
-                const publishDate = article.publishDate.toDate()
-                articles.push([article, id, publishDate])
+                const publishDate = articleData.publishDate.toDate()
+                const article = {data: articleData, id: id, publishDate: publishDate}
+                articles.push(article)
             }
         })
 
-        articles.sort((a, b) => a[2] - b[2]).reverse() // sorting the articles by publishDate
+        articles.sort((a, b) => a.publishDate - b.publishDate).reverse() // sorting the articles by publishDate
         articles.forEach(article => {
             i++
-            loadArticle(article[0], article[1])
+            loadArticle(article.data, article.id, article.data.hidden)
         })
 
         if (i !== -1) {
