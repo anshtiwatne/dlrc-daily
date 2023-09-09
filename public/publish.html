@@ -15,16 +15,176 @@
     <script defer src="/__/firebase/10.3.0/firebase-app-compat.js"></script>
     <script defer src="/__/firebase/10.3.0/firebase-firestore-compat.js"></script>
     <script defer src="/__/firebase/10.3.0/firebase-storage-compat.js"></script>
+    <script defer src="/__/firebase/10.3.0/firebase-auth-compat.js"></script>
     <!-- use emulator set to true-->
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
 </head>
 
-<body style="height: 100dvh; font-family: 'Poppins', sans-serif;">
-    <div style="display: flex; justify-content: center; flex-direction: column; margin: 0 auto;">
-        <h1>Undergoing Maintenance</h1>
-        <a href="https://daily.dlrc.in/?article=njuupqIvbu0QyAdpxYRQ">Funny thing, code.</a>
-        <br><br>
-    </div>
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    input {
+        width: 100%;
+    }
+
+    h3 {
+        margin-top: 2rem;
+    }
+
+    input[type="file"] {
+        border: 1px solid var(--border);
+    }
+</style>
+
+<body>
+    <header style="padding: 0;">
+        <h3>Publish to DLRC Daily</h3>
+    </header>
+
+    <form id="publishForm" onsubmit="return false">
+        <br>
+        <label for="author">Author</label>
+        <input id="author" type="text" required>
+
+        <label for="headline">Headline</label>
+        <input id="headline" type="text" placeholder="< 30 characters" maxlength="30" required>
+
+        <label for="coverImage">Cover Image</label>
+        <input id="coverImage" type="file" accept="image/webp" required>
+
+        <label for="story">Story</label>
+        <textarea id="story" type="text" placeholder="< 300 characters" maxlength="300" required></textarea>
+
+        <label for="tag">Tag</label>
+        <input id="tag" type="text" required>
+
+        <div style="display: flex; align-items: center; text-align: center; margin-top: 2rem;">
+            <button id="googleSignIn" style="margin-left: 0rem; margin-bottom: 1rem;">Sign in with Google</button>
+            <button type="submit" id="publishButton" style="margin-left: 1rem; margin-bottom: 1rem;">Publish</button>
+        </div><br>
+    </form>
 </body>
+
+<script type="module">
+    const app = firebase.app()
+    const db = firebase.firestore()
+    const storage = firebase.storage()
+    const auth = firebase.auth()
+    const provider = new firebase.auth.GoogleAuthProvider()
+    const colorThief = new ColorThief()
+
+    function toHSL(r, g, b) {
+        r /= 255, g /= 255, b /= 255
+
+        var max = Math.max(r, g, b), min = Math.min(r, g, b)
+        var h, s, l = (max + min) / 2
+
+        if (max == min) {
+            h = s = 0
+        }
+        else {
+            var d = max - min;
+            s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+
+            switch (max) {
+                case r: h = (g - b) / d + (g < b ? 6 : 0); break
+                case g: h = (b - r) / d + 2; break
+                case b: h = (r - g) / d + 4; break
+            }
+
+            h /= 6;
+        }
+
+        h = Math.round(360 * h)
+        s = Math.round(100 * s)
+        l = Math.round(100 * l)
+
+        return { h: h, s: s, l: l };
+    }
+
+    function getBgColor(imgEl) {
+
+        const dominantColor = colorThief.getColor(imgEl, 1)
+        const rgb = { r: dominantColor[0], g: dominantColor[1], b: dominantColor[2] }
+        let hsl = toHSL(rgb.r, rgb.g, rgb.b)
+        // increase luminosity and saturation if too dark
+        if (hsl.l < 75) {
+            hsl.s = Math.round((hsl.l / 75 + 1) * 25)
+            hsl.l = 75
+        }
+
+        const bgColor = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`
+        return bgColor
+    }
+
+    function publish() {
+        const articles = db.collection("articles")
+        const images = storage.ref()
+
+        const file = document.getElementById("coverImage").files[0]
+        const name = `coverImages/${Date.now()}`
+        const metadata = {contentType: file.type}
+
+        const author = document.getElementById("author").value
+        const headline = document.getElementById("headline").value
+        const story = document.getElementById("story").value
+        const tag = document.getElementById("tag").value
+        
+        images.child(name).put(file, metadata)
+        .then(snapshot => snapshot.ref.getDownloadURL())
+        .then(imageURL => {
+            const image = document.getElementById("coverImage")
+            image.src = imageURL
+            image.crossOrigin = "anonymous";
+
+            let imgEl = document.createElement("img");
+            imgEl.src = imageURL;
+            imgEl.crossOrigin = "anonymous";
+            imgEl.style.display = "none";
+
+            imgEl.onload = function() {
+                const bgColor = getBgColor(imgEl)
+
+                articles.add({
+                    author: author,
+                    headline: headline,
+                    coverImage: imageURL,
+                    story: story,
+                    tag: tag,
+                    publishDate: firebase.firestore.Timestamp.now(),
+                    likes: 0,
+                    color: bgColor
+                })
+                .then(() => {
+                    alert("Published!")
+                    document.getElementById("publishForm").reset()
+                })
+            }
+        })
+    }
+    document.getElementById("googleSignIn").onclick = () => {
+        auth.signInWithPopup(provider)
+        .then(result => {
+            const user = result.user
+            const email = user.email
+            if (email === "ansh.tiwatne@gmail.com") {
+                document.getElementById("googleSignIn").innerHTML = "Verified"
+            } else {
+                alert("You are not authorized to publish articles.")
+            }
+        })
+    }
+    document.getElementById("publishForm").addEventListener("submit", () => {
+        if (auth.currentUser.email === "ansh.tiwatne@gmail.com") {
+            publish()
+            // server side checks for google auth email before authenticating write access anyway, this check is only to warn on client side
+        } else {
+            alert("You are not authorized to publish articles.")
+        }
+        console.log("yay")
+    })
+</script>
 
 </html>
