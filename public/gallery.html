@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>DLRC Daily | Gallery</title>
+    <link href="manifest.webmanifest" rel="manifest">
+    <link rel="icon" type="image/x-icon" href="assets/logos/favicon.ico">
+    <link rel="canonical" href="https://daily.dlrc.in/" />
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/10.3.0/firebase-app-compat.js"></script>
+    <script defer src="/__/firebase/10.3.0/firebase-firestore-compat.js"></script>
+    <!-- use emulator set to true-->
+    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Roboto+Slab:wght@900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <meta name="theme-color" content="#000000">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="darkreader-lock">
+
+    <meta name="title" content="DLRC Daily">
+    <meta name="description"
+        content="Stay updated on the happenings at the DLRC campus through short articles uploaded daily by the DLRC Newsletter">
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="DLRC Daily" />
+    <meta property="og:description"
+        content="Stay updated on the happenings at the DLRC campus through short articles uploaded daily by the DLRC Newsletter" />
+    <meta property="og:image" itemprop="image" content="https://daily.dlrc.in/assets/logos/any.png">
+</head>
+
+<style>
+    body {
+        background-color: #2F2F2F;
+    }
+
+    #gallery img {
+        border-radius: 2.5px;
+        max-width: 100%;
+        display: block;
+        box-shadow: 0.1rem 0.1rem 1rem rgba(0, 0, 0, 0.5);
+    }
+
+    figure {
+        margin: 0;
+        display: grid;
+        grid-template-rows: 1fr auto;
+        margin-bottom: 10px;
+        break-inside: avoid;
+    }
+
+    figure > img {
+        grid-row: 1 / -1;
+        grid-column: 1;
+    }
+
+    #gallery {
+        margin: 10px 10px;
+        column-count: 4;
+        column-gap: 10px;
+    }
+
+    @media screen and (max-width: 1000px) {
+        #gallery {
+            column-count: 3;
+        }
+    }
+</style>
+
+<body>
+    <a class="logo" href="/">
+        <img class="logoImg" src="assets/logos/logo.webp" width="35rem" height="35rem" alt="DLRC logo">
+        <span class="logoTxt">DLRC DAILY</span>
+    </a>
+    <a href="about" class="infoBtn material-symbols-rounded">info</a>
+
+    <div id="gallery"></div>
+</body>
+
+<script type="module">
+    const app = firebase.app()
+    const db = firebase.firestore()
+
+    function loadImage(image) {
+        document.getElementById("gallery").innerHTML += /*html*/
+            `
+            <figure>
+                <a href="${image.link}">
+                    <img src="${image.src}" alt="${image.alt}">
+                </a>
+            </figure>`
+    }
+
+    function main() {
+        console.log(db.collection("articles").get().then(snapshot => console.log(snapshot.docs[0].data().headline)))
+        db.collection("articles").get().then((snapshot) => {
+            let images = []
+
+            snapshot.docs.forEach(doc => {
+                const articleData = doc.data()
+                const id = doc.id
+                const publishDate = articleData.publishDate.toDate()
+                const articleURL = new URL("https://daily.dlrc.in/")
+                articleURL.searchParams.append("article", id)
+
+                if (!articleData.hidden) {
+                    const image = { src: articleData.coverImage, alt: articleData.headline, link: articleURL.href, publishDate: publishDate }
+                    images.push(image)
+                }
+            })
+
+            images.sort((a, b) => a.publishDate - b.publishDate).reverse() // sorting the articles by publishDate
+            images.forEach(image => {
+                loadImage(image)
+            })
+        })
+    }
+
+    main()
+</script>
+
+</html>
