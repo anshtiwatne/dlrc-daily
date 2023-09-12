@@ -12,6 +12,7 @@
     <div id="shortsHistogram"></div>
     <div id="likesTrend"></div>
     <div id="internLeaderboard"></div>
+    <div id="authors"></div>
 </body>
 <script type="module">
 
@@ -79,16 +80,23 @@
         Plotly.newPlot("likesTrend", likesTrendData, likesTrendLayout, config)
 
         authors = Counter(authors)
-        let newsletterInterns = ["Ashwini Sirur", "Janhavi Kaurwar", "Mihika Shah", "Samiya Kelkar", "Shakti Kaurwar", "Kashvi Deshpande", "Ansh Tiwatne", "Maitreyie Saxena"]
+        const newsletterInterns = ["Ashwini Sirur", "Janhavi Kaurwar", "Mihika Shah", "Samiya Kelkar", "Shakti Kaurwar", "Kashvi Deshpande", "Ansh Tiwatne", "Maitreyie Saxena"]
+        let interns = {}
 
         Object.keys(authors).forEach(author => {
-            if (!newsletterInterns.includes(author)) {
-                delete authors[author]
+            if (newsletterInterns.includes(author)) {
+                interns[author] = authors[author]
             }
         })
 
         authors = reverseSortDict(authors)
-        const internLeaderboard = [{ x: Object.keys(authors), y: Object.values(authors), type: "bar" }]
+        interns = reverseSortDict(interns)
+
+        const authorsData = [{ x: Object.keys(authors), y: Object.values(authors), type: "bar" }]
+        const authorsLayout = { title: { text: "Authors" }, xaxis: { type: "category" } }
+        Plotly.newPlot("authors", authorsData, authorsLayout, config)
+
+        const internLeaderboard = [{ x: Object.keys(interns), y: Object.values(interns), type: "bar" }]
         const internLeaderboardLayout = { title: { text: "Intern Leaderboard" }, xaxis: { type: "category" } }
         Plotly.newPlot("internLeaderboard", internLeaderboard, internLeaderboardLayout, config)
 
