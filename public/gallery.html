@@ -59,9 +59,14 @@
         break-inside: avoid;
     }
 
-    figure > img {
+    figure img {
         grid-row: 1 / -1;
         grid-column: 1;
+    }
+
+    figure > a:hover {
+        opacity: 0.8;
+        transform: scale(1.01);
     }
 
     #gallery {
