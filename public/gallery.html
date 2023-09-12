@@ -84,6 +84,7 @@
     </a>
     <a href="about" class="infoBtn material-symbols-rounded">info</a>
 
+    <div id="endScreen"><span class="loader"></span></div>
     <div id="gallery"></div>
 </body>
 
@@ -124,6 +125,11 @@
                 loadImage(image)
             })
         })
+        .then(
+            setTimeout(() => {
+                document.getElementById("endScreen").style.display = "none"
+            }, 1000)
+        )
     }
 
     main()
