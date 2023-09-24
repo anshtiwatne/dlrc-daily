@@ -13,6 +13,7 @@
     <div id="likesTrend"></div>
     <div id="internLeaderboard"></div>
     <div id="authors"></div>
+    <div id="topAuthors2Weeks"></div>
 </body>
 <script type="module">
 
@@ -42,6 +43,8 @@
         let dates = []
         let likes = {}
         let authors = []
+        let authors2Weeks = []
+        const now = new Date()
 
         snapshot.docs.forEach(doc => {
             const article = doc.data()
@@ -51,6 +54,10 @@
                 const author = article.author
                 articles.push({id: id, publishDate: publishDate, likes: article.likes})
                 authors.push(author)
+
+                if (now - publishDate < 1209600000) {
+                    authors2Weeks.push(author)
+                }
             }
         })
 
@@ -79,9 +86,10 @@
         const likesTrendLayout = { title: { text: "Likes Trend" }, xaxis: { type: "date", range: [new Date("2023-08-01")/1, Date.now()], dtick: "D1", tickformat: "%e\n%B" } }
         Plotly.newPlot("likesTrend", likesTrendData, likesTrendLayout, config)
 
-        authors = Counter(authors)
         const newsletterInterns = ["Ashwini Sirur", "Janhavi Kaurwar", "Mihika Shah", "Samiya Kelkar", "Shakti Kaurwar", "Maitreyie Saxena"]
         let interns = {}
+        authors = Counter(authors)
+        authors = reverseSortDict(authors)
 
         Object.keys(authors).forEach(author => {
             if (newsletterInterns.includes(author)) {
@@ -89,13 +97,17 @@
             }
         })
 
-        authors = reverseSortDict(authors)
-        interns = reverseSortDict(interns)
-
         const authorsData = [{ x: Object.keys(authors), y: Object.values(authors), type: "bar" }]
-        const authorsLayout = { title: { text: "Authors" }, xaxis: { type: "category" } }
+        const authorsLayout = { title: { text: "Author Publications (Lifetime)" }, xaxis: { type: "category" } }
         Plotly.newPlot("authors", authorsData, authorsLayout, config)
 
+        authors2Weeks = Counter(authors2Weeks)
+        authors2Weeks = reverseSortDict(authors2Weeks)
+        const topAuthors2Weeks = [{ x: Object.keys(authors2Weeks), y: Object.values(authors2Weeks), type: "bar" }]
+        const topAuthors2WeeksLayout = { title: { text: "Author Publications (2 weeks)" }, xaxis: { type: "category" } }
+        Plotly.newPlot("topAuthors2Weeks", topAuthors2Weeks, topAuthors2WeeksLayout, config)
+
+        interns = reverseSortDict(interns)
         const internLeaderboard = [{ x: Object.keys(interns), y: Object.values(interns), type: "bar" }]
         const internLeaderboardLayout = { title: { text: "Intern Leaderboard" }, xaxis: { type: "category" } }
         Plotly.newPlot("internLeaderboard", internLeaderboard, internLeaderboardLayout, config)
