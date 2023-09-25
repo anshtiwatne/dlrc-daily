@@ -16,7 +16,7 @@ function loadArticle(article, id, hidden=false) {
         <div class="txtContent">
             <header>
                 <div class="title">
-                    <span class="tag">${article.tag}</span>
+                    <a href="gallery.html/?category=${article.tag}" class="tag">${article.tag}</a>
                     <a href="${article.coverImage}">
                         <span class="fullscreenBtn material-symbols-rounded">fullscreen</span>
                     </a>

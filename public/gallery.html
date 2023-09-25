@@ -97,6 +97,11 @@
     const app = firebase.app()
     const db = firebase.firestore()
 
+    const queryString = window.location.search
+    const urlParams = new URLSearchParams(queryString)
+    const category = urlParams.get("category")
+    console.log(category)
+
     function loadImage(image) {
         document.getElementById("gallery").innerHTML += /*html*/
             `
@@ -108,7 +113,6 @@
     }
 
     function main() {
-        console.log(db.collection("articles").get().then(snapshot => console.log(snapshot.docs[0].data().headline)))
         db.collection("articles").get().then((snapshot) => {
             let images = []
 
@@ -119,7 +123,7 @@
                 const articleURL = new URL("https://daily.dlrc.in/")
                 articleURL.searchParams.append("article", id)
 
-                if (!articleData.hidden) {
+                if (!articleData.hidden && (category === null || articleData.tag === category)) {
                     const image = { src: articleData.coverImage, alt: articleData.headline, link: articleURL.href, publishDate: publishDate }
                     images.push(image)
                 }
