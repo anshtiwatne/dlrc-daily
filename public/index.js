@@ -16,7 +16,7 @@ function loadArticle(article, id, hidden=false) {
         <div class="txtContent">
             <header>
                 <div class="title">
-                    <a href="${new URL("https://daily.dlrc.in/gallery").searchParams.append(article.tag)}" class="tag">${article.tag}</a>
+                    <a href="${new URL("https://daily.dlrc.in").searchParams.append("category", article.tag)}" class="tag">${article.tag}</a>
                     <a href="${article.coverImage}">
                         <span class="fullscreenBtn material-symbols-rounded">fullscreen</span>
                     </a>
