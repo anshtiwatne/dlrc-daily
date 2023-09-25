@@ -133,6 +133,13 @@
             images.forEach(image => {
                 loadImage(image)
             })
+
+            if (images.length() < 21) {
+                document.getElementById("gallery").style.columnCount = "3"
+                if (window.innerWidth < 1000) {
+                    document.getElementById("gallery").style.columnCount = "2"
+                }
+            }
         })
         .then(
             setTimeout(() => {
