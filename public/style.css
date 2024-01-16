@@ -78,6 +78,7 @@ a {
     box-sizing: border-box;
     scroll-snap-align: start;
     scroll-snap-stop: always;
+    transition: transform 1s ease-in-out;
 }
 
 .coverImg {
@@ -263,6 +264,52 @@ a {
         margin: 0 auto;
         padding: 1rem;
         max-width: 75vw;
+    }
+
+    .headline {
+        font-size: 1.30rem;
+    }
+
+    .story {
+        font-size: 1.15rem;
+        padding: 2rem 0;
+    }
+
+    .header {
+        padding-bottom: 2.5vh;
+    }
+
+    .timestamp {
+        font-size: 1rem;
+        font-weight: normal;
+        color: var(--secondary-text-color);
+    }
+
+    .footer {
+        padding-top: 2.5vh;
+    }
+}
+
+@media (min-width: 1000px) {
+    .article {
+        display: flex;
+        align-items: center;
+    }
+
+    .coverImg {
+        height: 100%;
+        min-width: 40dvw;
+        max-width: 60dvw;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .txtContent {
+        margin: 0 auto;
+        padding: 5rem;
+        height: max-content;
+        max-width: 60dvw;
+        min-width: 40dvw
     }
 
     .headline {

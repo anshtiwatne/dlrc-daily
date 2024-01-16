@@ -10,9 +10,11 @@ function loadArticle(article, id, hidden=false) {
         fill = 1
     }
 
+    console.log(window.innerWidth)
+
     document.getElementById("articles").innerHTML += /*html*/
     `<div class="article" id="${id}" style="background-color: ${color};" ${hidden ? "hidden" : ""}>
-        <div class="coverImg" style="background-image: linear-gradient(to top, ${color}, transparent, transparent), url(${article.coverImage});"></div>
+        <div class="coverImg" style="background-image: linear-gradient(to ${window.innerWidth >= 1000 ? 'left' : 'top'}, ${color}, transparent, transparent), url(${article.coverImage});"></div>
         <div class="txtContent">
             <header>
                 <div class="title">
@@ -181,6 +183,33 @@ function goToSharedArticle() {
     }
 }
 
+function checkSlideshowMode() {
+    const queryString = window.location.search
+    const urlParams = new URLSearchParams(queryString)
+    const slideshow = urlParams.get("slideshow")
+
+    const event = new KeyboardEvent('keydown', {
+        key: 'ArrowDown',
+        bubbles: true,
+        cancelable: true,
+    })
+
+    if (slideshow) {
+		const articles = document.querySelectorAll('.article')
+		let currentIndex = 0;
+
+		function scrollNext() {
+			const nextIndex = (currentIndex + 1) % articles.length
+			articles[nextIndex].scrollIntoView({ behavior: 'smooth' })
+			currentIndex = nextIndex
+		
+			setTimeout(scrollNext, 5000); // 5 seconds delay before the next scroll
+		}
+
+		setTimeout(scrollNext, 5000)
+    }
+}
+
 function getArticleInView() {
     let elements = document.querySelectorAll(".article")
   
@@ -201,7 +230,6 @@ function showForegroundNotification() {
         navigator.serviceWorker.ready.then((registration) => {
             messaging.onMessage((payload) => {
                 payload = JSON.parse(JSON.stringify(payload))
-                console.log(payload)
                 registration.showNotification(payload.notification.title,
                     {
                         body: payload.notification.body,
@@ -215,7 +243,7 @@ function showForegroundNotification() {
 
 function getFCMToken() {
     messaging.getToken(messaging, { vapidKey: "BL1R4Annaua2hasnfjxlLFYoZIn6NaoM45RfddzZxsjby1SQEa-l3mMapA4__Q5zFa5YYvgdPi3NT6tZtUOicxE" }).then((currentToken) => {
-        console.log(currentToken)
+        // console.log(currentToken)
     })
 }
 
@@ -280,13 +308,14 @@ function main() {
         })
 
         if (i !== -1) {
-            setTimeout(function () {
+            setTimeout(() => {
                 unhideArticles()
                 goToSharedArticle()
                 instructionPromptCheck()
                 updateLikes()
                 shareArticle()
                 window.addEventListener("scroll", getArticleInView)
+                checkSlideshowMode()
             }, 250)
         }
     })
