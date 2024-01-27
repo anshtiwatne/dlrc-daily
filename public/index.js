@@ -2,6 +2,9 @@ const analytics = firebase.analytics()
 const db = firebase.firestore()
 const messaging = firebase.messaging()
 
+const isMobile = /iPhone|iPod|iPad|Android/i.test(navigator.userAgent)
+const isPWA = window.matchMedia("(display-mode: standalone)").matches
+
 function loadArticle(article, id, hidden=false) {
     const color = article.color
 
@@ -126,7 +129,7 @@ function updateLikes() {
 }
 
 function instructionPromptCheck() {
-    if (localStorage.getItem("instructionPrompt") == null) {
+    if (localStorage.getItem("instructionPrompt") == null && isMobile && isPWA) {
         setTimeout(alert("• Swipe up for the next short\n• Click fullscreen to open an image\n• Click share to share the short"))
         localStorage.setItem("instructionPrompt", "1")
     }
@@ -188,13 +191,9 @@ function checkSlideshowMode() {
     const urlParams = new URLSearchParams(queryString)
     const slideshow = urlParams.get("slideshow")
 
-    const event = new KeyboardEvent('keydown', {
-        key: 'ArrowDown',
-        bubbles: true,
-        cancelable: true,
-    })
-
     if (slideshow) {
+        alert('Slideshow mode enabled')
+        document.getElementsByClassName('logoTxt')[0].style.animation = 'none';
 		const articles = document.querySelectorAll('.article')
 		let currentIndex = 0;
 
@@ -263,8 +262,6 @@ function notifyMe() {
 }
 
 function promptInstallIfWeb() {
-    const isMobile = /iPhone|iPod|iPad|Android/i.test(navigator.userAgent)
-    const isPWA = window.matchMedia("(display-mode: standalone)").matches
     const promptIgnored = localStorage.getItem("installPrompt") == "1"
 
     if (isMobile && !isPWA && !promptIgnored) {

@@ -61,6 +61,8 @@
             }
         })
 
+        console.log(`Total Articles: ${articles.length}`)
+
         articles.sort((a, b) => a.publishDate - b.publishDate) // sorting the articles by publishDate
         articles.forEach(article => {
             i++
