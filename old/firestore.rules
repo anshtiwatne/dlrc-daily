@@ -1,0 +1,20 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /articles/{articleID} {
+      allow read;
+      allow update: if verifyLikeIncrement()
+      allow create: if hasAdminAccess()
+      
+      function verifyLikeIncrement() {
+        return request.resource.data.diff(resource.data).affectedKeys().hasOnly(["likes"]);
+			}
+      
+      function hasAdminAccess() {
+      	return request.auth.token.email_verified &&
+      	request.auth.token.email == "ansh.tiwatne@gmail.com"
+      }
+    }
+  }
+}

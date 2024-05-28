@@ -1,18 +1,17 @@
 rules_version = '2';
 
-// Craft rules based on data in your Firestore database
-// allow write: if firestore.get(
-//    /databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin;
 service firebase.storage {
-  match /b/{bucket}/o {
-    match /coverImages/{imageID} {
-      allow read;
-      allow create: if hasAdminAccess();
-      
-    	function hasAdminAccess() {
-      	return request.auth.token.email_verified &&
-      	request.auth.token.email == "ansh.tiwatne@gmail.com"
-      }
-    }
-  }
+	match /b/{bucket}/o {
+
+		match /coverImages/{imageID} {
+			allow read, create;
+			allow delete: if isAdmin();
+		}
+
+		function isAdmin() {
+			return request.auth.token.email_verified &&
+			// request.auth.token.email.matches(".*@dlrc.in");
+			request.auth.token.email in ['ansh.tiwatne@gmail.com']
+		}
+	}
 }

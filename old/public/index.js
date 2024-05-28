@@ -26,7 +26,7 @@ function loadArticle(article, id, hidden=false) {
                         <span class="fullscreenBtn material-symbols-rounded">fullscreen</span>
                     </a>
                 </div>
-                    <div class="headline">${article.headline}</div>
+                <div class="headline">${article.headline}</div>
             </header>
             <div class="story">${linkify(article.story)}</div>
             <div class="footer">
@@ -137,7 +137,7 @@ function instructionPromptCheck() {
 
 function linkify(text) {
     const urlRegex = /(https?:\/\/[^\s]+)/g;
-    return text.replace(urlRegex, url => `<a class="linkified" href="${url}">${new URL(url).hostname}</a>`)
+    return text.replace(urlRegex, url => `${new URL(url).hostname}`)
 }
 
 function shareArticle() {

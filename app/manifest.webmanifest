@@ -1,0 +1,124 @@
+{
+    "id": "/",
+    "background_color": "#FFFFFF",
+    "description": "Stay updated on the happenings at the DLRC campus through short articles uploaded daily by the DLRC Newsletter",
+    "dir": "ltr",
+    "display": "standalone",
+    "name": "DLRC Daily",
+    "orientation": "portrait-primary",
+    "scope": "/",
+    "short_name": "DLRC Daily",
+    "start_url": "/",
+    "theme_color": "#000000",
+    "categories": [
+        "news"
+    ],
+    "screenshots": [
+        {
+            "src": "./screenshots/mobile1.png",
+            "sizes": "1140x2280",
+            "type": "image/png"
+        },
+        {
+            "src": "./screenshots/mobile2.png",
+            "sizes": "1140x2280",
+            "type": "image/png"
+        },
+        {
+            "src": "./screenshots/mobile3.png",
+            "sizes": "1140x2280",
+            "type": "image/png"
+        },
+        {
+            "src": "./screenshots/mobile4.png",
+            "sizes": "1140x2280",
+            "type": "image/png"
+        }
+    ],
+    "icons": [
+        {
+            "src": "./logos/any.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "any"
+        },
+        {
+            "src": "./logos/maskable.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "maskable"
+        },
+        {
+            "src": "./logos/monochrome.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "monochrome"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Shorts",
+            "url": "/",
+            "icons": [
+                {
+                    "src": "./shortcuts/web_stories.png",
+                    "type": "image/png",
+                    "sizes": "96x96",
+                    "purpose": "any"
+                }
+            ]
+        },
+        {
+            "name": "Gallery view",
+            "url": "/gallery",
+            "icons": [
+                {
+                    "src": "./shortcuts/photo_library.png",
+                    "type": "image/png",
+                    "sizes": "96x96",
+                    "purpose": "any"
+                }
+            ]
+        },
+        {
+            "name": "Publish",
+            "url": "/publish",
+            "icons": [
+                {
+                    "src": "./shortcuts/newspaper.png",
+                    "type": "image/png",
+                    "sizes": "96x96",
+                    "purpose": "any"
+                }
+            ]
+        }
+    ],
+    "lang": "en",
+    "display_override": [
+        "standalone",
+        "fullscreen",
+        "window-controls-overlay",
+        "minimal-ui",
+        "browser"
+    ],
+    "handle_links": "preferred",
+    "launch_handler": {
+        "client_mode": [
+            "navigate-existing",
+            "auto"
+        ]
+    },
+    "prefer_related_applications": true,
+    "edge_side_panel": {
+        "preferred_width": 376
+    },
+    "related_applications": [
+        {
+            "platform": "play",
+            "url": "https://play.google.com/store/apps/details?id=in.dlrc.daily.twa",
+            "id": "in.dlrc.daily.twa"
+        }
+    ],
+    "iarc_rating_id": "fa253567-3430-49aa-9fd3-54a3513171ce",
+    "gcm_sender_id": "103953800507"
+}

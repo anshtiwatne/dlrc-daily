@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.text-animate-disappear {
+	animation: disappear-to-left 1s 5s forwards;
+	transition-timing-function: ease-in;
+	vertical-align: 50%;
+}
+
+@keyframes disappear-to-left {
+	0% {
+		transform: translateX(0);
+		opacity: 1;
+	}
+
+	100% {
+		transform: translateX(-7.5%);
+		opacity: 0;
+	}
+}

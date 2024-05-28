@@ -1,20 +1,41 @@
 rules_version = '2';
 
 service cloud.firestore {
-  match /databases/{database}/documents {
-    match /articles/{articleID} {
-      allow read;
-      allow update: if verifyLikeIncrement()
-      allow create: if hasAdminAccess()
-      
-      function verifyLikeIncrement() {
-        return request.resource.data.diff(resource.data).affectedKeys().hasOnly(["likes"]);
-			}
-      
-      function hasAdminAccess() {
-      	return request.auth.token.email_verified &&
-      	request.auth.token.email == "ansh.tiwatne@gmail.com"
-      }
-    }
-  }
+	match /databases/{database}/documents {
+
+		match /articles/{articleID} {
+			allow read;
+			allow update: if isAdmin() || verifyInteraction()
+			allow write: if isAdmin()
+		}
+
+		match /submissions/{submissionID} {
+			allow read, create;
+			allow update, delete: if isAdmin()
+		}
+
+		match /tags/{tagID} {
+			allow read;
+		}
+
+		match /users/{userEmail} {
+			allow read;
+			allow create, update: if request.auth.token.email == userEmail; 
+		}
+
+		function verifyInteraction() {
+			let affectedKeys = request.resource.data.diff(resource.data).affectedKeys();
+			let allowedUpdates = ["likes", "comments"];
+			
+			return affectedKeys.hasOnly(allowedUpdates);
+		}
+			
+		function isAdmin() {
+			let userEmail = request.auth.token.email;
+			let userDoc = get(/databases/$(database)/documents/users/$(userEmail));
+
+			return request.auth.token.email_verified &&
+			userDoc.data.isAdmin == true;
+		}
+	}
 }
