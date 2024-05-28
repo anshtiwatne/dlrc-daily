@@ -20,6 +20,9 @@ export const metadata: Metadata = {
 	description:
 		'Stay updated on the happenings at the DLRC campus through short articles uploaded daily by the DLRC Newsletter',
 	appleWebApp: true,
+	alternates: {
+		canonical: 'https://daily.dlrc.in',
+	},
 	other: {
 		['darkreader-lock']: 'true',
 	},
