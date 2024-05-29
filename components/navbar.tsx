@@ -26,11 +26,11 @@ import { ThemeSwitch } from '@/components/theme-switch'
 const robotoSlab = Roboto_Slab({ subsets: ['latin'] })
 const navItems = [
 	{ text: 'Home', icon: 'home', href: '/' },
-	{ text: 'Gallery View', icon: 'photo_library', href: '/gallery' },
+	{ text: 'Gallery view', icon: 'photo_library', href: '/gallery' },
 	{ text: 'Publish', icon: 'newspaper', href: '/publish' },
 	{ text: 'Admin', icon: 'shield_person', href: '/admin' },
 	{ text: 'About', icon: 'info', href: '/about' },
-	{ text: 'Privacy Policy', icon: 'shield', href: './privacy' },
+	{ text: 'Privacy policy', icon: 'shield', href: './privacy' },
 ]
 
 export function Navbar() {
@@ -147,7 +147,7 @@ export function Navbar() {
 					<NavbarMenuItem className="flex items-center justify-between gap-2">
 						<div className="flex items-center gap-2 text-foreground-800">
 							<MaterialSymbol icon="contrast" size={24} />
-							<p>Dark Mode</p>
+							<p>Dark mode</p>
 						</div>
 						<ThemeSwitch />
 					</NavbarMenuItem>
