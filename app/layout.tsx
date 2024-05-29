@@ -12,7 +12,7 @@ import 'react-material-symbols/rounded'
 
 const poppins = Poppins({
 	weight: ['400', '500', '600', '700', '800', '900'],
-	preload: false, // disabled because the devanagari subset doesn't support it
+	subsets: ['latin'],
 })
 
 export const metadata: Metadata = {
