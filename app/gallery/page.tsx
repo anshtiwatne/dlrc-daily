@@ -20,10 +20,10 @@ import NextLink from 'next/link'
 import { Loader } from '@/components/loader'
 
 export default function Page() {
-	const [isMd, setIsMd] = useState(false)
+	const [isMd, setIsMd] = useState<boolean | null>(null)
+	const [tagText, setTagText] = useState('')
 	const searchParams = useSearchParams()
 	const tagID = searchParams.get('tag')
-	const [tagText, setTagText] = useState('')
 	const db = useFirestore()
 	let coverImagesQuery
 
@@ -98,7 +98,11 @@ export default function Page() {
 	return (
 		<>
 			<div className="flex items-center justify-center p-4 md:py-6">
-				<Masonry columns={isMd ? 4 : 3} spacing={isMd ? 2 : 1}>
+				<Masonry
+					sequential
+					columns={isMd ? 4 : 3}
+					spacing={isMd ? 2 : 1}
+				>
 					{articlesData
 						.sort(
 							(a, b) =>
