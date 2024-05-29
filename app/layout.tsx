@@ -1,4 +1,5 @@
 import '@/styles/globals.css'
+import 'react-material-symbols/rounded'
 import clsx from 'clsx'
 import { Metadata, Viewport } from 'next'
 import { Poppins } from 'next/font/google'
@@ -7,8 +8,6 @@ import { Suspense } from 'react'
 import { Providers } from '@/app/providers'
 import { Navbar } from '@/components/navbar'
 import { FirebaseContextProvider } from '@/config/firebase'
-
-import 'react-material-symbols/rounded'
 
 const poppins = Poppins({
 	weight: ['400', '500', '600', '700', '800', '900'],
