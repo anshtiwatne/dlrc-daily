@@ -98,11 +98,7 @@ export default function Page() {
 	return (
 		<>
 			<div className="flex items-center justify-center p-4 md:py-6">
-				<Masonry
-					sequential
-					columns={isMd ? 4 : 3}
-					spacing={isMd ? 2 : 1}
-				>
+				<Masonry columns={isMd ? 4 : 3} spacing={isMd ? 2 : 1}>
 					{articlesData
 						.sort(
 							(a, b) =>
