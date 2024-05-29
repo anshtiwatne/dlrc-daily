@@ -79,7 +79,7 @@ export default function Page() {
 					))}
 				</div>
 			</div>
-			<p style={{ fontFamily: 'monospace' }}>version 2.0.0</p>
+			<p style={{ fontFamily: 'monospace' }}>version 2.0.0-RC</p>
 		</div>
 	)
 }

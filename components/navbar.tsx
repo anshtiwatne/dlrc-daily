@@ -169,7 +169,7 @@ export function Navbar() {
 									className="px-[0.125rem] text-[1.25rem]"
 									icon={faGooglePlay}
 								/>
-								<p>Rate on Google Play</p>
+								<p>Review</p>
 							</div>
 						</Link>
 					</NavbarMenuItem>
