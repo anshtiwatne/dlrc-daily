@@ -99,7 +99,7 @@ export default function Page() {
 		<>
 			<div className="flex items-center justify-center p-4 md:py-6">
 				<Masonry
-					// sequential
+					sequential
 					columns={isMd ? 4 : 3}
 					spacing={isMd ? 2 : 1}
 				>
