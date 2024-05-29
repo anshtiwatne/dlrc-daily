@@ -1,6 +1,7 @@
 import '@/styles/globals.css'
+import clsx from 'clsx'
 import { Metadata, Viewport } from 'next'
-import { Poppins, Noto_Sans } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import { Suspense } from 'react'
 
 import { Providers } from '@/app/providers'
@@ -11,10 +12,7 @@ import 'react-material-symbols/rounded'
 
 const poppins = Poppins({
 	weight: ['400', '500', '600', '700', '800', '900'],
-	subsets: ['latin'],
-})
-const notoSans = Noto_Sans({
-	subsets: ['latin-ext', 'devanagari'],
+	preload: false, // disabled because the devanagari subset doesn't support it
 })
 
 export const metadata: Metadata = {
@@ -53,12 +51,7 @@ export default function RootLayout({
 	return (
 		<html suppressHydrationWarning lang="en">
 			<head />
-			<body
-				className="min-h-[100dvh]"
-				style={{
-					fontFamily: `${poppins.style.fontFamily}, ${notoSans.style.fontFamily}, sans-serif`,
-				}}
-			>
+			<body className={clsx('min-h-[100dvh]', poppins.className)}>
 				<Providers
 					themeProps={{ attribute: 'class', defaultTheme: 'light' }}
 				>
