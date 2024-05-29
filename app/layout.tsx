@@ -1,8 +1,7 @@
 import '@/styles/globals.css'
 import { Metadata, Viewport } from 'next'
-import { Poppins } from 'next/font/google'
+import { Poppins, Noto_Sans } from 'next/font/google'
 import { Suspense } from 'react'
-import clsx from 'clsx'
 
 import { Providers } from '@/app/providers'
 import { Navbar } from '@/components/navbar'
@@ -11,8 +10,11 @@ import { FirebaseContextProvider } from '@/config/firebase'
 import 'react-material-symbols/rounded'
 
 const poppins = Poppins({
-	weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+	weight: ['400', '500', '600', '700', '800', '900'],
 	subsets: ['latin'],
+})
+const notoSans = Noto_Sans({
+	subsets: ['latin-ext', 'devanagari'],
 })
 
 export const metadata: Metadata = {
@@ -51,7 +53,12 @@ export default function RootLayout({
 	return (
 		<html suppressHydrationWarning lang="en">
 			<head />
-			<body className={clsx('min-h-screen', poppins.className)}>
+			<body
+				className="min-h-[100dvh]"
+				style={{
+					fontFamily: `${poppins.style.fontFamily}, ${notoSans.style.fontFamily}, sans-serif`,
+				}}
+			>
 				<Providers
 					themeProps={{ attribute: 'class', defaultTheme: 'light' }}
 				>
