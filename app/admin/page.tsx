@@ -36,11 +36,11 @@ import {
 	useSigninCheck,
 	useAuth,
 } from 'reactfire'
-import NextLink from 'next/link'
 import clsx from 'clsx'
 
 import { Loader } from '@/components/loader'
 import { Login } from '@/components/login'
+import { ErrMsg } from '@/components/error'
 
 function AdminView({ user }: { user: User }) {
 	const db = useFirestore()
@@ -78,32 +78,22 @@ function AdminView({ user }: { user: User }) {
 		return <Loader />
 	if (!userData.isAdmin)
 		return (
-			<div className="flex h-full flex-col items-center justify-center">
-				<h1 className="py-4 text-center text-2xl text-foreground-800 md:text-2xl">
-					You&apos;re not an admin 🥲
-				</h1>
-				<div className="flex gap-2">
-					<Button
-						color="primary"
-						startContent={
-							<MaterialSymbol icon="logout" size={20} />
-						}
-						variant="flat"
-						onClick={() => auth.signOut()}
-					>
-						Sign out
-					</Button>
-					<Button
-						as={NextLink}
-						color="primary"
-						href="/"
-						startContent={<MaterialSymbol icon="home" size={20} />}
-						variant="flat"
-					>
-						Home
-					</Button>
-				</div>
-			</div>
+			<ErrMsg
+				buttons={[
+					{
+						text: 'Sign out',
+						href: '#',
+						icon: 'logout',
+						onClick: () => auth.signOut(),
+					},
+					{
+						text: 'Home',
+						href: '/',
+						icon: 'home',
+					},
+				]}
+				text="You're not an admin 🥲"
+			/>
 		)
 
 	function SubmissionActions({ submission }: { submission: DocumentData }) {

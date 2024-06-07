@@ -3,7 +3,7 @@
 
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
-import { Switch } from '@nextui-org/switch'
+import { Switch } from '@nextui-org/react'
 import { MaterialSymbol } from 'react-material-symbols'
 
 export function ThemeSwitch() {

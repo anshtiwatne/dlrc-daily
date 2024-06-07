@@ -1,9 +1,8 @@
 'use client'
 
 import { useEffect } from 'react'
-import { Button } from '@nextui-org/button'
-import { MaterialSymbol } from 'react-material-symbols'
-import NextLink from 'next/link'
+
+import { ErrMsg } from '@/components/error'
 
 export default function Error({
 	error,
@@ -19,32 +18,21 @@ export default function Error({
 	}, [error])
 
 	return (
-		<div className="flex h-full flex-col items-center justify-center">
-			<h1 className="py-4 text-center text-2xl text-foreground-800">
-				Something went wrong! 🫤
-			</h1>
-			<div className="flex gap-2">
-				<Button
-					color="primary"
-					href="#"
-					startContent={
-						<MaterialSymbol icon="device_reset" size={20} />
-					}
-					variant="flat"
-					onClick={() => reset()}
-				>
-					Try again
-				</Button>
-				<Button
-					as={NextLink}
-					color="primary"
-					href="/"
-					startContent={<MaterialSymbol icon="home" size={20} />}
-					variant="flat"
-				>
-					Home
-				</Button>
-			</div>
-		</div>
+		<ErrMsg
+			buttons={[
+				{
+					text: 'Try again',
+					href: '#',
+					icon: 'refresh',
+					onClick: () => reset(),
+				},
+				{
+					text: 'Home',
+					href: '/',
+					icon: 'home',
+				},
+			]}
+			text="Something went wrong! 🫤"
+		/>
 	)
 }
