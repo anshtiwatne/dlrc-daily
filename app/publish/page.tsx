@@ -371,7 +371,10 @@ export default function Page() {
 							onChange={(e) => setSelectedTag(e.target.value)}
 						>
 							{sortTags(tags).map((tag: any) => (
-								<SelectItem key={tag.NO_ID_FIELD}>
+								<SelectItem
+									key={tag.NO_ID_FIELD}
+									textValue={tag.text}
+								>
 									<span
 										className={
 											tag.NO_ID_FIELD === 'NONE'

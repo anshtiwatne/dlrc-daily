@@ -1,7 +1,7 @@
 {
     "id": "/",
     "background_color": "#FFFFFF",
-    "description": "Stay updated on the happenings at the DLRC campus through short articles and publish your own",
+    "description": "Daily news snippets from the DLRC campus",
     "dir": "ltr",
     "display": "standalone",
     "name": "DLRC Daily",
@@ -16,23 +16,51 @@
     "screenshots": [
         {
             "src": "./screenshots/mobile1.png",
-            "sizes": "1140x2280",
-            "type": "image/png"
+            "sizes": "1520x3040",
+            "type": "image/png",
+            "form_factor": "narrow"
         },
         {
             "src": "./screenshots/mobile2.png",
-            "sizes": "1140x2280",
-            "type": "image/png"
+            "sizes": "1520x3040",
+            "type": "image/png",
+            "form_factor": "narrow"
         },
         {
             "src": "./screenshots/mobile3.png",
-            "sizes": "1140x2280",
-            "type": "image/png"
+            "sizes": "1520x3040",
+            "type": "image/png",
+            "form_factor": "narrow"
         },
         {
             "src": "./screenshots/mobile4.png",
-            "sizes": "1140x2280",
-            "type": "image/png"
+            "sizes": "1520x3040",
+            "type": "image/png",
+            "form_factor": "narrow"
+        },
+        {
+            "src": "./screenshots/wide1.png",
+            "sizes": "2048x2732",
+            "type": "image/png",
+            "form_factor": "wide"
+        },
+        {
+            "src": "./screenshots/wide2.png",
+            "sizes": "2048x2732",
+            "type": "image/png",
+            "form_factor": "wide"
+        },
+        {
+            "src": "./screenshots/wide3.png",
+            "sizes": "2048x2732",
+            "type": "image/png",
+            "form_factor": "wide"
+        },
+        {
+            "src": "./screenshots/wide4.png",
+            "sizes": "2048x2732",
+            "type": "image/png",
+            "form_factor": "wide"
         }
     ],
     "icons": [
