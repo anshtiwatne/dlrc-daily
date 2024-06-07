@@ -6,7 +6,7 @@ import NextLink from 'next/link'
 
 type ButtonProps = {
 	text: string
-	href: string
+	href?: string
 	icon: string
 	onClick?: () => void
 }
@@ -24,24 +24,41 @@ export function ErrMsg({
 				{text}
 			</h1>
 			<div className="flex gap-2">
-				{buttons.map((button) => (
-					<Button
-						key={button.href}
-						as={NextLink}
-						color="primary"
-						href="/"
-						startContent={
-							<MaterialSymbol
-								icon={button.icon as any}
-								size={20}
-							/>
-						}
-						variant="flat"
-						onClick={button.onClick}
-					>
-						{button.text}
-					</Button>
-				))}
+				{buttons.map((button) =>
+					button.href ? (
+						<Button
+							key={button.icon}
+							as={NextLink}
+							color="primary"
+							href="/"
+							startContent={
+								<MaterialSymbol
+									icon={button.icon as any}
+									size={20}
+								/>
+							}
+							variant="flat"
+							onClick={button.onClick}
+						>
+							{button.text}
+						</Button>
+					) : (
+						<Button
+							key={button.icon}
+							color="primary"
+							startContent={
+								<MaterialSymbol
+									icon={button.icon as any}
+									size={20}
+								/>
+							}
+							variant="flat"
+							onClick={button.onClick}
+						>
+							{button.text}
+						</Button>
+					),
+				)}
 			</div>
 		</div>
 	)

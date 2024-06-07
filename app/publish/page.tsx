@@ -37,6 +37,7 @@ import { generateID } from '@/utils/id'
 import { capitalizeTitle } from '@/utils/text'
 import { getBgColor } from '@/utils/color'
 import { linkifyPreview } from '@/utils/text'
+import { ErrMsg } from '@/components/error'
 
 function dataURLToBlob(dataURL: string) {
 	const parts = dataURL.split(';base64,')
@@ -67,6 +68,11 @@ export default function Page() {
 		isOpen: isSubmitSuccessOpen,
 		onOpen: onSubmitSuccessOpen,
 		onOpenChange: onSubmitSuccessOpenChange,
+	} = useDisclosure()
+	const {
+		isOpen: isPlatformInfoOpen,
+		onOpen: onPlatformInfoOpen,
+		onOpenChange: onPlatformInfoOpenChange,
 	} = useDisclosure()
 
 	const [image, setImage] = useState<string | null>(null)
@@ -100,6 +106,61 @@ export default function Page() {
 		'DLRC Parent',
 	]
 
+	function webpSupported() {
+		const userAgent = navigator.userAgent
+
+		const isIOS =
+			/iPad|iPhone|iPod/.test(userAgent) ||
+			(/Macintosh/.test(userAgent) &&
+				navigator.maxTouchPoints &&
+				navigator.maxTouchPoints > 1)
+
+		const isSafari = /^((?!chrome|android).)*safari/i.test(userAgent)
+
+		return !(isIOS || isSafari)
+	}
+
+	if (!webpSupported()) {
+		return (
+			<>
+				<ErrMsg
+					buttons={[
+						{
+							text: 'Info',
+							icon: 'info',
+							onClick: () => onPlatformInfoOpen(),
+						},
+						{
+							text: 'Home',
+							href: '/',
+							icon: 'home',
+						},
+					]}
+					text="Platform not supported 😔"
+				/>
+				<Modal
+					isOpen={isPlatformInfoOpen}
+					onOpenChange={onPlatformInfoOpenChange}
+				>
+					<ModalContent>
+						{() => (
+							<>
+								<ModalHeader className="flex flex-col gap-1">
+									Info
+								</ModalHeader>
+								<ModalBody className="pb-6">
+									Publishing articles is not supported on iOS
+									and macOS running Safari, try again on a
+									different device or browser
+								</ModalBody>
+							</>
+						)}
+					</ModalContent>
+				</Modal>
+			</>
+		)
+	}
+
 	if (
 		tagsStatus !== 'success' ||
 		articlesStatus !== 'success' ||
@@ -116,8 +177,6 @@ export default function Page() {
 
 			return a.text.localeCompare(b.text)
 		})
-
-		return tags
 	}
 
 	function getUsedIDs() {
