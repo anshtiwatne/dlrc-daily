@@ -16,7 +16,7 @@ export default function Page() {
 	return (
 		<div className="w-full px-4 py-2">
 			<Accordion defaultExpandedKeys={['1']}>
-				<AccordionItem key="1" title="Privacy Policy">
+				<AccordionItem key="1" title="Introduction">
 					DLRC built the DLRC Daily app as an Open Source app. This
 					SERVICE is provided by DLRC at no cost and is intended for
 					use as is. This page is used to inform visitors regarding
