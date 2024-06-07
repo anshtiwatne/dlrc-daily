@@ -55,7 +55,7 @@ export default function RootLayout({
 					themeProps={{ attribute: 'class', defaultTheme: 'light' }}
 				>
 					<FirebaseContextProvider>
-						<div className="relative flex h-screen flex-col">
+						<div className="relative flex h-[100dvh] flex-col">
 							<Navbar />
 							<main className="flex h-full w-[100dvw] flex-col items-center">
 								<Suspense>{children}</Suspense>
