@@ -480,37 +480,20 @@ export default function Page() {
 							<ModalBody className="pb-6">
 								<ul className="flex list-disc flex-col gap-4 pl-4">
 									<li>
-										Articles can be written in either
-										English or Hindi
+										Images must be a single 4:3 aspect ratio
+										photo or graphic (not a collage),
+										without any watermarks or filters
 									</li>
 									<li>
-										Images must have a 4:3 aspect ratio
-										(this is what they&apos;ll appear as)
+										Headlines must be in title case and less
+										than or equal to 30 characters in length
+										(click the button next to the headline
+										field to autocapitalize it)
 									</li>
 									<li>
-										Images must not have any watermark on
-										them
-									</li>
-									<li>
-										The image uploaded must be a single
-										photo or graphic and not a collage
-									</li>
-									<li>
-										Refrain from adding filters or vignettes
-										on photos
-									</li>
-									<li>
-										Headlines must be less than or equal to
-										30 characters in length
-									</li>
-									<li>
-										Headlines must be in title case, click
-										the button next to the headline field to
-										autocapitalize it
-									</li>
-									<li>
-										Stories must be less than or equal to
-										300 characters in length
+										Stories must be in either English or
+										Hindi and less than or equal to 300
+										characters in length
 									</li>
 								</ul>
 							</ModalBody>
