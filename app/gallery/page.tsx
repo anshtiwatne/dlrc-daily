@@ -16,9 +16,9 @@ import { useFirestore, useFirestoreCollectionData } from 'reactfire'
 import { useSearchParams } from 'next/navigation'
 import { MaterialSymbol } from 'react-material-symbols'
 import NextLink from 'next/link'
+import clsx from 'clsx'
 
 import { Loader } from '@/components/loader'
-import clsx from 'clsx'
 
 export default function Page() {
 	const [isMd, setIsMd] = useState<boolean | null>(null)
