@@ -203,7 +203,7 @@ export default function Page() {
 			const storageRef = ref(storage, `coverImages/${newID}.webp`)
 			const author = isAnonymous
 				? selectedPseudonym
-				: `${firstName} ${lastName}`.trim()
+				: `${firstName.trim()} ${lastName.trim()}`.trim() // if no last name, the center space is trimmed
 
 			fetch(image)
 				.then((response) => response.blob())

@@ -190,7 +190,7 @@ const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 						<Link
 							as={NextLink}
 							className="text-sm font-semibold uppercase text-neutral-800 text-opacity-85 underline decoration-2 underline-offset-4 md:text-[0.9375rem]"
-							href={`/gallery?tag=${props.articleDoc.tag.id}`}
+							href={`/gallery?${new URLSearchParams({ tag: props.articleDoc.tag.id }).toString()}`}
 						>
 							{props.articleDoc.tag.id === 'NONE'
 								? ''
@@ -218,9 +218,13 @@ const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 				<div className="flex items-center justify-between md:pt-[10dvh] lg:pt-[2.5dvh]">
 					<div className="flex items-center gap-1">
 						<span className="text-xs md:text-sm">by</span>
-						<span className="text-[0.9375rem] font-semibold text-neutral-700 md:text-base">
+						<Link
+							as={NextLink}
+							className="text-[0.9375rem] font-semibold text-neutral-700 md:text-base"
+							href={`/gallery?${new URLSearchParams({ author: props.articleDoc.author }).toString()}`}
+						>
 							{props.articleDoc.author}
-						</span>
+						</Link>
 						<span className="timestamp text-sm text-neutral-700 md:text-base">
 							•{' '}
 							{timeAgo(

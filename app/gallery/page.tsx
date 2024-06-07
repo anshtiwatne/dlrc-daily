@@ -18,12 +18,14 @@ import { MaterialSymbol } from 'react-material-symbols'
 import NextLink from 'next/link'
 
 import { Loader } from '@/components/loader'
+import clsx from 'clsx'
 
 export default function Page() {
 	const [isMd, setIsMd] = useState<boolean | null>(null)
 	const [tagText, setTagText] = useState('')
 	const searchParams = useSearchParams()
 	const tagID = searchParams.get('tag')
+	const author = searchParams.get('author')
 	const db = useFirestore()
 	let coverImagesQuery
 
@@ -41,6 +43,11 @@ export default function Page() {
 			where('tag', '==', doc(db, 'tags', tagID)),
 		)
 		fetchTagText()
+	} else if (author) {
+		coverImagesQuery = query(
+			collection(db, 'articles'),
+			where('author', '==', author),
+		)
 	} else {
 		coverImagesQuery = query(
 			collection(db, 'articles'),
@@ -68,7 +75,9 @@ export default function Page() {
 				<h1 className="py-4 text-center text-2xl text-foreground-800 md:text-2xl">
 					{tagText
 						? `No articles with tag ${tagText} 🧐`
-						: 'No articles found 🧐'}
+						: author
+							? `No articles by ${author} 🧐`
+							: 'No articles found 🧐'}
 				</h1>
 				<div className="flex gap-2">
 					<Button
@@ -97,7 +106,7 @@ export default function Page() {
 
 	return (
 		<>
-			<div className="flex items-center justify-center p-4 md:py-6">
+			<div className="flex w-full items-center justify-center p-4 md:py-6">
 				<Masonry columns={isMd ? 4 : 3} spacing={isMd ? 2 : 1}>
 					{articlesData
 						.sort(
@@ -120,15 +129,22 @@ export default function Page() {
 						))}
 				</Masonry>
 			</div>
-			{tagID && (
+			{(tagID || author) && (
 				<Chip
-					className="fixed bottom-6 left-6 z-50 bg-[rgba(255,255,255,0.625)] pr-1 lowercase text-neutral-700"
+					className={clsx(
+						'fixed bottom-6 left-6 z-50 bg-[rgba(255,255,255,0.625)] pr-1 text-neutral-700',
+						tagID ? 'lowercase' : '',
+					)}
 					size="sm"
 					startContent={
-						<MaterialSymbol color="#404040" icon="tag" size={16} />
+						<MaterialSymbol
+							color="#404040"
+							icon={tagID ? 'tag' : 'person'}
+							size={16}
+						/>
 					}
 				>
-					{tagText}
+					{tagText || author}
 				</Chip>
 			)}
 		</>
