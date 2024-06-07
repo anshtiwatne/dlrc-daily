@@ -192,7 +192,9 @@ const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 							className="text-sm font-semibold uppercase text-neutral-800 text-opacity-85 underline decoration-2 underline-offset-4 md:text-[0.9375rem]"
 							href={`/gallery?tag=${props.articleDoc.tag.id}`}
 						>
-							{tagData.text}
+							{props.articleDoc.tag.id === 'NONE'
+								? ''
+								: tagData.text}
 						</Link>
 						<MaterialSymbol
 							className="cursor-pointer"

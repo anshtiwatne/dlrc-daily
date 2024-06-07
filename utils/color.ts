@@ -55,8 +55,50 @@ export function hexToHSL(hex: string) {
 	return { h: h, s: s, l: l }
 }
 
-export function getBgColor(hex: string) {
-	let hsl = hexToHSL(hex)
+export function rgbToHSL(rgb: string) {
+	const result = rgb.match(/\d+/g)
+
+	if (!result) {
+		throw new Error('Invalid RGB or RGBA string')
+	}
+	let r = parseInt(result[0]) / 255
+	let g = parseInt(result[1]) / 255
+	let b = parseInt(result[2]) / 255
+
+	let cmin = Math.min(r, g, b),
+		cmax = Math.max(r, g, b),
+		delta = cmax - cmin,
+		h = 0,
+		s = 0,
+		l = 0
+
+	if (delta == 0) h = 0
+	// Red is max
+	else if (cmax == r) h = ((g - b) / delta) % 6
+	// Green is max
+	else if (cmax == g) h = (b - r) / delta + 2
+	// Blue is max
+	else h = (r - g) / delta + 4
+
+	h = Math.round(h * 60)
+
+	// Make negative hues positive behind 360°
+	if (h < 0) h += 360
+
+	l = (cmax + cmin) / 2
+
+	// Calculate saturation
+	s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1))
+
+	// Multiply l and s by 100
+	s = +(s * 100).toFixed(1)
+	l = +(l * 100).toFixed(1)
+
+	return { h: h, s: s, l: l }
+}
+
+export function getBgColor(rgb: string) {
+	let hsl = rgbToHSL(rgb)
 
 	// increase luminosity and saturation if too dark
 	if (hsl.l < 75) {

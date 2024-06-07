@@ -122,7 +122,7 @@ export default function Page() {
 			</div>
 			{tagID && (
 				<Chip
-					className="fixed bottom-6 left-6 z-50 bg-[rgba(255,255,255,0.625)] pr-1 text-neutral-700"
+					className="fixed bottom-6 left-6 z-50 bg-[rgba(255,255,255,0.625)] pr-1 lowercase text-neutral-700"
 					size="sm"
 					startContent={
 						<MaterialSymbol color="#404040" icon="tag" size={16} />

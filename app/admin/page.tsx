@@ -135,7 +135,7 @@ function AdminView({ user }: { user: User }) {
 				likes: 0,
 				comments: [],
 			}).then(() => {
-				handleDelete()
+				deleteDoc(submissionRef)
 			})
 		}
 

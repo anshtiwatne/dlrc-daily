@@ -29,7 +29,6 @@ import { ref, getDownloadURL, uploadBytes } from 'firebase/storage'
 import { MaterialSymbol } from 'react-material-symbols'
 import { useRef, useState } from 'react'
 import { useTheme } from 'next-themes'
-import NextLink from 'next/link'
 // @ts-ignore
 import { useExtractColor } from 'react-extract-colors'
 
@@ -85,6 +84,7 @@ export default function Page() {
 	const { data: tags, status: tagsStatus } = useFirestoreCollectionData(
 		collection(db, 'tags'),
 	)
+
 	const { data: articles, status: articlesStatus } = useFirestoreCollection(
 		collection(db, 'articles'),
 	)
@@ -106,6 +106,19 @@ export default function Page() {
 		submissionsStatus !== 'success'
 	)
 		return <Loader />
+
+	function sortTags(tags: any[]) {
+		if (!tags) return []
+
+		return tags.sort((a, b) => {
+			if (a.NO_ID_FIELD === 'NONE') return 1
+			if (b.NO_ID_FIELD === 'NONE') return -1
+
+			return a.text.localeCompare(b.text)
+		})
+
+		return tags
+	}
 
 	function getUsedIDs() {
 		const articleIDs = articles.docs.map((doc) => doc.id)
@@ -251,9 +264,20 @@ export default function Page() {
 						/>
 					</CardBody>
 					<CardFooter className="flex justify-between pt-0">
-						<p className="text-sm text-foreground-500">
-							Cover image
-						</p>
+						<div className="flex items-center gap-2">
+							<p className="text-sm text-foreground-500">
+								Cover image
+							</p>
+							{dominantColor && (
+								<div
+									className="h-4 w-4 rounded-full"
+									style={{
+										backgroundColor:
+											getBgColor(dominantColor),
+									}}
+								/>
+							)}
+						</div>
 						<input
 							ref={fileInputRef}
 							hidden
@@ -287,9 +311,17 @@ export default function Page() {
 							variant="underlined"
 							onChange={(e) => setSelectedTag(e.target.value)}
 						>
-							{Object.keys(tags).map((tagIndex: any) => (
-								<SelectItem key={tags[tagIndex].NO_ID_FIELD}>
-									{tags[tagIndex].text}
+							{sortTags(tags).map((tag: any) => (
+								<SelectItem key={tag.NO_ID_FIELD}>
+									<span
+										className={
+											tag.NO_ID_FIELD === 'NONE'
+												? 'text-danger'
+												: ''
+										}
+									>
+										{tag.text}
+									</span>
 								</SelectItem>
 							))}
 						</Select>
@@ -453,25 +485,28 @@ export default function Page() {
 									</li>
 									<li>
 										Images must have a 4:3 aspect ratio
-										(this is what they&apos;ll be cropped to
-										on most devices)
+										(this is what they&apos;ll appear as)
+									</li>
+									<li>
+										Images must not have any watermark on
+										them
+									</li>
+									<li>
+										The image uploaded must be a single
+										photo or graphic and not a collage
+									</li>
+									<li>
+										Refrain from adding filters or vignettes
+										on photos
 									</li>
 									<li>
 										Headlines must be less than or equal to
 										30 characters in length
 									</li>
 									<li>
-										Click the button next to the headline
-										input to automatically capitalize lower
-										case letters to upper case according to
-										the{' '}
-										<Link
-											isExternal
-											as={NextLink}
-											href="https://learn.microsoft.com/en-us/style-guide/capitalization#title-style-capitalization"
-										>
-											Microsoft capitalization style guide
-										</Link>
+										Headlines must be in title case, click
+										the button next to the headline field to
+										autocapitalize it
 									</li>
 									<li>
 										Stories must be less than or equal to
