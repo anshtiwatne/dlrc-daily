@@ -1,0 +1,8 @@
+in/dlrc/daily/twa/BuildConfig.java
+ in.dlrc.daily.twa.BuildConfig
+in/dlrc/daily/twa/LauncherActivity.java
+ in.dlrc.daily.twa.LauncherActivity
+in/dlrc/daily/twa/DelegationService.java
+ in.dlrc.daily.twa.DelegationService
+in/dlrc/daily/twa/Application.java
+ in.dlrc.daily.twa.Application
