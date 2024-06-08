@@ -15,6 +15,7 @@ import {
 	startAfter,
 	getDocs,
 	DocumentData,
+	arrayUnion,
 } from 'firebase/firestore'
 import { MaterialSymbol } from 'react-material-symbols'
 import {
@@ -98,9 +99,7 @@ const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 	)
 	const [likeCount, setLikeCount] = useState(props.articleDoc.likes)
 	const [commentText, setCommentText] = useState('')
-	const [articleComments, setArticleComments] = useState(
-		props.articleDoc.comments,
-	)
+	const [commentSuccess, setCommentSuccess] = useState<boolean | null>(null)
 	const { isOpen, onOpen, onOpenChange } = useDisclosure()
 	const { data: tagData, status: tagStatus } =
 		useFirestoreDocData<DocumentData>(props.articleDoc.tag)
@@ -126,25 +125,19 @@ const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 		if (commentText.trim() === '') return
 		try {
 			await updateDoc(articleRef, {
-				comments: [
-					...articleComments, // for multiple comments
-					{
-						text: commentText,
-						timestamp: new Date(),
-					},
-				],
+				submittedComments: arrayUnion({
+					text: commentText.replace(/\s\s+/g, ' ').trim(),
+					timestamp: new Date(),
+				}),
 			})
 			setCommentText('')
-			setArticleComments((prev: string[]) => [
-				...prev,
-				{
-					text: commentText,
-					timestamp: new Date(),
-				},
-			])
+			setCommentSuccess(true)
+			setTimeout(() => setCommentSuccess(null), 2500)
 		} catch (error) {
 			// eslint-disable-next-line no-console
 			console.error('Error updating document: ', error)
+			setCommentSuccess(false)
+			setTimeout(() => setCommentSuccess(null), 2500)
 		}
 	}
 
@@ -256,7 +249,7 @@ const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 								icon="comment"
 								size={24}
 							/>
-							<span>{articleComments.length}</span>
+							<span>{props.articleDoc.comments.length}</span>
 						</button>
 					</div>
 				</div>
@@ -282,7 +275,7 @@ const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 								Comments
 							</ModalHeader>
 							<ModalBody>
-								{articleComments
+								{props.articleDoc.comments
 									.sort(
 										(a: any, b: any) =>
 											getMillis(b.timestamp) -
@@ -326,7 +319,21 @@ const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 								>
 									<Input
 										spellCheck
-										placeholder="Add a comment..."
+										color={
+											commentSuccess === null
+												? 'default'
+												: commentSuccess
+													? 'success'
+													: 'danger'
+										}
+										isDisabled={commentSuccess !== null}
+										placeholder={
+											commentSuccess === null
+												? 'Add a comment...'
+												: commentSuccess
+													? 'Submitted, will be reviewed'
+													: 'Failed to add comment'
+										}
 										type="text"
 										value={commentText}
 										variant="underlined"
@@ -336,11 +343,22 @@ const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 									/>
 									<Button
 										isIconOnly
+										isDisabled={
+											commentText
+												.replace(/\s\s+/g, ' ')
+												.trim() === '' ||
+											commentSuccess !== null
+										}
 										type="submit"
-										variant="flat"
+										variant="faded"
 									>
 										<MaterialSymbol
-											className="text-foreground-700"
+											className={clsx(
+												'text-foreground-700',
+												commentSuccess
+													? 'animate-send'
+													: '',
+											)}
 											icon="send"
 											size={24}
 										/>
@@ -488,7 +506,7 @@ export default function Home() {
 	return (
 		<>
 			<section
-				className="absolute left-0 top-0 h-[100dvh] w-[100dvw] snap-y snap-mandatory overflow-y-scroll scrollbar-hide"
+				className="absolute left-0 top-0 h-screen w-[100dvw] snap-y snap-mandatory overflow-y-scroll scrollbar-hide"
 				id="articles"
 			>
 				{sharedArticle && (

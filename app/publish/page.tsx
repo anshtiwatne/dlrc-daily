@@ -214,9 +214,11 @@ export default function Page() {
 								coverImage: url,
 								color: getBgColor(dominantColor),
 								tag: doc(db, 'tags', selectedTag),
-								headline: headline.trim(),
-								story: story.trim(),
-								author: author,
+								headline: headline
+									.replace(/\s\s+/g, ' ')
+									.trim(),
+								story: story.replace(/\s\s+/g, ' ').trim(),
+								author: author.replace(/\s\s+/g, ' ').trim(),
 							}).then(() => {
 								handleSubmitSuccess()
 							})

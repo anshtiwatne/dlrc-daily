@@ -19,3 +19,26 @@
 		opacity: 0;
 	}
 }
+
+.animate-send {
+	animation: fadeOutIn 1s forwards;
+}
+
+@keyframes fadeOutIn {
+	0% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+	50% {
+		opacity: 0;
+		transform: translateX(20px);
+	}
+	50.1% {
+		opacity: 0;
+		transform: translateX(-20px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
