@@ -92,6 +92,41 @@ function formatLink(value: string, type: string) {
 	else return value
 }
 
+function LikeCounter({ count }: { count: string }) {
+	const [newNum, setNewNum] = useState(count)
+	const [oldNum, setOldNum] = useState(count)
+
+	useEffect(() => {
+		if (count !== newNum) {
+			setOldNum(newNum)
+			setNewNum(count)
+		}
+	}, [count, newNum])
+
+	const renderDigits = () => {
+		let digits = []
+
+		for (let i = 0; i < newNum.length; i++) {
+			const newDigit = newNum[i]
+			const oldDigit = oldNum[i] || ''
+			const animateDir =
+				parseInt(newDigit) > parseInt(oldDigit) ? 'up' : 'down'
+
+			digits.push(
+				<span
+					className={`digit-container ${newDigit !== oldDigit ? `animate-${animateDir}` : ''}`}
+				>
+					{newDigit}
+				</span>,
+			)
+		}
+
+		return digits
+	}
+
+	return <div className={`w-[${count.length}ch]`}>{renderDigits()}</div>
+}
+
 const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 	const articleRef = doc(useFirestore(), 'articles', props.articleDoc.id)
 	const [isLiked, setIsLiked] = useState(
@@ -227,7 +262,7 @@ const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 					</div>
 					<div className="flex items-center gap-4">
 						<button
-							className="flex cursor-pointer items-center gap-1"
+							className="flex cursor-pointer items-center gap-[0.1875rem]"
 							data-id="${id}"
 							onClick={handleLike}
 						>
@@ -237,10 +272,10 @@ const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 								icon="thumb_up"
 								size={24}
 							/>
-							<span>{likeCount}</span>
+							<LikeCounter count={likeCount.toString()} />
 						</button>
 						<button
-							className="flex cursor-pointer items-center gap-1"
+							className="flex cursor-pointer items-center gap-[0.1875rem]"
 							data-id="${id}"
 							onClick={onOpen}
 						>
@@ -249,7 +284,11 @@ const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 								icon="comment"
 								size={24}
 							/>
-							<span>{props.articleDoc.comments.length}</span>
+							<span
+								className={`w-[${props.articleDoc.comments.length.toString().length}ch]`}
+							>
+								{props.articleDoc.comments.length}
+							</span>
 						</button>
 					</div>
 				</div>
@@ -350,7 +389,7 @@ const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 											commentSuccess !== null
 										}
 										type="submit"
-										variant="faded"
+										variant="light"
 									>
 										<MaterialSymbol
 											className={clsx(
@@ -360,7 +399,7 @@ const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 													: '',
 											)}
 											icon="send"
-											size={24}
+											size={32}
 										/>
 									</Button>
 								</form>

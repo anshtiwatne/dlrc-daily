@@ -42,3 +42,41 @@
 		transform: translateX(0);
 	}
 }
+
+/* like counter animation */
+
+.digit-container {
+	display: inline-block;
+	position: relative;
+	transition: all 0.3s ease;
+}
+
+.animate-up {
+	animation: slideUpFade 0.5s forwards;
+}
+
+.animate-down {
+	animation: slideDownFade 0.5s forwards;
+}
+
+@keyframes slideUpFade {
+	from {
+		transform: translateY(100%);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+@keyframes slideDownFade {
+	from {
+		transform: translateY(-100%);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
