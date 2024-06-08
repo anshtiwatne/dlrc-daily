@@ -20,7 +20,7 @@ export function InstallPrompt() {
 		setTimeout(() => {
 			onOpen()
 			localStorage.setItem('installPrompt', '1')
-		}, 1000)
+		}, 25000)
 	}
 
 	return (

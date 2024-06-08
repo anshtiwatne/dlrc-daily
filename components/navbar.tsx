@@ -99,7 +99,7 @@ export function Navbar() {
 					<MaterialSymbol
 						className={clsx(
 							navTransparency && !isMenuOpen
-								? 'text-neutral-200 text-opacity-90 lg:text-neutral-700 lg:text-opacity-75'
+								? 'text-neutral-200 text-opacity-95 lg:text-neutral-700 lg:text-opacity-75'
 								: 'text-black text-opacity-100 dark:text-neutral-300',
 						)}
 						icon={isMenuOpen ? 'close' : 'menu'}
