@@ -124,7 +124,7 @@ function LikeCounter({ count }: { count: string }) {
 		return digits
 	}
 
-	return <div className={`w-[${count.length}ch]`}>{renderDigits()}</div>
+	return <div style={{ width: `${count.length}ch` }}>{renderDigits()}</div>
 }
 
 const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
@@ -285,7 +285,9 @@ const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 								size={24}
 							/>
 							<span
-								className={`w-[${props.articleDoc.comments.length.toString().length}ch]`}
+								style={{
+									width: `${props.articleDoc.comments.length.toString().length}ch`,
+								}}
 							>
 								{props.articleDoc.comments.length}
 							</span>
