@@ -114,6 +114,7 @@ function LikeCounter({ count }: { count: string }) {
 
 			digits.push(
 				<span
+					key={i}
 					className={`digit-container ${newDigit !== oldDigit ? `animate-${animateDir}` : ''}`}
 				>
 					{newDigit}
