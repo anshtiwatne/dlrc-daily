@@ -110,7 +110,7 @@ function LikeCounter({ count }: { count: string }) {
 			const newDigit = newNum[i]
 			const oldDigit = oldNum[i] || ''
 			const animateDir =
-				parseInt(newDigit) > parseInt(oldDigit) ? 'up' : 'down'
+				parseInt(newNum) > parseInt(oldNum) ? 'up' : 'down'
 
 			digits.push(
 				<span

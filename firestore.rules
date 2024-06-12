@@ -25,7 +25,7 @@ service cloud.firestore {
 
 		function verifyInteraction() {
 			let affectedKeys = request.resource.data.diff(resource.data).affectedKeys();
-			let allowedUpdates = ["likes", "comments"];
+			let allowedUpdates = ["likes", "submittedComments"];
 			
 			return affectedKeys.hasOnly(allowedUpdates);
 		}

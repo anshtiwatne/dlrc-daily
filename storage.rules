@@ -11,7 +11,10 @@ service firebase.storage {
 		function isAdmin() {
 			return request.auth.token.email_verified &&
 			// request.auth.token.email.matches(".*@dlrc.in");
-			request.auth.token.email in ['ansh.tiwatne@gmail.com']
+			request.auth.token.email in [
+				'ansh.tiwatne@gmail.com',
+				'dalmiamona@gmail.com'
+			]
 		}
 	}
 }
