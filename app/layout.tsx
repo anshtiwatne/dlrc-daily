@@ -16,21 +16,19 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
 	title: 'DLRC Daily',
+	applicationName: 'DLRC Daily',
 	description:
 		'Stay updated on the happenings at the DLRC campus through short articles uploaded daily by the DLRC Newsletter',
-	appleWebApp: true,
+	metadataBase: new URL('https://daily.dlrc.in'),
 	alternates: {
 		canonical: 'https://daily.dlrc.in',
 	},
+	appleWebApp: true,
+	formatDetection: {
+		telephone: false,
+	},
 	other: {
 		['darkreader-lock']: 'true',
-	},
-	openGraph: {
-		images: [
-			{
-				url: 'https://daily.dlrc.in/logos/any.png',
-			},
-		],
 	},
 }
 
