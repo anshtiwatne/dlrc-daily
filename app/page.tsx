@@ -31,8 +31,8 @@ import {
 	Chip,
 	Link,
 } from '@nextui-org/react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import NextLink from 'next/link'
-import { useSearchParams } from 'next/navigation'
 import Linkify from 'linkify-react'
 import clsx from 'clsx'
 
@@ -129,6 +129,7 @@ function LikeCounter({ count }: { count: string }) {
 }
 
 const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
+	const router = useRouter()
 	const articleRef = doc(useFirestore(), 'articles', props.articleDoc.id)
 	const [isLiked, setIsLiked] = useState(
 		localStorage.getItem(`${props.articleDoc.id}_liked`) === '1',
@@ -204,13 +205,12 @@ const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 		>
 			{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
 			<div
-				className={`h-[40dvh] w-[${props.windowDim.width}] bg-cover bg-center lg:h-full lg:min-w-[40dvw] lg:max-w-[60dvw]`}
+				className={`h-[40dvh] w-[${props.windowDim.width}] cursor-pointer bg-cover bg-center lg:h-full lg:min-w-[40dvw] lg:max-w-[60dvw]`}
 				style={{
 					backgroundImage: `linear-gradient(to ${props.windowDim.width >= 1024 ? 'left' : 'top'}, ${props.articleDoc.color}, transparent, transparent), url(${props.articleDoc.coverImage})`,
 				}}
 				onClick={() => {
-					if (typeof window !== undefined)
-						window.location.assign(props.articleDoc.coverImage)
+					router.push(props.articleDoc.coverImage)
 				}}
 			/>
 			<div className="mx-[1.5rem] mt-[-5dvh] flex h-[60dvh] flex-col justify-evenly md:mx-auto md:my-0 md:h-[60dvh] md:w-[80dvw] md:justify-center lg:h-max lg:min-w-[40dvw] lg:max-w-[60dvw] lg:p-20">
