@@ -30,7 +30,7 @@ export function ErrMsg({
 							key={button.icon}
 							as={NextLink}
 							color="primary"
-							href="/"
+							href={button.href}
 							startContent={
 								<MaterialSymbol
 									icon={button.icon as any}
