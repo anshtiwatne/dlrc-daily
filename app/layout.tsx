@@ -6,14 +6,16 @@ import { Poppins } from 'next/font/google'
 import { Suspense } from 'react'
 
 import { Providers } from '@/app/providers'
-import { Navbar } from '@/components/navbar'
 import { FirebaseContextProvider } from '@/config/firebase'
+import { Navbar } from '@/components/navbar'
 import { InstallPrompt } from '@/components/install-prompt'
 
 const poppins = Poppins({
 	weight: ['400', '500', '600', '700', '800', '900'],
 	subsets: ['latin'],
 })
+
+export const dynamic = 'force-static'
 
 export const metadata: Metadata = {
 	title: 'DLRC Daily',

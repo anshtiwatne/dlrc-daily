@@ -11,19 +11,23 @@ import {
 	Image,
 	Link,
 } from '@nextui-org/react'
+import { useEffect } from 'react'
 
 export function InstallPrompt() {
 	const { isOpen, onOpen, onOpenChange } = useDisclosure()
-	const isMobile = /iPhone|iPod|iPad|Android/i.test(navigator.userAgent)
-	const isPWA = window.matchMedia('(display-mode: standalone)').matches
-	const promptIgnored = localStorage.getItem('installPrompt') == '1'
 
-	if (isMobile && !isPWA && !promptIgnored) {
-		setTimeout(() => {
-			onOpen()
-			localStorage.setItem('installPrompt', '1')
-		}, 25000)
-	}
+	useEffect(() => {
+		const isMobile = /iPhone|iPod|iPad|Android/i.test(navigator.userAgent)
+		const isPWA = window.matchMedia('(display-mode: standalone)').matches
+		const promptIgnored = localStorage.getItem('installPrompt') == '1'
+
+		if (isMobile && !isPWA && !promptIgnored) {
+			setTimeout(() => {
+				onOpen()
+				localStorage.setItem('installPrompt', '1')
+			}, 25000)
+		}
+	}, [])
 
 	return (
 		<>
