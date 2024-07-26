@@ -1,4 +1,4 @@
-import '@/styles/globals.css'
+import '@/app/globals.css'
 import 'react-material-symbols/rounded'
 import clsx from 'clsx'
 import { Metadata, Viewport } from 'next'
@@ -50,7 +50,7 @@ export default function RootLayout({
 			<head />
 			<body className={clsx('min-h-[100dvh]', poppins.className)}>
 				<Providers
-					themeProps={{ attribute: 'class', defaultTheme: 'light' }}
+					themeProps={{ attribute: 'class', defaultTheme: 'light', children }}
 				>
 					<FirebaseContextProvider>
 						<div className="relative flex h-[100dvh] flex-col">
