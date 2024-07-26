@@ -11,6 +11,7 @@ import {
 	NavbarMenuItem,
 	Divider,
 } from '@nextui-org/react'
+import clsx from 'clsx'
 import NextLink from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Roboto_Slab } from 'next/font/google'
@@ -19,7 +20,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGooglePlay } from '@fortawesome/free-brands-svg-icons'
 import { useState, Fragment, useEffect } from 'react'
 import { useAuth, useSigninCheck } from 'reactfire'
-import clsx from 'clsx'
 
 import { ThemeSwitch } from '@/components/theme-switch'
 
