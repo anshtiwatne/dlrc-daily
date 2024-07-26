@@ -8,6 +8,7 @@ import { Suspense } from 'react'
 import { Providers } from '@/app/providers'
 import { Navbar } from '@/components/navbar'
 import { FirebaseContextProvider } from '@/config/firebase'
+import { InstallPrompt } from '@/components/install-prompt'
 
 const poppins = Poppins({
 	weight: ['400', '500', '600', '700', '800', '900'],
@@ -62,6 +63,7 @@ export default function RootLayout({
 							<main className="flex h-full w-[100dvw] flex-col items-center">
 								<Suspense>{children}</Suspense>
 							</main>
+							<InstallPrompt />
 						</div>
 					</FirebaseContextProvider>
 				</Providers>

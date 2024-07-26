@@ -36,7 +36,6 @@ import NextLink from 'next/link'
 import Linkify from 'linkify-react'
 import clsx from 'clsx'
 
-import { InstallPrompt } from '@/components/install-prompt'
 import { Loader } from '@/components/loader'
 import { timeAgo, getMillis } from '@/utils/datetime'
 import { getRandomColor } from '@/utils/color'
@@ -546,60 +545,49 @@ export default function Home() {
 		)
 
 	return (
-		<>
-			<section
-				className="absolute left-0 top-0 h-screen w-[100dvw] snap-y snap-mandatory overflow-y-scroll scrollbar-hide"
-				id="articles"
-			>
-				{sharedArticle && (
-					<Article
-						articleDoc={sharedArticle}
-						isShared={true}
-						windowDim={windowDim}
-					/>
-				)}
-				{articlesData.map((article, index) => (
-					<Article
-						key={article.id}
-						ref={
-							index === articlesData.length - 1
-								? loadMoreRef
-								: null
+		<section
+			className="absolute left-0 top-0 h-screen w-[100dvw] snap-y snap-mandatory overflow-y-scroll scrollbar-hide"
+			id="articles"
+		>
+			{sharedArticle && (
+				<Article
+					articleDoc={sharedArticle}
+					isShared={true}
+					windowDim={windowDim}
+				/>
+			)}
+			{articlesData.map((article, index) => (
+				<Article
+					key={article.id}
+					ref={index === articlesData.length - 1 ? loadMoreRef : null}
+					articleDoc={article}
+					isShared={false}
+					windowDim={windowDim}
+				/>
+			))}
+			<div className="w-full py-4 text-center font-semibold">
+				Loading...
+			</div>
+			{windowDim.width >= 1024 && (
+				<div className="fixed bottom-4 right-4 flex items-center gap-1">
+					<MaterialSymbol
+						className="text-neutral-700 text-opacity-75"
+						icon="arrow_upward"
+						size={24}
+						onClick={() =>
+							document.getElementById('articles')?.scrollBy(0, -1)
 						}
-						articleDoc={article}
-						isShared={false}
-						windowDim={windowDim}
 					/>
-				))}
-				<div className="w-full py-4 text-center font-semibold">
-					Loading...
+					<MaterialSymbol
+						className="text-neutral-700 text-opacity-75"
+						icon="arrow_downward"
+						size={24}
+						onClick={() =>
+							document.getElementById('articles')?.scrollBy(0, 1)
+						}
+					/>
 				</div>
-				{windowDim.width >= 1024 && (
-					<div className="fixed bottom-4 right-4 flex items-center gap-1">
-						<MaterialSymbol
-							className="text-neutral-700 text-opacity-75"
-							icon="arrow_upward"
-							size={24}
-							onClick={() =>
-								document
-									.getElementById('articles')
-									?.scrollBy(0, -1)
-							}
-						/>
-						<MaterialSymbol
-							className="text-neutral-700 text-opacity-75"
-							icon="arrow_downward"
-							size={24}
-							onClick={() =>
-								document
-									.getElementById('articles')
-									?.scrollBy(0, 1)
-							}
-						/>
-					</div>
-				)}
-			</section>
-			<InstallPrompt />
-		</>
+			)}
+		</section>
 	)
 }
