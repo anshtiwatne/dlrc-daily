@@ -312,16 +312,12 @@ export default function Page() {
 					className="mb-2 mt-4 border-medium dark:border-transparent"
 					shadow="none"
 				>
-					<CardBody>
-						{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+					<CardBody onClick={() => fileInputRef.current?.click()}>
 						<div
 							className="relative w-full rounded-lg bg-cover bg-center pt-[75%] text-white"
 							style={{
 								backgroundImage: `url(${image ?? `/images/img-placeholder-${theme === 'light' ? 'light' : 'dark'}.svg`})`,
 							}}
-							onClick={() =>
-								!image && fileInputRef.current?.click()
-							}
 						/>
 					</CardBody>
 					<CardFooter className="flex justify-between pt-0">
