@@ -50,7 +50,11 @@ export default function RootLayout({
 			<head />
 			<body className={clsx('min-h-[100dvh]', poppins.className)}>
 				<Providers
-					themeProps={{ attribute: 'class', defaultTheme: 'light', children }}
+					themeProps={{
+						attribute: 'class',
+						defaultTheme: 'light',
+						children,
+					}}
 				>
 					<FirebaseContextProvider>
 						<div className="relative flex h-[100dvh] flex-col">
