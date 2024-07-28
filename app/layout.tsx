@@ -9,6 +9,7 @@ import { Providers } from '@/app/providers'
 import { FirebaseContextProvider } from '@/config/firebase'
 import { Navbar } from '@/components/navbar'
 import { InstallPrompt } from '@/components/install-prompt'
+import { PublishPrompt } from '@/components/publish-prompt'
 
 const poppins = Poppins({
 	weight: ['400', '500', '600', '700', '800', '900'],
@@ -67,6 +68,7 @@ export default function RootLayout({
 								<Suspense>{children}</Suspense>
 							</main>
 							<InstallPrompt />
+							<PublishPrompt />
 						</div>
 					</FirebaseContextProvider>
 				</Providers>

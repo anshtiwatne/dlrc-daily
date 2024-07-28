@@ -389,6 +389,7 @@ export default function Page() {
 							<Input
 								isRequired
 								autoCapitalize="on"
+								description={`${headline.trim().length} / 30`}
 								isInvalid={headline.trim().length > 30}
 								label="Headline"
 								value={headline}
@@ -416,6 +417,7 @@ export default function Page() {
 						</div>
 						<Textarea
 							isRequired
+							description={`${linkifyPreview(story.trim()).length} / 300`}
 							isInvalid={
 								linkifyPreview(story.trim()).length > 300
 							}
@@ -425,7 +427,7 @@ export default function Page() {
 							onValueChange={setStory}
 						/>
 						<Checkbox
-							className="pt-6"
+							className="pt-4"
 							isSelected={isAnonymous}
 							onValueChange={setIsAnonymous}
 						>

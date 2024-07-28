@@ -43,10 +43,8 @@ export function InstallPrompt() {
 								Install DLRC Daily
 							</ModalHeader>
 							<ModalBody>
-								<p>
-									For the best experience, get the DLRC Daily
-									app on your device.
-								</p>
+								For the best experience, get the DLRC Daily app
+								on your device.
 							</ModalBody>
 							<ModalFooter className="flex items-center">
 								<Button
