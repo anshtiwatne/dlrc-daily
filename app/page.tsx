@@ -227,7 +227,7 @@ const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 						<MaterialSymbol
 							className="cursor-pointer"
 							color="#404040"
-							icon="ios_share"
+							icon="share"
 							size={24}
 							onClick={handleShare}
 						/>
