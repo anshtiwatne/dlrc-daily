@@ -21,15 +21,15 @@ export default function Error({
 		<ErrMsg
 			buttons={[
 				{
+					text: 'Home',
+					href: '/',
+					icon: 'home',
+				},
+				{
 					text: 'Try again',
 					href: '#',
 					icon: 'refresh',
 					onClick: () => reset(),
-				},
-				{
-					text: 'Home',
-					href: '/',
-					icon: 'home',
 				},
 			]}
 			text="Something went wrong! 🫤"

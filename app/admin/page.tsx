@@ -518,15 +518,15 @@ function AdminView({ user }: { user: User }) {
 			<ErrMsg
 				buttons={[
 					{
+						text: 'Home',
+						href: '/',
+						icon: 'home',
+					},
+					{
 						text: 'Sign out',
 						href: '#',
 						icon: 'logout',
 						onClick: () => auth.signOut(),
-					},
-					{
-						text: 'Home',
-						href: '/',
-						icon: 'home',
 					},
 				]}
 				text="You're not an admin 🥲"

@@ -129,14 +129,14 @@ export default function Page() {
 				<ErrMsg
 					buttons={[
 						{
-							text: 'Info',
-							icon: 'info',
-							onClick: () => onPlatformInfoOpen(),
-						},
-						{
 							text: 'Home',
 							href: '/',
 							icon: 'home',
+						},
+						{
+							text: 'Info',
+							icon: 'info',
+							onClick: () => onPlatformInfoOpen(),
 						},
 					]}
 					text="Platform not supported 😔"
