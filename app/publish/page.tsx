@@ -561,8 +561,13 @@ export default function Page() {
 									<li>
 										Headlines must be in title case and less
 										than or equal to 30 characters in length
-										(click the button next to the headline
-										field to autocapitalize it)
+										(click the
+										<MaterialSymbol
+											className="align-bottom"
+											icon="keyboard_capslock"
+											size={22.5}
+										/>
+										button to autocapitalize)
 									</li>
 									<li>
 										Stories must be in either English or
