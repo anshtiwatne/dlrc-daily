@@ -87,6 +87,9 @@ export default function Page() {
 	const [isSubmitSuccess, setIsSubmitSuccess] = useState<Boolean | null>(null)
 	const [submitBtnDisabled, setSubmitBtnDisabled] = useState(false)
 
+	const maxHeadlineLength = 30
+	const maxStoryLength = 300
+
 	const { data: tags, status: tagsStatus } = useFirestoreCollectionData(
 		collection(db, 'tags'),
 	)
@@ -385,12 +388,14 @@ export default function Page() {
 								</SelectItem>
 							))}
 						</Select>
-						<div className="flex w-full items-end gap-1">
+						<div className="flex w-full items-center gap-1">
 							<Input
 								isRequired
 								autoCapitalize="on"
-								description={`${headline.trim().length} / 30`}
-								isInvalid={headline.trim().length > 30}
+								description={`${headline.trim().length} / ${maxHeadlineLength}`}
+								isInvalid={
+									headline.trim().length > maxHeadlineLength
+								}
 								label="Headline"
 								value={headline}
 								variant="underlined"
@@ -417,14 +422,17 @@ export default function Page() {
 						</div>
 						<Textarea
 							isRequired
-							description={`${linkifyPreview(story.trim()).length} / 300`}
+							description={`${linkifyPreview(story.trim()).length} / ${maxStoryLength}`}
 							isInvalid={
-								linkifyPreview(story.trim()).length > 300
+								linkifyPreview(story.trim()).length >
+								maxStoryLength
 							}
 							label="Story"
 							value={story}
 							variant="underlined"
-							onValueChange={setStory}
+							onValueChange={(value) =>
+								setStory(value.replace(/\s\s+/g, ' '))
+							}
 						/>
 						<Checkbox
 							className="pt-4"
@@ -456,7 +464,9 @@ export default function Page() {
 							<div className="flex items-center gap-2">
 								<Input
 									isRequired
+									autoComplete="given-name"
 									label="First name"
+									name="fname"
 									value={firstName}
 									variant="underlined"
 									onValueChange={(value) =>
@@ -476,7 +486,9 @@ export default function Page() {
 									}
 								/>
 								<Input
+									autoComplete="family-name"
 									label="Last name"
+									name="lname"
 									value={lastName}
 									variant="underlined"
 									onValueChange={(value) =>
