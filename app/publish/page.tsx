@@ -82,9 +82,9 @@ export default function Page() {
 	const [story, setStory] = useState('')
 	const [firstName, setFirstName] = useState('')
 	const [lastName, setLastName] = useState('')
-	const [selectedPseudonym, setSelectedPseudonym] = useState('' as string)
+	const [selectedPseudonym, setSelectedPseudonym] = useState('')
 	const [isAnonymous, setIsAnonymous] = useState(false)
-	const [isSubmitSuccess, setIsSubmitSuccess] = useState<Boolean | null>(null)
+	const [isSubmitSuccess, setIsSubmitSuccess] = useState<boolean | null>(null)
 	const [submitBtnDisabled, setSubmitBtnDisabled] = useState(false)
 
 	const maxHeadlineLength = 30
@@ -430,9 +430,7 @@ export default function Page() {
 							label="Story"
 							value={story}
 							variant="underlined"
-							onValueChange={(value) =>
-								setStory(value.replace(/\s\s+/g, ' '))
-							}
+							onValueChange={setStory}
 						/>
 						<Checkbox
 							className="pt-4"
