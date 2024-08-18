@@ -7,6 +7,7 @@ import {
 	collection,
 	query,
 	orderBy,
+	limit,
 	DocumentData,
 	where,
 	doc,
@@ -52,6 +53,7 @@ export default function Page() {
 		coverImagesQuery = query(
 			collection(db, 'articles'),
 			orderBy('publishDate', 'desc'),
+			limit(50),
 		)
 	}
 	const { data: articlesData, status: articlesStatus } =
