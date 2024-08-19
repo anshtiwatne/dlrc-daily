@@ -28,7 +28,7 @@ export function Login() {
 				className="h-[40px] gap-[10px] border-1 border-[#747775] bg-white px-[12px] text-[#1F1F1F] hover:shadow dark:border-[#E3E3E3] dark:bg-[#131314] dark:text-[#E3E3E3]"
 				radius="full"
 				variant="flat"
-				onClick={signIn}
+				onPress={signIn}
 			>
 				<Image
 					alt="Google logo"

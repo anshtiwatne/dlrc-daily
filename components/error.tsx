@@ -8,7 +8,7 @@ type ButtonProps = {
 	text: string
 	href?: string
 	icon: string
-	onClick?: () => void
+	onPress?: () => void
 }
 
 export function ErrMsg({
@@ -38,7 +38,7 @@ export function ErrMsg({
 								/>
 							}
 							variant="flat"
-							onClick={button.onClick}
+							onPress={button.onPress}
 						>
 							{button.text}
 						</Button>
@@ -53,7 +53,7 @@ export function ErrMsg({
 								/>
 							}
 							variant="flat"
-							onClick={button.onClick}
+							onPress={button.onPress}
 						>
 							{button.text}
 						</Button>

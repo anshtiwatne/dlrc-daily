@@ -136,7 +136,7 @@ export default function Page() {
 						{
 							text: 'Info',
 							icon: 'info',
-							onClick: () => onPlatformInfoOpen(),
+							onPress: () => onPlatformInfoOpen(),
 						},
 					]}
 					text="Platform not supported 😔"
@@ -355,7 +355,7 @@ export default function Page() {
 								)
 							}
 							variant="flat"
-							onClick={() => fileInputRef.current?.click()}
+							onPress={() => fileInputRef.current?.click()}
 						>
 							{isImgLoading ? 'Loading...' : 'Upload'}
 						</Button>
@@ -407,7 +407,7 @@ export default function Page() {
 									color="primary"
 									size="sm"
 									variant="faded"
-									onClick={() =>
+									onPress={() =>
 										setHeadline((prev) =>
 											capitalizeTitle(prev),
 										)
@@ -530,7 +530,7 @@ export default function Page() {
 							variant={
 								isSubmitSuccess === null ? 'flat' : 'bordered'
 							}
-							onClick={handleSubmit}
+							onPress={handleSubmit}
 						>
 							{isSubmitSuccess === null
 								? 'Submit'

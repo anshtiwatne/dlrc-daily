@@ -17,6 +17,7 @@ import {
 	Chip,
 	Tooltip,
 	Link,
+	Divider,
 } from '@nextui-org/react'
 import { useEffect, useState } from 'react'
 import {
@@ -105,7 +106,7 @@ function ModerateArticles({
 							isIconOnly
 							size="sm"
 							variant="faded"
-							onClick={onViewOpen}
+							onPress={onViewOpen}
 						>
 							<MaterialSymbol
 								className="text-foreground-600"
@@ -119,7 +120,7 @@ function ModerateArticles({
 							isIconOnly
 							size="sm"
 							variant="faded"
-							onClick={handlePublish}
+							onPress={handlePublish}
 						>
 							<MaterialSymbol
 								className="text-foreground-600"
@@ -134,7 +135,7 @@ function ModerateArticles({
 							color="danger"
 							size="sm"
 							variant="faded"
-							onClick={handleDelete}
+							onPress={handleDelete}
 						>
 							<MaterialSymbol
 								className="text-danger"
@@ -237,7 +238,7 @@ function ModerateArticles({
 	}
 
 	return (
-		<div className="flex w-full max-w-2xl flex-col gap-4 p-6">
+		<div className="flex w-full max-w-2xl flex-col gap-4">
 			<Input
 				aria-label="Search articles"
 				className="w-full"
@@ -342,7 +343,7 @@ function ModerateComments({ commentedArticles }: { commentedArticles: any[] }) {
 							isIconOnly
 							size="sm"
 							variant="faded"
-							onClick={onViewOpen}
+							onPress={onViewOpen}
 						>
 							<MaterialSymbol
 								className="text-foreground-600"
@@ -356,7 +357,7 @@ function ModerateComments({ commentedArticles }: { commentedArticles: any[] }) {
 							isIconOnly
 							size="sm"
 							variant="faded"
-							onClick={handlePublish}
+							onPress={handlePublish}
 						>
 							<MaterialSymbol
 								className="text-foreground-600"
@@ -371,7 +372,7 @@ function ModerateComments({ commentedArticles }: { commentedArticles: any[] }) {
 							color="danger"
 							size="sm"
 							variant="faded"
-							onClick={handleDelete}
+							onPress={handleDelete}
 						>
 							<MaterialSymbol
 								className="text-danger"
@@ -415,7 +416,7 @@ function ModerateComments({ commentedArticles }: { commentedArticles: any[] }) {
 	}
 
 	return (
-		<div className="flex w-full max-w-2xl flex-col gap-4 p-6">
+		<div className="flex w-full max-w-2xl flex-col gap-4">
 			<Input
 				aria-label="Search comments"
 				className="w-full"
@@ -526,7 +527,7 @@ function AdminView({ user }: { user: User }) {
 						text: 'Sign out',
 						href: '#',
 						icon: 'logout',
-						onClick: () => auth.signOut(),
+						onPress: () => auth.signOut(),
 					},
 				]}
 				text="You're not an admin 🥲"
@@ -534,8 +535,9 @@ function AdminView({ user }: { user: User }) {
 		)
 
 	return (
-		<div className="flex h-full w-full flex-col items-center">
+		<div className="flex h-full w-full flex-col items-center gap-6 p-6 md:flex-row md:items-start">
 			<ModerateArticles articleSubmissions={articleSubmissions} />
+			<Divider className="md:hidden" />
 			<ModerateComments commentedArticles={commentedArticles} />
 		</div>
 	)

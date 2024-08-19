@@ -5,6 +5,8 @@ import { MaterialSymbol } from 'react-material-symbols'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 import NextLink from 'next/link'
 
 import { Loader } from '@/components/loader'
@@ -37,10 +39,30 @@ const aboutLinks = [
 	},
 ]
 
+function easterEgg(router: AppRouterInstance) {
+	router.push('https://dlrc-inshorts.web.app/')
+}
+
 export default function Page() {
+	const router = useRouter()
 	const [mounted, setMounted] = useState(false)
+	const [, setClickCount] = useState(0)
 
 	useEffect(() => setMounted(true), [])
+
+	function handleVersionClick() {
+		setClickCount((prev) => {
+			const newCount = prev + 1
+
+			if (newCount >= 5) {
+				easterEgg(router)
+
+				return 0
+			}
+
+			return newCount
+		})
+	}
 
 	if (!mounted) return <Loader />
 
@@ -79,7 +101,12 @@ export default function Page() {
 					))}
 				</div>
 			</div>
-			<p style={{ fontFamily: 'monospace' }}>version 2.0.0</p>
+			<button
+				style={{ fontFamily: 'monospace' }}
+				onClick={handleVersionClick}
+			>
+				version 2.0.0
+			</button>
 		</div>
 	)
 }
