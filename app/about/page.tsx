@@ -4,9 +4,8 @@ import { Divider, Link } from '@nextui-org/react'
 import { MaterialSymbol } from 'react-material-symbols'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 import NextLink from 'next/link'
 
 import { Loader } from '@/components/loader'
@@ -39,23 +38,34 @@ const aboutLinks = [
 	},
 ]
 
-function easterEgg(router: AppRouterInstance) {
-	router.push('https://dlrc-inshorts.web.app/')
-}
-
 export default function Page() {
 	const router = useRouter()
+	const easterEggRef = useRef<HTMLButtonElement>(null)
 	const [mounted, setMounted] = useState(false)
 	const [, setClickCount] = useState(0)
 
 	useEffect(() => setMounted(true), [])
 
+	function easterEgg() {
+		easterEggRef.current?.classList.add('animate-spin')
+		setTimeout(() => {
+			easterEggRef.current?.classList.remove('animate-spin')
+			router.push('https://dlrc-inshorts.web.app/')
+		}, 1000)
+	}
+
 	function handleVersionClick() {
+		easterEggRef.current?.classList.add('animate-bounce')
+		setTimeout(
+			() => easterEggRef.current?.classList.remove('animate-bounce'),
+			500,
+		)
+
 		setClickCount((prev) => {
 			const newCount = prev + 1
 
 			if (newCount >= 5) {
-				easterEgg(router)
+				easterEgg()
 
 				return 0
 			}
@@ -102,6 +112,7 @@ export default function Page() {
 				</div>
 			</div>
 			<button
+				ref={easterEggRef}
 				style={{ fontFamily: 'monospace' }}
 				onClick={handleVersionClick}
 			>
