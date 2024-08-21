@@ -57,7 +57,7 @@ export default function Page() {
 		coverImagesQuery = query(
 			collection(db, 'articles'),
 			orderBy('publishDate', 'desc'),
-			limit(50),
+			limit(100),
 		)
 	}
 	const { data: articlesData, status: articlesStatus } =
