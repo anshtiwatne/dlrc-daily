@@ -1,3 +1,5 @@
+import { DocumentData } from '@firebase/firestore'
+
 export function capitalizeTitle(title: string) {
 	const alwaysLower = [
 		'a',
@@ -56,4 +58,26 @@ export function linkifyPreview(text: string) {
 	const urlRegex = /(https?:\/\/[^\s]+)/g
 
 	return text.replace(urlRegex, (url) => `${new URL(url).hostname}`)
+}
+
+export function articleSearch(searchTerm: string, article: DocumentData) {
+	const normalizedSearch = searchTerm.trim().toLowerCase()
+
+	return (
+		article.headline.toLowerCase().includes(normalizedSearch) ||
+		article.story.toLowerCase().includes(normalizedSearch) ||
+		article.author.toLowerCase().includes(normalizedSearch)
+	)
+}
+
+export function abbreviateName(name: string) {
+	const maxLength = 10
+
+	if (name.length > maxLength) {
+		const [firstName, lastName] = name.split(' ')
+
+		return `${firstName} ${lastName.charAt(0)}.`
+	}
+
+	return name
 }

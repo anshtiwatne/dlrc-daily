@@ -1,7 +1,7 @@
 'use client'
 
 import Masonry from '@mui/lab/Masonry'
-import { Button, Image, Chip } from '@nextui-org/react'
+import { Image, Chip, Input } from '@nextui-org/react'
 import { useEffect, useState } from 'react'
 import {
 	collection,
@@ -14,20 +14,24 @@ import {
 	getDoc,
 } from 'firebase/firestore'
 import { useFirestore, useFirestoreCollectionData } from 'reactfire'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { MaterialSymbol } from 'react-material-symbols'
 import NextLink from 'next/link'
-import clsx from 'clsx'
 
 import { Loader } from '@/components/loader'
+import { ErrMsg } from '@/components/error'
+import { abbreviateName, articleSearch } from '@/utils/text'
+import { timeAgo } from '@/utils/datetime'
 
 export default function Page() {
+	const router = useRouter()
+	const db = useFirestore()
 	const [isMd, setIsMd] = useState<boolean | null>(null)
 	const [tagText, setTagText] = useState('')
+	const [search, setSearch] = useState('')
 	const searchParams = useSearchParams()
 	const tagID = searchParams.get('tag')
 	const author = searchParams.get('author')
-	const db = useFirestore()
 	let coverImagesQuery
 
 	async function fetchTagText() {
@@ -73,82 +77,105 @@ export default function Page() {
 
 	if (!articlesData.length)
 		return (
-			<main className="flex h-full flex-col items-center justify-center">
-				<h1 className="py-4 text-center text-2xl text-foreground-800 md:text-2xl">
-					{tagText
+			<ErrMsg
+				buttons={[
+					{ text: 'Home', icon: 'home', href: '/' },
+					{
+						text: 'Gallery view',
+						icon: 'photo_library',
+						href: '/gallery',
+					},
+				]}
+				text={
+					tagText
 						? `No articles with tag ${tagText} 🧐`
 						: author
 							? `No articles by ${author} 🧐`
-							: 'No articles found 🧐'}
-				</h1>
-				<div className="flex gap-2">
-					<Button
-						as={NextLink}
-						color="primary"
-						href="/gallery"
-						startContent={
-							<MaterialSymbol icon="photo_library" size={20} />
-						}
-						variant="flat"
-					>
-						Gallery view
-					</Button>
-					<Button
-						as={NextLink}
-						color="primary"
-						href="/"
-						startContent={<MaterialSymbol icon="home" size={20} />}
-						variant="flat"
-					>
-						Home
-					</Button>
-				</div>
-			</main>
+							: 'No articles found 🧐'
+				}
+			/>
 		)
 
 	return (
-		<>
-			<div className="flex w-full items-center justify-center p-4 md:py-6">
-				<Masonry columns={isMd ? 4 : 3} spacing={isMd ? 2 : 1}>
-					{articlesData
-						.sort(
-							(a, b) =>
-								b.publishDate.seconds - a.publishDate.seconds,
-						)
-						?.map((article: DocumentData) => (
-							<NextLink
-								key={article.NO_ID_FIELD}
-								href={`/?article=${article.NO_ID_FIELD}`}
-							>
-								<Image
-									isZoomed
-									alt={article.headline}
-									loading="lazy"
-									radius="sm"
-									src={article.coverImage}
-								/>
-							</NextLink>
-						))}
-				</Masonry>
+		<div className="flex w-full flex-col items-center justify-center gap-4 p-4">
+			<div className="flex w-full items-center gap-2">
+				<Input
+					placeholder="Search"
+					startContent={<MaterialSymbol icon="search" size={20} />}
+					type="text"
+					value={search}
+					variant="faded"
+					onValueChange={setSearch}
+				/>
+				{tagText || author ? (
+					<Chip
+						className="h-full px-2"
+						radius="md"
+						startContent={
+							<MaterialSymbol
+								color="#404040"
+								icon={tagID ? 'tag' : 'person'}
+								size={16}
+							/>
+						}
+						variant="dot"
+						onClose={() => router.push('/gallery')}
+					>
+						<span className="text-primary">
+							{tagText || (author && abbreviateName(author))}
+						</span>
+					</Chip>
+				) : (
+					<Chip
+						className="h-full pl-2"
+						radius="md"
+						startContent={
+							<MaterialSymbol
+								color="#404040"
+								icon="calendar_month"
+								size={16}
+							/>
+						}
+						variant="dot"
+					>
+						<span className="text-primary">
+							{`Past ${timeAgo(
+								new Date(
+									articlesData[articlesData.length - 1]
+										?.publishDate?.seconds * 1000,
+								),
+							)}`}
+						</span>
+					</Chip>
+				)}
 			</div>
-			{(tagID || author) && (
-				<Chip
-					className={clsx(
-						'fixed bottom-6 left-6 z-50 bg-[rgba(255,255,255,0.625)] pr-1 text-neutral-700',
-						tagID ? 'lowercase' : '',
-					)}
-					size="sm"
-					startContent={
-						<MaterialSymbol
-							color="#404040"
-							icon={tagID ? 'tag' : 'person'}
-							size={16}
-						/>
-					}
-				>
-					{tagText || author}
-				</Chip>
-			)}
-		</>
+			<Masonry
+				columns={isMd ? 4 : 3}
+				spacing={isMd ? 2 : 1}
+				sx={{ width: 'auto' }}
+			>
+				{articlesData
+					.sort(
+						(a, b) => b.publishDate.seconds - a.publishDate.seconds,
+					)
+					.filter((article: DocumentData) =>
+						articleSearch(search, article),
+					)
+					?.map((article: DocumentData) => (
+						<NextLink
+							key={article.NO_ID_FIELD}
+							href={`/?article=${article.NO_ID_FIELD}`}
+						>
+							<Image
+								isZoomed
+								alt={article.headline}
+								loading="lazy"
+								radius="sm"
+								src={article.coverImage}
+							/>
+						</NextLink>
+					))}
+			</Masonry>
+		</div>
 	)
 }
