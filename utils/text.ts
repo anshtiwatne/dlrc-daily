@@ -81,3 +81,14 @@ export function abbreviateName(name: string) {
 
 	return name
 }
+
+export async function profanityCheck(text: string): Promise<boolean> {
+	const res = await fetch('https://vector.profanity.dev', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({ message: text }),
+	})
+	const json = await res.json()
+
+	return json.isProfanity
+}
