@@ -110,6 +110,14 @@ export default function Page() {
 						</Link>
 					))}
 				</div>
+				<Divider />
+				<p className="flex-grow">
+					Homepage design inspired by{' '}
+					<Link href="https://headlines.scroll.in">
+						headlines.scroll.in
+					</Link>{' '}
+					and <Link href="https://inshorts.com">inshorts.com</Link>.
+				</p>
 			</div>
 			<button
 				ref={easterEggRef}
