@@ -156,81 +156,63 @@ function ModerateArticles({
 					onOpenChange={onViewOpenChange}
 				>
 					<ModalContent>
-						{() => (
-							<>
-								<ModalHeader className="flex flex-col gap-1 pb-2">
-									{submission.headline}
-								</ModalHeader>
-								<ModalBody className="pb-6">
-									{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-									<div
-										className="relative w-full flex-shrink-0 cursor-pointer rounded-lg bg-cover bg-center pt-[75%] text-white"
-										style={{
-											backgroundImage: showBgColor
-												? `linear-gradient(to top, ${submission.color}, transparent, transparent), url(${submission.coverImage})`
-												: `url(${submission.coverImage})`,
-										}}
-										onClick={() =>
-											setShowBgColor((prev) => !prev)
-										}
-									/>
-									<div className="flex items-center gap-2">
-										<Chip
-											className={clsx(
-												'py-[0.125rem] pl-[0.625rem]',
-												showBgColor
-													? 'bg-[rgba(255,255,255,0.09375)] text-neutral-800'
-													: '',
-											)}
-											startContent={
-												<MaterialSymbol
-													icon="tag"
-													size={16}
-												/>
-											}
-											variant={
-												showBgColor ? 'flat' : 'faded'
-											}
-										>
-											{tagData.text}
-										</Chip>
-										<Chip
-											className={clsx(
-												'py-[0.125rem] pl-[0.625rem]',
-												showBgColor
-													? 'bg-[rgba(255,255,255,0.09375)] text-neutral-800'
-													: '',
-											)}
-											startContent={
-												<MaterialSymbol
-													icon="sell"
-													size={16}
-												/>
-											}
-											variant={
-												showBgColor ? 'flat' : 'faded'
-											}
-										>
-											{articleRef.id}
-										</Chip>
-									</div>
-									<p>{submission.story}</p>
-									<div className="flex items-center gap-1">
-										<span className="text-sm">by</span>
-										<span
-											className={clsx(
-												'font-medium',
-												showBgColor
-													? 'text-neutral-700'
-													: '',
-											)}
-										>
-											{submission.author}
-										</span>
-									</div>
-								</ModalBody>
-							</>
-						)}
+						<ModalHeader className="flex flex-col gap-1 pb-2">
+							{submission.headline}
+						</ModalHeader>
+						<ModalBody className="pb-6">
+							{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+							<div
+								className="relative w-full flex-shrink-0 cursor-pointer rounded-lg bg-cover bg-center pt-[75%] text-white"
+								style={{
+									backgroundImage: showBgColor
+										? `linear-gradient(to top, ${submission.color}, transparent, transparent), url(${submission.coverImage})`
+										: `url(${submission.coverImage})`,
+								}}
+								onClick={() => setShowBgColor((prev) => !prev)}
+							/>
+							<div className="flex items-center gap-2">
+								<Chip
+									className={clsx(
+										'py-[0.125rem] pl-[0.625rem]',
+										showBgColor
+											? 'bg-[rgba(255,255,255,0.09375)] text-neutral-800'
+											: '',
+									)}
+									startContent={
+										<MaterialSymbol icon="tag" size={16} />
+									}
+									variant={showBgColor ? 'flat' : 'faded'}
+								>
+									{tagData.text}
+								</Chip>
+								<Chip
+									className={clsx(
+										'py-[0.125rem] pl-[0.625rem]',
+										showBgColor
+											? 'bg-[rgba(255,255,255,0.09375)] text-neutral-800'
+											: '',
+									)}
+									startContent={
+										<MaterialSymbol icon="sell" size={16} />
+									}
+									variant={showBgColor ? 'flat' : 'faded'}
+								>
+									{articleRef.id}
+								</Chip>
+							</div>
+							<p>{submission.story}</p>
+							<div className="flex items-center gap-1">
+								<span className="text-sm">by</span>
+								<span
+									className={clsx(
+										'font-medium',
+										showBgColor ? 'text-neutral-700' : '',
+									)}
+								>
+									{submission.author}
+								</span>
+							</div>
+						</ModalBody>
 					</ModalContent>
 				</Modal>
 			</>
@@ -389,26 +371,22 @@ function ModerateComments({ commentedArticles }: { commentedArticles: any[] }) {
 					onOpenChange={onViewOpenChange}
 				>
 					<ModalContent>
-						{() => (
-							<>
-								<ModalHeader className="flex flex-col gap-1 pb-2">
-									Comment Info
-								</ModalHeader>
-								<ModalBody className="pb-6">
-									<p className="text-wrap">
-										{submission.comment.text}
-									</p>
-									<div className="flex items-center gap-1">
-										<span className="text-sm">on</span>
-										<Link
-											href={`/?${new URLSearchParams({ article: submission.articleID }).toString()}`}
-										>
-											{submission.articleHeadline}
-										</Link>
-									</div>
-								</ModalBody>
-							</>
-						)}
+						<ModalHeader className="flex flex-col gap-1 pb-2">
+							Comment Info
+						</ModalHeader>
+						<ModalBody className="pb-6">
+							<p className="text-wrap">
+								{submission.comment.text}
+							</p>
+							<div className="flex items-center gap-1">
+								<span className="text-sm">on</span>
+								<Link
+									href={`/?${new URLSearchParams({ article: submission.articleID }).toString()}`}
+								>
+									{submission.articleHeadline}
+								</Link>
+							</div>
+						</ModalBody>
 					</ModalContent>
 				</Modal>
 			</>
