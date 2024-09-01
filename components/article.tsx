@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { forwardRef, useEffect, useState } from 'react'
 import { doc, increment, updateDoc, DocumentData } from '@firebase/firestore'
 import { useFirestore, useFirestoreDocData } from 'reactfire'
-import { Chip, Link, useDisclosure, Image } from '@nextui-org/react'
+import { Chip, Link, useDisclosure } from '@nextui-org/react'
 import { MaterialSymbol } from 'react-material-symbols'
 import NextLink from 'next/link'
 import Linkify from 'linkify-react'
@@ -139,18 +139,18 @@ export const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 			id={props.articleDoc.id}
 			style={{ backgroundColor: props.articleDoc.color }}
 		>
-			{/* <div
+			{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+			<div
 				className={`h-[40dvh] w-[${props.windowDim.width}] cursor-pointer bg-cover bg-center lg:h-full lg:w-[60dvw]`}
 				style={{
 					backgroundImage: `linear-gradient(to ${props.windowDim.width >= 1024 ? 'left' : 'top'}, ${props.articleDoc.color}, transparent, transparent), url(${props.articleDoc.coverImage})`,
+					willChange: 'background-image',
 				}}
 				onClick={() => {
 					router.push(props.articleDoc.coverImage)
 				}}
-			/> */}
-
-			{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-			<div
+			/>
+			{/* <div
 				className={`h-[40dvh] w-[${props.windowDim.width}] cursor-pointer bg-cover bg-center lg:h-full lg:w-[40dvw]`}
 				onClick={() => {
 					router.push(props.articleDoc.coverImage)
@@ -158,7 +158,7 @@ export const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 			>
 				<div className="relative h-full w-full">
 					<div
-						className="absolute z-10 h-full w-full"
+						className="absolute h-full w-full"
 						style={{
 							backgroundImage: `linear-gradient(to ${props.windowDim.width >= 1024 ? 'left' : 'top'}, ${props.articleDoc.color}, transparent, transparent)`,
 						}}
@@ -166,13 +166,13 @@ export const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 					<Image
 						removeWrapper
 						alt="cover image"
-						className="z-0 h-full w-full object-cover"
+						className="h-full w-full object-cover"
 						loading="lazy"
 						radius="none"
 						src={props.articleDoc.coverImage}
 					/>
 				</div>
-			</div>
+			</div> */}
 			<div className="mx-[1.5rem] mt-[-5dvh] flex h-[60dvh] flex-col justify-evenly md:mx-auto md:my-0 md:h-[60dvh] md:w-[80dvw] md:justify-center lg:h-max lg:min-w-[40dvw] lg:max-w-[60dvw] lg:p-20">
 				<header className="flex flex-col gap-4">
 					<div className="flex items-center justify-between">

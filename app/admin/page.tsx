@@ -183,7 +183,7 @@ function ModerateArticles({
 									}
 									variant={showBgColor ? 'flat' : 'faded'}
 								>
-									{tagData.text}
+									{tagData?.text}
 								</Chip>
 								<Chip
 									className={clsx(
