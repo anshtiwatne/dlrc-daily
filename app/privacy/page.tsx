@@ -14,7 +14,7 @@ export default function Page() {
 	if (!mounted) return <Loader />
 
 	return (
-		<div className="w-full px-4 py-2">
+		<div className="w-full px-4 py-1">
 			<Accordion defaultExpandedKeys={['1']}>
 				<AccordionItem key="1" title="Introduction">
 					DLRC built the DLRC Daily app as an Open Source app. This

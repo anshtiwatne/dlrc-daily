@@ -52,7 +52,7 @@ export default function RootLayout({
 	return (
 		<html suppressHydrationWarning lang="en">
 			<head />
-			<body className={clsx('min-h-[100dvh]', poppins.className)}>
+			<body className={poppins.className}>
 				<Providers
 					themeProps={
 						{
@@ -62,11 +62,11 @@ export default function RootLayout({
 					}
 				>
 					<FirebaseContextProvider>
-						<div className="relative flex h-[100dvh] flex-col">
+						<div className="relative flex min-h-dvh flex-col">
 							<Navbar />
-							<main className="flex h-full w-[100dvw] flex-col items-center">
+							<div className="flex h-full w-dvw flex-grow flex-col items-center">
 								<Suspense>{children}</Suspense>
-							</main>
+							</div>
 							<InstallPrompt />
 							<PublishPrompt />
 						</div>

@@ -477,7 +477,7 @@ export function DailyPublish() {
 						</div>
 					)}
 				</div>
-				<div>
+				<div className='flex flex-col w-full gap-2'>
 					<Link
 						className="my-4 ml-1 w-full cursor-pointer text-left text-sm"
 						color="primary"
@@ -487,7 +487,6 @@ export function DailyPublish() {
 					</Link>
 					<Button
 						fullWidth
-						className="my-2 mb-4"
 						color={
 							isSubmitSuccess === null
 								? 'primary'
@@ -688,7 +687,6 @@ export function MagazinePublish() {
 			</div>
 			<Button
 				fullWidth
-				className=""
 				color="primary"
 				// disabled={submitBtnDisabled}
 				variant="flat"

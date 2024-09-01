@@ -4,8 +4,8 @@ import { CircularProgress } from '@nextui-org/react'
 
 export function Loader() {
 	return (
-		<main className="flex h-full items-center justify-center overflow-hidden scrollbar-hide">
+		<div className="absolute inset-0 flex flex-col items-center justify-center">
 			<CircularProgress aria-label="loading" size="lg" />
-		</main>
+		</div>
 	)
 }

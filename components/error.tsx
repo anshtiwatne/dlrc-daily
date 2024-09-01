@@ -16,48 +16,50 @@ export function ErrMsg({
 	buttons,
 }: {
 	text: string
-	buttons: ButtonProps[]
+	buttons?: ButtonProps[]
 }) {
 	return (
-		<div className="flex h-full flex-col items-center justify-center gap-4">
+		<div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
 			<h1 className="text-center text-2xl text-foreground-800">{text}</h1>
-			<div className="flex gap-2">
-				{buttons.map((button) =>
-					button.href ? (
-						<Button
-							key={button.icon}
-							as={NextLink}
-							color="primary"
-							href={button.href}
-							startContent={
-								<MaterialSymbol
-									icon={button.icon as any}
-									size={20}
-								/>
-							}
-							variant="flat"
-							onPress={button.onPress}
-						>
-							{button.text}
-						</Button>
-					) : (
-						<Button
-							key={button.icon}
-							color="primary"
-							startContent={
-								<MaterialSymbol
-									icon={button.icon as any}
-									size={20}
-								/>
-							}
-							variant="flat"
-							onPress={button.onPress}
-						>
-							{button.text}
-						</Button>
-					),
-				)}
-			</div>
+			{buttons && (
+				<div className="flex gap-2">
+					{buttons.map((button) =>
+						button.href ? (
+							<Button
+								key={button.icon}
+								as={NextLink}
+								color="primary"
+								href={button.href}
+								startContent={
+									<MaterialSymbol
+										icon={button.icon as any}
+										size={20}
+									/>
+								}
+								variant="flat"
+								onPress={button.onPress}
+							>
+								{button.text}
+							</Button>
+						) : (
+							<Button
+								key={button.icon}
+								color="primary"
+								startContent={
+									<MaterialSymbol
+										icon={button.icon as any}
+										size={20}
+									/>
+								}
+								variant="flat"
+								onPress={button.onPress}
+							>
+								{button.text}
+							</Button>
+						),
+					)}
+				</div>
+			)}
 		</div>
 	)
 }

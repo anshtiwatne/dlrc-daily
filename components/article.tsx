@@ -141,10 +141,9 @@ export const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 		>
 			{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
 			<div
-				className={`h-[40dvh] w-[${props.windowDim.width}] cursor-pointer bg-cover bg-center lg:h-full lg:w-[60dvw]`}
+				className={`h-[40dvh] w-[${props.windowDim.width}] cursor-pointer bg-cover bg-center lg:h-full lg:min-w-[40dvw] lg:max-w-[60dvw]`}
 				style={{
 					backgroundImage: `linear-gradient(to ${props.windowDim.width >= 1024 ? 'left' : 'top'}, ${props.articleDoc.color}, transparent, transparent), url(${props.articleDoc.coverImage})`,
-					willChange: 'background-image',
 				}}
 				onClick={() => {
 					router.push(props.articleDoc.coverImage)

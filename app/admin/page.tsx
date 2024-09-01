@@ -48,6 +48,7 @@ import clsx from 'clsx'
 import { Loader } from '@/components/loader'
 import { Login } from '@/components/login'
 import { ErrMsg } from '@/components/error'
+import { profanityCheck } from '@/utils/text'
 
 function ModerateArticles({
 	articleSubmissions,
@@ -59,6 +60,7 @@ function ModerateArticles({
 	const [search, setSearch] = useState('')
 
 	function SubmissionActions({ submission }: { submission: DocumentData }) {
+		const [profanityResult, setProfanityResult] = useState<any>(null)
 		const submissionRef = doc(db, 'submissions', submission.NO_ID_FIELD)
 		const coverImageRef = ref(
 			storage,
@@ -74,6 +76,15 @@ function ModerateArticles({
 			onOpenChange: onViewOpenChange,
 		} = useDisclosure()
 		const [showBgColor, setShowBgColor] = useState(false)
+
+		useEffect(() => {
+			const checkProfanity = async () => {
+				const result = await profanityCheck(submission.story)
+				setProfanityResult(result)
+			}
+
+			checkProfanity()
+		}, [submission.story])
 
 		function handlePublish() {
 			setDoc(articleRef, {
@@ -212,6 +223,23 @@ function ModerateArticles({
 									{submission.author}
 								</span>
 							</div>
+							{profanityResult?.isProfanity && (
+								<Chip
+									className={clsx(
+										'py-[0.125rem] pl-[0.625rem]',
+									)}
+									startContent={
+										<MaterialSymbol
+											icon="warning"
+											size={16}
+										/>
+									}
+									color="danger"
+									variant="flat"
+								>
+									Profanity detected
+								</Chip>
+							)}
 						</ModalBody>
 					</ModalContent>
 				</Modal>
@@ -297,12 +325,22 @@ function ModerateComments({ commentedArticles }: { commentedArticles: any[] }) {
 	}: {
 		submission: { comment: any; articleID: string; articleHeadline: string }
 	}) {
+		const [profanityResult, setProfanityResult] = useState<any>(null)
 		const articleRef = doc(db, 'articles', submission.articleID)
 		const {
 			isOpen: isViewOpen,
 			onOpen: onViewOpen,
 			onOpenChange: onViewOpenChange,
 		} = useDisclosure()
+
+		useEffect(() => {
+			const checkProfanity = async () => {
+				const result = await profanityCheck(submission.comment.text)
+				setProfanityResult(result)
+			}
+
+			checkProfanity()
+		}, [submission.comment.text])
 
 		function handlePublish() {
 			updateDoc(articleRef, {
@@ -386,6 +424,23 @@ function ModerateComments({ commentedArticles }: { commentedArticles: any[] }) {
 									{submission.articleHeadline}
 								</Link>
 							</div>
+							{profanityResult?.isProfanity && (
+								<Chip
+									className={clsx(
+										'py-[0.125rem] pl-[0.625rem]',
+									)}
+									startContent={
+										<MaterialSymbol
+											icon="warning"
+											size={16}
+										/>
+									}
+									color="danger"
+									variant="flat"
+								>
+									Profanity detected
+								</Chip>
+							)}
 						</ModalBody>
 					</ModalContent>
 				</Modal>
@@ -434,9 +489,7 @@ function ModerateComments({ commentedArticles }: { commentedArticles: any[] }) {
 							) => (
 								<TableRow key={i}>
 									<TableCell>
-										<p className="w-[30dvw] overflow-clip sm:w-96">
-											{submission.comment.text}
-										</p>
+										<p>{submission.comment.text}</p>
 									</TableCell>
 									<TableCell className="flex justify-end">
 										<SubmissionActions

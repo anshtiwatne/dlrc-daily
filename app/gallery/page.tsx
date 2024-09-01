@@ -97,7 +97,7 @@ export default function Page() {
 		)
 
 	return (
-		<div className="flex w-full flex-col items-center justify-center gap-4 p-4">
+		<div className="flex h-full w-full flex-col items-center justify-center gap-4 p-4">
 			<div className="flex w-full items-center gap-2">
 				<Input
 					placeholder="Search"
@@ -109,7 +109,7 @@ export default function Page() {
 				/>
 				{tagText || author ? (
 					<Chip
-						className="h-full px-2"
+						className="h-10 px-2"
 						radius="md"
 						startContent={
 							<MaterialSymbol
@@ -127,7 +127,7 @@ export default function Page() {
 					</Chip>
 				) : (
 					<Chip
-						className="h-full pl-2"
+						className="h-10 pl-2"
 						radius="md"
 						startContent={
 							<MaterialSymbol

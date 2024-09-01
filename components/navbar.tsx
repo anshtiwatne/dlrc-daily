@@ -95,6 +95,11 @@ export function Navbar() {
 					onClick={() =>
 						document.getElementById('menu-toggle')?.click()
 					}
+					// style={
+					// 	navTransparency && !isMenuOpen
+					// 		? { background: 'radial-gradient(farthest-corner, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%)' }
+					// 		: {}
+					// }
 				>
 					<MaterialSymbol
 						className={clsx(
