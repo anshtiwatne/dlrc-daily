@@ -19,6 +19,7 @@ import { useSearchParams } from 'next/navigation'
 
 import { Loader } from '@/components/loader'
 import { Article } from '@/components/article'
+import { Progress } from '@nextui-org/react'
 
 export default function Home() {
 	const db = useFirestore()
@@ -167,17 +168,30 @@ export default function Home() {
 				/>
 			)}
 			{articlesData.map((article, index) => (
-				<Article
-					key={article.id}
-					ref={index === articlesData.length - 1 ? loadMoreRef : null}
-					articleDoc={article}
-					isShared={false}
-					windowDim={windowDim}
-				/>
+				<>
+					<Article
+						key={article.id}
+						ref={
+							index === articlesData.length - 1
+								? loadMoreRef
+								: null
+						}
+						articleDoc={article}
+						isShared={false}
+						windowDim={windowDim}
+					/>
+					{index === articlesData.length - 1 && (
+						<Progress
+							isIndeterminate
+							className="w-full mt-[-0.25rem]"
+							size="sm"
+						/>
+					)}
+				</>
 			))}
-			<div className="w-full py-4 text-center font-semibold">
+			{/* <div className="w-full py-4 text-center font-semibold">
 				Loading...
-			</div>
+			</div> */}
 			{windowDim.width >= 1024 && (
 				<div className="fixed bottom-4 right-4 flex items-center gap-1">
 					<MaterialSymbol

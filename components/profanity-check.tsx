@@ -1,6 +1,6 @@
 'use client'
 
-import { Chip } from '@nextui-org/react'
+import { Chip, Progress } from '@nextui-org/react'
 import { useEffect, useState } from 'react'
 import { MaterialSymbol } from 'react-material-symbols'
 
@@ -40,7 +40,7 @@ export function ProfanityBadge({ text }: { text: string }) {
 	console.log(profanityResult)
 
 	return profanityResult === null ? (
-		<p className="text-foreground-700">Checking for profanity...</p>
+		<Progress isIndeterminate label="Checking for profanity..." size="sm" />
 	) : (
 		<Chip
 			className="py-[0.125rem] pl-[0.625rem]"
