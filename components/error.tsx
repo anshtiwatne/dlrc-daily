@@ -19,7 +19,7 @@ export function ErrMsg({
 	buttons?: ButtonProps[]
 }) {
 	return (
-		<div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
+		<div className="flex flex-grow flex-col items-center justify-center gap-4" style={{ height: '100% !important' }}>
 			<h1 className="text-center text-2xl text-foreground-800">{text}</h1>
 			{buttons && (
 				<div className="flex gap-2">

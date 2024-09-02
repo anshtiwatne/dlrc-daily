@@ -77,7 +77,7 @@ export default function Page() {
 	if (!mounted) return <Loader />
 
 	return (
-		<div className="flex h-full max-w-2xl flex-col items-center justify-between gap-4 p-6">
+		<div className="flex h-full w-full max-w-2xl flex-grow flex-col items-center justify-between gap-4 p-6">
 			<div className="flex w-full flex-col gap-6">
 				<p className="flex-grow">
 					DLRC Daily was built to serve short form news from around

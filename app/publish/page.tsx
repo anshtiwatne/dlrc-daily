@@ -6,11 +6,11 @@ import { DailyPublish, MagazinePublish } from '@/components/publish-form'
 
 export default function Page() {
 	return (
-		<div className="flex flex-grow h-full w-full flex-col p-4">
+		<div className="flex h-full w-full flex-grow flex-col p-4">
 			<Tabs
 				fullWidth
 				classNames={{
-					panel: 'm-0 p-0',
+					panel: 'm-0 flex flex-grow flex-col p-0',
 				}}
 			>
 				<Tab title="DLRC Daily">

@@ -17,6 +17,8 @@ import {
 	CardFooter,
 	Tooltip,
 	Checkbox,
+	Autocomplete,
+	AutocompleteItem,
 } from '@nextui-org/react'
 import {
 	useFirestore,
@@ -47,6 +49,8 @@ const pseudonyms = [
 	'DLRC Student',
 	'DLRC Parent',
 ]
+
+const submissionTypes = ['news', 'event', 'story', 'poetry']
 
 export function DailyPublish() {
 	const { theme } = useTheme()
@@ -126,9 +130,9 @@ export function DailyPublish() {
 									Info
 								</ModalHeader>
 								<ModalBody className="pb-6">
-									Publishing articles is not supported on iOS
-									and macOS running Safari, try again on a
-									different device or browser
+									Publishing DLRC Daily articles is not
+									supported on iOS and macOS running Safari,
+									try on a different device or browser
 								</ModalBody>
 							</>
 						)}
@@ -421,7 +425,7 @@ export function DailyPublish() {
 								setSelectedPseudonym(e.target.value)
 							}
 						>
-							{pseudonyms.map((pseudonym: any) => (
+							{pseudonyms.map((pseudonym: string) => (
 								<SelectItem key={pseudonym}>
 									{pseudonym}
 								</SelectItem>
@@ -477,7 +481,7 @@ export function DailyPublish() {
 						</div>
 					)}
 				</div>
-				<div className='flex flex-col w-full gap-2'>
+				<div className="flex w-full flex-col gap-2">
 					<Link
 						className="my-4 ml-1 w-full cursor-pointer text-left text-sm"
 						color="primary"
@@ -511,36 +515,30 @@ export function DailyPublish() {
 				onOpenChange={onGuidelinesOpenChange}
 			>
 				<ModalContent>
-					{() => (
-						<>
-							<ModalHeader>Guidelines</ModalHeader>
-							<ModalBody className="pb-6">
-								<ul className="flex list-disc flex-col gap-4 pl-4">
-									<li>
-										Images must be a single 4:3 aspect ratio
-										photo or graphic (not a collage),
-										without any watermarks or filters
-									</li>
-									<li>
-										Headlines must be in title case and less
-										than or equal to 30 characters in length
-										(click the
-										<MaterialSymbol
-											className="align-bottom"
-											icon="keyboard_capslock"
-											size={22.5}
-										/>
-										button to autocapitalize)
-									</li>
-									<li>
-										Stories must be in either English or
-										Hindi and less than or equal to 300
-										characters in length
-									</li>
-								</ul>
-							</ModalBody>
-						</>
-					)}
+					<ModalHeader>Guidelines</ModalHeader>
+					<ModalBody className="pb-6">
+						<ul className="flex list-disc flex-col gap-4 pl-4">
+							<li>
+								Images must be a single 4:3 aspect ratio photo
+								or graphic (not a collage), without any
+								watermarks or filters
+							</li>
+							<li>
+								Headlines must be in title case and less than or
+								equal to 30 characters in length (click the
+								<MaterialSymbol
+									className="align-bottom"
+									icon="keyboard_capslock"
+									size={22.5}
+								/>
+								button to autocapitalize)
+							</li>
+							<li>
+								Stories must be in either English or Hindi and
+								less than or equal to 300 characters in length
+							</li>
+						</ul>
+					</ModalBody>
 				</ModalContent>
 			</Modal>
 			<Modal
@@ -548,20 +546,16 @@ export function DailyPublish() {
 				onOpenChange={onSubmitSuccessOpenChange}
 			>
 				<ModalContent>
-					{() => (
-						<>
-							<ModalHeader className="flex flex-col gap-1 tap-highlight-transparent">
-								Article Submitted!
-							</ModalHeader>
-							<ModalBody className="pb-5">
-								<p>
-									Your article has been submitted. It should
-									be reviewed and published on DLRC Daily
-									soon, if it isn&apos;t please let us know.
-								</p>
-							</ModalBody>
-						</>
-					)}
+					<ModalHeader className="flex flex-col gap-1 tap-highlight-transparent">
+						Article Submitted!
+					</ModalHeader>
+					<ModalBody className="pb-5">
+						<p>
+							Your article has been submitted. It should be
+							reviewed and published on DLRC Daily soon, if it
+							isn&apos;t please let us know.
+						</p>
+					</ModalBody>
 				</ModalContent>
 			</Modal>
 		</div>
@@ -569,34 +563,41 @@ export function DailyPublish() {
 }
 
 export function MagazinePublish() {
+	const [headline, setHeadline] = useState('')
+	const [submissionLink, setSubmissionLink] = useState('')
+	const [additionalInfo, setAdditionalInfo] = useState('')
 	const [isAnonymous, setIsAnonymous] = useState(false)
+	const [selectedPseudonym, setSelectedPseudonym] = useState('')
+	const [firstName, setFirstName] = useState('')
+	const [lastName, setLastName] = useState('')
 
 	return (
-		<div className="flex h-full w-full flex-col items-center justify-between gap-4">
+		<div className="flex flex-grow flex-col items-center justify-between gap-4">
 			<div className="flex h-full w-full flex-col gap-2">
+				<Autocomplete label="Submission type" variant="underlined">
+					{submissionTypes.map((submissionType: string) => (
+						<AutocompleteItem
+							className="capitalize"
+							key={submissionType}
+							value={submissionType}
+						>
+							{submissionType}
+						</AutocompleteItem>
+					))}
+				</Autocomplete>
 				<Input
+					isRequired
 					autoCapitalize="on"
-					// isInvalid={headline.trim().length > maxHeadlineLength}
-					label="Headline"
-					// value={headline}
+					label="Google doc link"
+					value={submissionLink}
 					variant="underlined"
-					// onValueChange={setHeadline}
+					onValueChange={setSubmissionLink}
 				/>
 				<Textarea
-					isRequired
-					// isInvalid={linkifyPreview(story.trim()).length > maxStoryLength}
-					label="Story"
-					// value={story}
-					variant="underlined"
-					// onValueChange={setStory}
-				/>
-				<Textarea
-					isRequired
-					// isInvalid={linkifyPreview(story.trim()).length > maxStoryLength}
 					label="Additional information"
-					// value={story}
+					value={additionalInfo}
 					variant="underlined"
-					// onValueChange={setStory}
+					onValueChange={setAdditionalInfo}
 				/>
 				<Checkbox
 					className="pt-4"
@@ -611,14 +612,14 @@ export function MagazinePublish() {
 					<Select
 						isRequired
 						label="Pseudonym"
-						// selectedKeys={[selectedPseudonym]}
-						// value={selectedPseudonym}
+						selectedKeys={[selectedPseudonym]}
+						value={selectedPseudonym}
 						variant="underlined"
-						// onChange={(e) =>
-						// 	setSelectedPseudonym(e.target.value)
-						// }
+						onChange={(e) =>
+							setSelectedPseudonym(e.target.value)
+						}
 					>
-						{pseudonyms.map((pseudonym: any) => (
+						{pseudonyms.map((pseudonym: string) => (
 							<SelectItem key={pseudonym}>{pseudonym}</SelectItem>
 						))}
 					</Select>
@@ -629,61 +630,48 @@ export function MagazinePublish() {
 							autoComplete="given-name"
 							label="First name"
 							name="fname"
-							// value={firstName}
+							value={firstName}
 							variant="underlined"
-							// onValueChange={(value) =>
-							// 	setFirstName(
-							// 		value
-							// 			.toLowerCase()
-							// 			.split(' ')
-							// 			.map(
-							// 				(word) =>
-							// 					word
-							// 						.charAt(0)
-							// 						.toUpperCase() +
-							// 					word.slice(1),
-							// 			)
-							// 			.join(' '),
-							// 	)
-							// }
+							onValueChange={(value) =>
+								setFirstName(
+									value
+										.toLowerCase()
+										.split(' ')
+										.map(
+											(word) =>
+												word
+													.charAt(0)
+													.toUpperCase() +
+												word.slice(1),
+										)
+										.join(' '),
+								)
+							}
 						/>
 						<Input
 							autoComplete="family-name"
 							label="Last name"
 							name="lname"
-							// value={lastName}
+							value={lastName}
 							variant="underlined"
-							// onValueChange={(value) =>
-							// 	setLastName(
-							// 		value
-							// 			.toLowerCase()
-							// 			.split(' ')
-							// 			.map(
-							// 				(word) =>
-							// 					word
-							// 						.charAt(0)
-							// 						.toUpperCase() +
-							// 					word.slice(1),
-							// 			)
-							// 			.join(' '),
-							// 	)
-							// }
+							onValueChange={(value) =>
+								setLastName(
+									value
+										.toLowerCase()
+										.split(' ')
+										.map(
+											(word) =>
+												word
+													.charAt(0)
+													.toUpperCase() +
+												word.slice(1),
+										)
+										.join(' '),
+								)
+							}
 						/>
 					</div>
 				)}
-				<Button
-					className="mb-2 mt-4"
-					startContent={
-						<MaterialSymbol
-							className="text-foreground-700"
-							icon="upload"
-							size={20}
-						/>
-					}
-					variant="bordered"
-				>
-					Upload media
-				</Button>
 			</div>
 			<Button
 				fullWidth
