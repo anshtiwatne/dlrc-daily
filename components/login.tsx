@@ -23,7 +23,7 @@ export function Login() {
 	}
 
 	return (
-		<div className="flex h-full items-center justify-center">
+		<div className="flex h-full w-full flex-grow items-center justify-center">
 			<Button
 				className="h-[40px] gap-[10px] border-1 border-[#747775] bg-white px-[12px] text-[#1F1F1F] hover:shadow dark:border-[#E3E3E3] dark:bg-[#131314] dark:text-[#E3E3E3]"
 				radius="full"
