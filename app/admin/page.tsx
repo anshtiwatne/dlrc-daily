@@ -485,22 +485,20 @@ function AuthorTally({ articleDocs }: { articleDocs: DocumentData[] }) {
 		)
 
 	return (
-		<div className="flex w-full max-w-2xl flex-col gap-4">
-			<Table aria-label="Authors table">
-				<TableHeader>
-					<TableColumn align="start">AUTHOR</TableColumn>
-					<TableColumn align="end">ARTICLES</TableColumn>
-				</TableHeader>
-				<TableBody>
-					{Object.entries(authors).map(([author, count]) => (
-						<TableRow key={author}>
-							<TableCell>{author}</TableCell>
-							<TableCell>{count}</TableCell>
-						</TableRow>
-					))}
-				</TableBody>
-			</Table>
-		</div>
+		<Table title='Author Publications'>
+			<TableHeader>
+				<TableColumn align="start">AUTHOR</TableColumn>
+				<TableColumn align="end">ARTICLES</TableColumn>
+			</TableHeader>
+			<TableBody>
+				{Object.entries(authors).map(([author, count]) => (
+					<TableRow key={author}>
+						<TableCell>{author}</TableCell>
+						<TableCell>{count}</TableCell>
+					</TableRow>
+				))}
+			</TableBody>
+		</Table>
 	)
 }
 
@@ -611,22 +609,28 @@ function AdminView({ user }: { user: User }) {
 						onPress={() =>
 							setDateRange({
 								start: parseDate(
-									new Date(Date.now() - 604800000).toISOString().split('T')[0],
+									new Date(Date.now() - 604800000)
+										.toISOString()
+										.split('T')[0],
 								),
-								end: parseDate(new Date().toISOString().split('T')[0]),
+								end: parseDate(
+									new Date().toISOString().split('T')[0],
+								),
 							})
 						}
 					>
 						2w
 					</Button>
 					<Button
-						className='px-6'
+						className="px-6"
 						isIconOnly
 						variant="bordered"
 						onPress={() =>
 							setDateRange({
 								start: parseDate('1970-01-01'),
-								end: parseDate(new Date().toISOString().split('T')[0]),
+								end: parseDate(
+									new Date().toISOString().split('T')[0],
+								),
 							})
 						}
 					>
