@@ -42,15 +42,7 @@ import { linkifyPreview } from '@/utils/text'
 import { dataURLToBlob } from '@/utils/file'
 import { webpSupported } from '@/utils/platform'
 import { ErrMsg } from '@/components/error'
-
-const pseudonyms = [
-	'DLRC Team',
-	'DLRC Facilitator',
-	'DLRC Student',
-	'DLRC Parent',
-]
-
-const submissionTypes = ['news', 'event', 'story', 'poetry']
+import { pseudonyms, submissionTypes } from '@/utils/constants'
 
 export function DailyPublish() {
 	const { theme } = useTheme()

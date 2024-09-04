@@ -18,6 +18,9 @@ import {
 	Tooltip,
 	Link,
 	Divider,
+	DateRangePicker,
+	RangeValue,
+	DateValue,
 } from '@nextui-org/react'
 import { useEffect, useState } from 'react'
 import {
@@ -29,11 +32,12 @@ import {
 	deleteDoc,
 	query,
 	where,
+	and,
 	arrayUnion,
 	arrayRemove,
-} from 'firebase/firestore'
-import { ref, deleteObject } from 'firebase/storage'
-import { User } from 'firebase/auth'
+} from '@firebase/firestore'
+import { ref, deleteObject } from '@firebase/storage'
+import { User } from '@firebase/auth'
 import { MaterialSymbol } from 'react-material-symbols'
 import {
 	useStorage,
@@ -42,6 +46,7 @@ import {
 	useFirestoreDocData,
 	useSigninCheck,
 	useAuth,
+	useFirestoreDocDataOnce,
 } from 'reactfire'
 import clsx from 'clsx'
 
@@ -49,6 +54,8 @@ import { Loader } from '@/components/loader'
 import { Login } from '@/components/login'
 import { ErrMsg } from '@/components/error'
 import { ProfanityBadge } from '@/components/profanity-check'
+import { pseudonyms } from '@/utils/constants'
+import { parseDate, getLocalTimeZone } from '@internationalized/date'
 
 function ModerateArticles({
 	articleSubmissions,
@@ -455,12 +462,62 @@ function ModerateComments({ commentedArticles }: { commentedArticles: any[] }) {
 	)
 }
 
+function AuthorTally({ articleDocs }: { articleDocs: DocumentData[] }) {
+	const authors = Object.entries(
+		articleDocs.reduce(
+			(acc, article) => {
+				if (!pseudonyms.includes(article.author)) {
+					if (!acc[article.author]) acc[article.author] = 1
+					else acc[article.author]++
+				}
+				return acc
+			},
+			{} as Record<string, number>,
+		),
+	)
+		.sort(([, a], [, b]) => b - a)
+		.reduce(
+			(acc, [author, count]) => {
+				acc[author] = count
+				return acc
+			},
+			{} as Record<string, number>,
+		)
+
+	return (
+		<div className="flex w-full max-w-2xl flex-col gap-4">
+			<Table aria-label="Authors table">
+				<TableHeader>
+					<TableColumn align="start">AUTHOR</TableColumn>
+					<TableColumn align="end">ARTICLES</TableColumn>
+				</TableHeader>
+				<TableBody>
+					{Object.entries(authors).map(([author, count]) => (
+						<TableRow key={author}>
+							<TableCell>{author}</TableCell>
+							<TableCell>{count}</TableCell>
+						</TableRow>
+					))}
+				</TableBody>
+			</Table>
+		</div>
+	)
+}
+
 function AdminView({ user }: { user: User }) {
 	const db = useFirestore()
 	const auth = useAuth()
 	const userRef = doc(db, 'users', user.email as string)
+
+	const [dateRange, setDateRange] = useState<RangeValue<DateValue>>({
+		start: parseDate(
+			new Date(Date.now() - 604800000).toISOString().split('T')[0],
+		),
+		end: parseDate(new Date().toISOString().split('T')[0]),
+	})
+
 	const { status: userDataStatus, data: userData } =
-		useFirestoreDocData(userRef)
+		useFirestoreDocDataOnce(userRef)
 	const { data: articleSubmissions, status: articleSubmissionsStatus } =
 		useFirestoreCollectionData(collection(db, 'submissions'))
 	const { data: commentedArticles, status: commentedArticlesStatus } =
@@ -468,6 +525,24 @@ function AdminView({ user }: { user: User }) {
 			query(
 				collection(db, 'articles'),
 				where('submittedComments', '!=', []),
+			),
+		)
+	const { data: recentArticles, status: recentArticlesStatus } =
+		useFirestoreCollectionData(
+			query(
+				collection(db, 'articles'),
+				and(
+					where(
+						'publishDate',
+						'>=',
+						dateRange.start.toDate(getLocalTimeZone()),
+					),
+					where(
+						'publishDate',
+						'<=',
+						dateRange.end.toDate(getLocalTimeZone()),
+					),
+				),
 			),
 		)
 
@@ -516,10 +591,50 @@ function AdminView({ user }: { user: User }) {
 		)
 
 	return (
-		<div className="flex h-full w-full flex-col items-center gap-6 p-6 md:flex-row md:items-start">
-			<ModerateArticles articleSubmissions={articleSubmissions} />
-			<Divider className="md:hidden" />
-			<ModerateComments commentedArticles={commentedArticles} />
+		<div className="flex h-full w-full flex-grow flex-col gap-6 p-6">
+			<div className="flex w-full flex-col items-center gap-6 md:flex-row md:items-start">
+				<ModerateArticles articleSubmissions={articleSubmissions} />
+				<Divider className="md:hidden" />
+				<ModerateComments commentedArticles={commentedArticles} />
+			</div>
+			<Divider />
+			<div className="flex w-full flex-col items-center gap-6 md:flex-row md:items-start">
+				<div className="flex w-full items-center gap-2">
+					<DateRangePicker
+						// label="Date range"
+						value={dateRange}
+						onChange={setDateRange}
+					/>
+					<Button
+						variant="bordered"
+						isIconOnly
+						onPress={() =>
+							setDateRange({
+								start: parseDate(
+									new Date(Date.now() - 604800000).toISOString().split('T')[0],
+								),
+								end: parseDate(new Date().toISOString().split('T')[0]),
+							})
+						}
+					>
+						2w
+					</Button>
+					<Button
+						className='px-6'
+						isIconOnly
+						variant="bordered"
+						onPress={() =>
+							setDateRange({
+								start: parseDate('1970-01-01'),
+								end: parseDate(new Date().toISOString().split('T')[0]),
+							})
+						}
+					>
+						Max
+					</Button>
+				</div>
+				<AuthorTally articleDocs={recentArticles} />
+			</div>
 		</div>
 	)
 }

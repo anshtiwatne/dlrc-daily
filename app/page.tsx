@@ -13,7 +13,7 @@ import {
 	startAfter,
 	getDocs,
 	DocumentData,
-} from 'firebase/firestore'
+} from '@firebase/firestore'
 import { MaterialSymbol } from 'react-material-symbols'
 import { useSearchParams } from 'next/navigation'
 
@@ -183,7 +183,7 @@ export default function Home() {
 					{index === articlesData.length - 1 && (
 						<Progress
 							isIndeterminate
-							className="w-full mt-[-0.25rem]"
+							className="mt-[-0.25rem] w-full"
 							size="sm"
 						/>
 					)}
