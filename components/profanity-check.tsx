@@ -37,8 +37,6 @@ export function ProfanityBadge({ text }: { text: string }) {
 		checkProfanity()
 	}, [text])
 
-	console.log(profanityResult)
-
 	return profanityResult === null ? (
 		<Progress isIndeterminate label="Checking for profanity..." size="sm" />
 	) : (

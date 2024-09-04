@@ -533,12 +533,20 @@ function AdminView({ user }: { user: User }) {
 					where(
 						'publishDate',
 						'>=',
-						dateRange.start.toDate(getLocalTimeZone()),
+						new Date(
+							dateRange.start
+								.toDate(getLocalTimeZone())
+								.setHours(0, 0, 0, 0),
+						),
 					),
 					where(
 						'publishDate',
 						'<=',
-						dateRange.end.toDate(getLocalTimeZone()),
+						new Date(
+							dateRange.end
+								.toDate(getLocalTimeZone())
+								.setHours(23, 59, 59, 999),
+						),
 					),
 				),
 			),
@@ -564,6 +572,7 @@ function AdminView({ user }: { user: User }) {
 	if (
 		articleSubmissionsStatus !== 'success' ||
 		commentedArticlesStatus !== 'success' ||
+		recentArticlesStatus !== 'success' ||
 		userDataStatus !== 'success' ||
 		!userData
 	)
