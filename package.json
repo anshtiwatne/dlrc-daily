@@ -6,7 +6,8 @@
 		"build": "next build",
 		"dev": "next dev",
 		"lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix",
-		"start": "next start"
+		"start": "next start",
+		"format": "prettier --write ."
 	},
 	"dependencies": {
 		"@emotion/react": "^11.13.3",

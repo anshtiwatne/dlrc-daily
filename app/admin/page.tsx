@@ -485,7 +485,7 @@ function AuthorTally({ articleDocs }: { articleDocs: DocumentData[] }) {
 		)
 
 	return (
-		<Table title='Author Publications'>
+		<Table title="Author Publications">
 			<TableHeader>
 				<TableColumn align="start">AUTHOR</TableColumn>
 				<TableColumn align="end">ARTICLES</TableColumn>
@@ -604,7 +604,7 @@ function AdminView({ user }: { user: User }) {
 						onChange={setDateRange}
 					/>
 					<Button
-						variant="bordered"
+						variant="faded"
 						isIconOnly
 						onPress={() =>
 							setDateRange({
@@ -624,7 +624,7 @@ function AdminView({ user }: { user: User }) {
 					<Button
 						className="px-6"
 						isIconOnly
-						variant="bordered"
+						variant="faded"
 						onPress={() =>
 							setDateRange({
 								start: parseDate('1970-01-01'),

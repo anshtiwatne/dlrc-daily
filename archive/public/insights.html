@@ -1,122 +1,220 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insights | DLRC Daily</title>
-    <script defer src="/__/firebase/10.3.0/firebase-app-compat.js"></script>
-    <script defer src="/__/firebase/10.3.0/firebase-firestore-compat.js"></script>
-    <script src='https://cdn.plot.ly/plotly-2.25.2.min.js'></script>
-</head>
-<body style="width: 95%; margin-left: 1.75%; display: flex; justify-content: center; flex-direction: column;">
-    <div id="shortsHistogram"></div>
-    <div id="likesTrend"></div>
-    <div id="internLeaderboard"></div>
-    <div id="authors"></div>
-    <div id="topAuthors2Weeks"></div>
-</body>
-<script type="module">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Insights | DLRC Daily</title>
+		<script defer src="/__/firebase/10.3.0/firebase-app-compat.js"></script>
+		<script
+			defer
+			src="/__/firebase/10.3.0/firebase-firestore-compat.js"
+		></script>
+		<script src="https://cdn.plot.ly/plotly-2.25.2.min.js"></script>
+	</head>
+	<body
+		style="
+			width: 95%;
+			margin-left: 1.75%;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+		"
+	>
+		<div id="shortsHistogram"></div>
+		<div id="likesTrend"></div>
+		<div id="internLeaderboard"></div>
+		<div id="authors"></div>
+		<div id="topAuthors2Weeks"></div>
+	</body>
+	<script type="module">
+		const firebaseConfig = {
+			apiKey: 'AIzaSyCO145OUsjafOByFoghuIQdY1HamdYuO0s',
+			authDomain: 'dlrc-daily.firebaseapp.com',
+			projectId: 'dlrc-daily',
+			storageBucket: 'dlrc-daily.appspot.com',
+			messagingSenderId: '235007567187',
+			appId: '1:235007567187:web:91c604b6d82632c036ada6',
+			measurementId: 'G-Y8SV4T6C2B',
+		}
+		const app = firebase.initializeApp(firebaseConfig)
+		const db = firebase.firestore()
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyCO145OUsjafOByFoghuIQdY1HamdYuO0s",
-        authDomain: "dlrc-daily.firebaseapp.com",
-        projectId: "dlrc-daily",
-        storageBucket: "dlrc-daily.appspot.com",
-        messagingSenderId: "235007567187",
-        appId: "1:235007567187:web:91c604b6d82632c036ada6",
-        measurementId: "G-Y8SV4T6C2B"
-    }
-    const app = firebase.initializeApp(firebaseConfig)
-    const db = firebase.firestore()
+		function reverseSortDict(dictionary) {
+			const entries = Object.entries(dictionary)
+			entries.sort((a, b) => b[1] - a[1])
+			const sortedDict = Object.fromEntries(entries)
 
-    function reverseSortDict(dictionary) {
-        const entries = Object.entries(dictionary);
-        entries.sort((a, b) => b[1] - a[1])
-        const sortedDict = Object.fromEntries(entries)
+			return sortedDict
+		}
 
-        return sortedDict
-    }
+		db.collection('articles')
+			.get()
+			.then((snapshot) => {
+				let articles = []
+				let i = -1
+				let dates = []
+				let likes = {}
+				let authors = []
+				let authors2Weeks = []
+				const now = new Date()
 
-    db.collection("articles").get().then((snapshot) => {
-        let articles = []
-        let i = -1
-        let dates = []
-        let likes = {}
-        let authors = []
-        let authors2Weeks = []
-        const now = new Date()
+				snapshot.docs.forEach((doc) => {
+					const article = doc.data()
+					if (!article.hidden) {
+						const id = doc.id
+						const publishDate = article.publishDate.toDate()
+						const author = article.author
+						articles.push({
+							id: id,
+							publishDate: publishDate,
+							likes: article.likes,
+						})
+						authors.push(author)
 
-        snapshot.docs.forEach(doc => {
-            const article = doc.data()
-            if (!article.hidden) {
-                const id = doc.id
-                const publishDate = article.publishDate.toDate()
-                const author = article.author
-                articles.push({id: id, publishDate: publishDate, likes: article.likes})
-                authors.push(author)
+						if (now - publishDate < 1209600000) {
+							authors2Weeks.push(author)
+						}
+					}
+				})
 
-                if (now - publishDate < 1209600000) {
-                    authors2Weeks.push(author)
-                }
-            }
-        })
+				console.log(`Total Articles: ${articles.length}`)
 
-        console.log(`Total Articles: ${articles.length}`)
+				articles.sort((a, b) => a.publishDate - b.publishDate) // sorting the articles by publishDate
+				articles.forEach((article) => {
+					i++
+					const [publishDate] = new Date(article.publishDate)
+						.toISOString()
+						.split('T')
+					dates.push(publishDate)
+					likes[publishDate] = article.likes
+				})
 
-        articles.sort((a, b) => a.publishDate - b.publishDate) // sorting the articles by publishDate
-        articles.forEach(article => {
-            i++
-            const [publishDate] = new Date(article.publishDate).toISOString().split("T")
-            dates.push(publishDate)
-            likes[publishDate] = article.likes
-        })
+				function Counter(array) {
+					var count = {}
+					array.forEach((val) => (count[val] = (count[val] || 0) + 1))
+					return count
+				}
 
-        function Counter(array) {
-            var count = {}
-            array.forEach(val => count[val] = (count[val] || 0) + 1)
-            return count
-        }
+				const config = { displayModeBar: false }
 
-        const config = { displayModeBar: false }
+				dates = Counter(dates)
+				const shortsHistogramData = [
+					{
+						x: Object.keys(dates),
+						y: Object.values(dates),
+						type: 'bar',
+					},
+				]
+				const shortsHistogramLayout = {
+					title: { text: 'Shorts Histogram' },
+					xaxis: {
+						type: 'date',
+						range: [new Date('2023-08-01') / 1, Date.now()],
+						dtick: 'D1',
+						tickformat: '%e\n%B',
+					},
+				}
+				Plotly.newPlot(
+					'shortsHistogram',
+					shortsHistogramData,
+					shortsHistogramLayout,
+					config,
+				)
 
-        dates = Counter(dates)
-        const shortsHistogramData = [{ x: Object.keys(dates), y: Object.values(dates), type: "bar" }]
-        const shortsHistogramLayout = { title: { text: "Shorts Histogram" }, xaxis: { type: "date", range: [new Date("2023-08-01")/1, Date.now()], dtick: "D1", tickformat: "%e\n%B" } }
-        Plotly.newPlot("shortsHistogram", shortsHistogramData, shortsHistogramLayout, config)
+				const likesTrendData = [
+					{
+						x: Object.keys(likes),
+						y: Object.values(likes),
+						type: 'line',
+					},
+				]
+				const likesTrendLayout = {
+					title: { text: 'Likes Trend' },
+					xaxis: {
+						type: 'date',
+						range: [new Date('2023-08-01') / 1, Date.now()],
+						dtick: 'D1',
+						tickformat: '%e\n%B',
+					},
+				}
+				Plotly.newPlot(
+					'likesTrend',
+					likesTrendData,
+					likesTrendLayout,
+					config,
+				)
 
-        const likesTrendData = [{ x: Object.keys(likes), y: Object.values(likes), type: "line" }]
-        const likesTrendLayout = { title: { text: "Likes Trend" }, xaxis: { type: "date", range: [new Date("2023-08-01")/1, Date.now()], dtick: "D1", tickformat: "%e\n%B" } }
-        Plotly.newPlot("likesTrend", likesTrendData, likesTrendLayout, config)
+				const newsletterInterns = [
+					'Ashwini Sirur',
+					'Janhavi Kaurwar',
+					'Mihika Shah',
+					'Samiya Kelkar',
+					'Shakti Kaurwar',
+					'Maitreyie Saxena',
+				]
+				let interns = {}
+				authors = Counter(authors)
+				authors = reverseSortDict(authors)
 
-        const newsletterInterns = ["Ashwini Sirur", "Janhavi Kaurwar", "Mihika Shah", "Samiya Kelkar", "Shakti Kaurwar", "Maitreyie Saxena"]
-        let interns = {}
-        authors = Counter(authors)
-        authors = reverseSortDict(authors)
+				Object.keys(authors).forEach((author) => {
+					if (newsletterInterns.includes(author)) {
+						interns[author] = authors[author]
+					}
+				})
 
-        Object.keys(authors).forEach(author => {
-            if (newsletterInterns.includes(author)) {
-                interns[author] = authors[author]
-            }
-        })
+				const authorsData = [
+					{
+						x: Object.keys(authors),
+						y: Object.values(authors),
+						type: 'bar',
+					},
+				]
+				const authorsLayout = {
+					title: { text: 'Author Publications (Lifetime)' },
+					xaxis: { type: 'category' },
+				}
+				Plotly.newPlot('authors', authorsData, authorsLayout, config)
 
-        const authorsData = [{ x: Object.keys(authors), y: Object.values(authors), type: "bar" }]
-        const authorsLayout = { title: { text: "Author Publications (Lifetime)" }, xaxis: { type: "category" } }
-        Plotly.newPlot("authors", authorsData, authorsLayout, config)
+				authors2Weeks = Counter(authors2Weeks)
+				authors2Weeks = reverseSortDict(authors2Weeks)
+				const topAuthors2Weeks = [
+					{
+						x: Object.keys(authors2Weeks),
+						y: Object.values(authors2Weeks),
+						type: 'bar',
+					},
+				]
+				const topAuthors2WeeksLayout = {
+					title: { text: 'Author Publications (2 weeks)' },
+					xaxis: { type: 'category' },
+				}
+				Plotly.newPlot(
+					'topAuthors2Weeks',
+					topAuthors2Weeks,
+					topAuthors2WeeksLayout,
+					config,
+				)
 
-        authors2Weeks = Counter(authors2Weeks)
-        authors2Weeks = reverseSortDict(authors2Weeks)
-        const topAuthors2Weeks = [{ x: Object.keys(authors2Weeks), y: Object.values(authors2Weeks), type: "bar" }]
-        const topAuthors2WeeksLayout = { title: { text: "Author Publications (2 weeks)" }, xaxis: { type: "category" } }
-        Plotly.newPlot("topAuthors2Weeks", topAuthors2Weeks, topAuthors2WeeksLayout, config)
+				interns = reverseSortDict(interns)
+				const internLeaderboard = [
+					{
+						x: Object.keys(interns),
+						y: Object.values(interns),
+						type: 'bar',
+					},
+				]
+				const internLeaderboardLayout = {
+					title: { text: 'Intern Leaderboard' },
+					xaxis: { type: 'category' },
+				}
+				Plotly.newPlot(
+					'internLeaderboard',
+					internLeaderboard,
+					internLeaderboardLayout,
+					config,
+				)
 
-        interns = reverseSortDict(interns)
-        const internLeaderboard = [{ x: Object.keys(interns), y: Object.values(interns), type: "bar" }]
-        const internLeaderboardLayout = { title: { text: "Intern Leaderboard" }, xaxis: { type: "category" } }
-        Plotly.newPlot("internLeaderboard", internLeaderboard, internLeaderboardLayout, config)
-
-        console.log(authors)
-
-    })
-
-</script>
+				console.log(authors)
+			})
+	</script>
 </html>

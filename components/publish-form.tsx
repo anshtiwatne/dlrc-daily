@@ -607,9 +607,7 @@ export function MagazinePublish() {
 						selectedKeys={[selectedPseudonym]}
 						value={selectedPseudonym}
 						variant="underlined"
-						onChange={(e) =>
-							setSelectedPseudonym(e.target.value)
-						}
+						onChange={(e) => setSelectedPseudonym(e.target.value)}
 					>
 						{pseudonyms.map((pseudonym: string) => (
 							<SelectItem key={pseudonym}>{pseudonym}</SelectItem>
@@ -631,9 +629,7 @@ export function MagazinePublish() {
 										.split(' ')
 										.map(
 											(word) =>
-												word
-													.charAt(0)
-													.toUpperCase() +
+												word.charAt(0).toUpperCase() +
 												word.slice(1),
 										)
 										.join(' '),
@@ -653,9 +649,7 @@ export function MagazinePublish() {
 										.split(' ')
 										.map(
 											(word) =>
-												word
-													.charAt(0)
-													.toUpperCase() +
+												word.charAt(0).toUpperCase() +
 												word.slice(1),
 										)
 										.join(' '),
