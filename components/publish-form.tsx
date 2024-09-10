@@ -19,6 +19,8 @@ import {
 	Checkbox,
 	Autocomplete,
 	AutocompleteItem,
+	Accordion,
+	AccordionItem,
 } from '@nextui-org/react'
 import {
 	useFirestore,
@@ -505,6 +507,7 @@ export function DailyPublish() {
 			<Modal
 				isOpen={isGuidelinesOpen}
 				onOpenChange={onGuidelinesOpenChange}
+				scrollBehavior='inside'
 			>
 				<ModalContent>
 					<ModalHeader>Guidelines</ModalHeader>
@@ -555,32 +558,117 @@ export function DailyPublish() {
 }
 
 export function MagazinePublish() {
-	const [headline, setHeadline] = useState('')
+	const db = useFirestore()
+	const [submissionType, setSubmissionType] = useState('')
 	const [submissionLink, setSubmissionLink] = useState('')
 	const [additionalInfo, setAdditionalInfo] = useState('')
 	const [isAnonymous, setIsAnonymous] = useState(false)
 	const [selectedPseudonym, setSelectedPseudonym] = useState('')
 	const [firstName, setFirstName] = useState('')
 	const [lastName, setLastName] = useState('')
+	const [isSubmitSuccess, setIsSubmitSuccess] = useState<boolean | null>(null)
+	const [submitBtnDisabled, setSubmitBtnDisabled] = useState(false)
+
+	const {
+		isOpen: isGuidelinesOpen,
+		onOpen: onGuidelinesOpen,
+		onOpenChange: onGuidelinesOpenChange,
+	} = useDisclosure()
+	const {
+		isOpen: isSubmitSuccessOpen,
+		onOpen: onSubmitSuccessOpen,
+		onOpenChange: onSubmitSuccessOpenChange,
+	} = useDisclosure()
+
+	const { data: magazineSubmissions, status: magazineSubmissionsStatus } =
+		useFirestoreCollection(collection(db, 'magazineSubmissions'))
+
+	function getUsedIDs() {
+		return magazineSubmissions.docs.map((doc) => doc.id)
+	}
+
+	function handleSubmit() {
+		console.log(
+			`Submission type: ${submissionType}\nSubmission link: ${submissionLink}\nAdditional info: ${additionalInfo}\nAuthor: ${
+				isAnonymous
+					? selectedPseudonym
+					: `${firstName.trim()} ${lastName.trim()}`.trim()
+			}`,
+		)
+		setSubmitBtnDisabled(true)
+		if (
+			submissionType &&
+			submissionLink &&
+			(firstName.trim() || selectedPseudonym)
+		) {
+			const usedIDs = getUsedIDs()
+			const newID = generateID(usedIDs)
+			const submissionRef = doc(db, 'magazineSubmissions', newID)
+			const author = isAnonymous
+				? selectedPseudonym
+				: `${firstName.trim()} ${lastName.trim()}`.trim() // if no last name, the center space is trimmed
+
+			setDoc(submissionRef, {
+				type: submissionType,
+				url: submissionLink,
+				additionalInfo: additionalInfo,
+				author: author.replace(/\s\s+/g, ' ').trim(),
+			}).then(() => {
+				handleSubmitSuccess()
+			})
+		} else {
+			handleSubmitFailure()
+		}
+	}
+
+	function handleSubmitSuccess() {
+		setIsSubmitSuccess(true)
+		setTimeout(() => {
+			setSubmissionType('')
+			setSubmissionLink('')
+			setFirstName('')
+			setLastName('')
+			setIsAnonymous(false)
+			setSelectedPseudonym('')
+			setIsSubmitSuccess(null)
+			setSubmitBtnDisabled(false)
+			onSubmitSuccessOpen()
+		}, 500)
+	}
+
+	function handleSubmitFailure() {
+		setIsSubmitSuccess(false)
+		setTimeout(() => {
+			setIsSubmitSuccess(null)
+			setSubmitBtnDisabled(false)
+		}, 2000)
+	}
 
 	return (
 		<div className="flex flex-grow flex-col items-center justify-between gap-4">
 			<div className="flex h-full w-full flex-col gap-2">
-				<Autocomplete label="Submission type" variant="underlined">
-					{submissionTypes.map((submissionType: string) => (
-						<AutocompleteItem
-							className="capitalize"
-							key={submissionType}
-							value={submissionType}
-						>
-							{submissionType}
-						</AutocompleteItem>
+				<Select
+					isRequired
+					label="Submission type"
+					selectedKeys={[submissionType]}
+					value={submissionType}
+					variant="underlined"
+					onChange={(e) => setSubmissionType(e.target.value)}
+				>
+					{submissionTypes.map((type: any) => (
+						<SelectItem key={type} textValue={type}>
+							<span
+								className={type === null ? 'text-danger' : ''}
+							>
+								{type || 'None'}
+							</span>
+						</SelectItem>
 					))}
-				</Autocomplete>
+				</Select>
 				<Input
 					isRequired
 					autoCapitalize="on"
-					label="Google doc link"
+					label="Document link"
 					value={submissionLink}
 					variant="underlined"
 					onValueChange={setSubmissionLink}
@@ -659,15 +747,173 @@ export function MagazinePublish() {
 					</div>
 				)}
 			</div>
-			<Button
-				fullWidth
-				color="primary"
-				// disabled={submitBtnDisabled}
-				variant="flat"
-				// onPress={handleSubmit}
+			<div className="flex w-full flex-col gap-2">
+				<Link
+					className="my-4 ml-1 w-full cursor-pointer text-left text-sm"
+					color="primary"
+					onClick={onGuidelinesOpen}
+				>
+					Guidelines
+				</Link>
+				<Button
+					fullWidth
+					color={
+						isSubmitSuccess === null
+							? 'primary'
+							: isSubmitSuccess
+								? 'success'
+								: 'danger'
+					}
+					disabled={submitBtnDisabled}
+					variant={isSubmitSuccess === null ? 'flat' : 'bordered'}
+					onPress={handleSubmit}
+				>
+					{isSubmitSuccess === null
+						? 'Submit'
+						: isSubmitSuccess
+							? 'Submitted!'
+							: 'Check all fields and try again'}
+				</Button>
+			</div>
+			<Modal
+				isOpen={isGuidelinesOpen}
+				onOpenChange={onGuidelinesOpenChange}
+				scrollBehavior='inside'
 			>
-				Submit
-			</Button>
+				<ModalContent>
+					<ModalHeader>Guidelines</ModalHeader>
+					<ModalBody className="pb-6">
+						<Accordion>
+							<AccordionItem title="Content">
+								<ul className="flex list-disc flex-col gap-4 pl-4">
+									<li>
+										All articles, stories, poems, and
+										artwork must be original work.
+										Plagiarism will not be tolerated
+									</li>
+									<li>
+										Content should be relevant to the
+										student body and school community,
+										focusing on topics like school events,
+										student achievements, hobbies, culture,
+										and educational tips
+									</li>
+									<li>
+										Articles should maintain a positive,
+										respectful, and inclusive tone. Content
+										that could be considered offensive,
+										discriminatory, or hurtful to any group
+										or individual is strictly prohibited
+									</li>
+									<li>
+										Ensure that all facts, figures, and
+										statistics are accurate. Sources should
+										be cited where necessary
+									</li>
+								</ul>
+							</AccordionItem>
+							<AccordionItem title="Submission">
+								<ul className="flex list-disc flex-col gap-4 pl-4">
+									<li>
+										All contributions must be submitted by
+										the deadline to allow time for editing
+										and layout design
+									</li>
+									<li>
+										Articles should be submitted in a
+										standard word processing format (e.g.,
+										.docx or Google Docs). Artwork should be
+										submitted as high-resolution images in
+										.jpeg or .png format
+									</li>
+									<li>
+										Articles should be maximum of 500 words,
+										depending on the type and scope of the
+										content
+									</li>
+									<li>
+										Include the name of the contributor +
+										grade and title
+									</li>
+								</ul>
+							</AccordionItem>
+							<AccordionItem title="Moderation">
+								<ul className="flex list-disc flex-col gap-4 pl-4">
+									<li>
+										The editorial team reserves the right to
+										edit submissions for grammar, clarity,
+										length, and content appropriateness.
+										Major changes will be discussed with the
+										author
+									</li>
+									<li>
+										Contributors may receive feedback and be
+										asked to revise their work before final
+										publication
+									</li>
+								</ul>
+							</AccordionItem>
+							<AccordionItem title="Design & Layout">
+								<ul className="flex list-disc flex-col gap-4 pl-4">
+									<li>
+										Maintain a consistent design and layout
+										throughout the magazine, using the same
+										fonts, color schemes, and styles
+									</li>
+									<li>
+										Ensure that text is legible and that the
+										layout is visually appealing and easy to
+										navigate. Avoid cluttering pages with
+										too much content
+									</li>
+									<li>
+										Include images, illustrations, and other
+										visual elements that complement the
+										written content and enhance the overall
+										appeal of the magazine
+									</li>
+								</ul>
+							</AccordionItem>
+							<AccordionItem title="Ethical Considerations">
+								<ul className="flex list-disc flex-col gap-4 pl-4">
+									<li>
+										Obtain permission before publishing any
+										photos or personal information of
+										students, teachers, or staff members
+									</li>
+									<li>
+										Strive for balanced and fair reporting,
+										especially in articles that discuss
+										school policies, events, or student
+										issues
+									</li>
+									<li>
+										Give proper credit to authors,
+										photographers, and artists. Do not use
+										copyrighted material without permission
+									</li>
+								</ul>
+							</AccordionItem>
+						</Accordion>
+					</ModalBody>
+				</ModalContent>
+			</Modal>
+			<Modal
+				isOpen={isSubmitSuccessOpen}
+				onOpenChange={onSubmitSuccessOpenChange}
+			>
+				<ModalContent>
+					<ModalHeader className="flex flex-col gap-1 tap-highlight-transparent">
+						Submitted!
+					</ModalHeader>
+					<ModalBody className="pb-5">
+						<p>
+							Your content has been submitted. Thanks for your
+							contribution!
+						</p>
+					</ModalBody>
+				</ModalContent>
+			</Modal>
 		</div>
 	)
 }

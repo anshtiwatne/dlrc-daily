@@ -3,8 +3,15 @@
 import { Tab, Tabs } from '@nextui-org/react'
 
 import { DailyPublish, MagazinePublish } from '@/components/publish-form'
+import { useSearchParams } from 'next/navigation'
+import { useState } from 'react'
 
 export default function Page() {
+	const searchParams = useSearchParams()
+	const [publishType, setPublishType] = useState<any>(
+		searchParams.get('type') ? searchParams.get('type') : 'daily',
+	)
+
 	return (
 		<div className="flex h-full w-full flex-grow flex-col p-4">
 			<Tabs
@@ -12,11 +19,13 @@ export default function Page() {
 				classNames={{
 					panel: 'm-0 flex flex-grow flex-col p-0',
 				}}
+				selectedKey={publishType}
+				onSelectionChange={setPublishType}
 			>
-				<Tab title="DLRC Daily">
+				<Tab key='daily' title="DLRC Daily">
 					<DailyPublish />
 				</Tab>
-				<Tab isDisabled title="Magazine">
+				<Tab key='magazine' title="Magazine">
 					<MagazinePublish />
 				</Tab>
 			</Tabs>

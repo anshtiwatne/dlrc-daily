@@ -5,4 +5,4 @@ export const pseudonyms = [
 	'DLRC Parent',
 ]
 
-export const submissionTypes = ['news', 'event', 'story', 'poetry']
+export const submissionTypes = ['news', 'event', 'story', 'poetry', 'other']
