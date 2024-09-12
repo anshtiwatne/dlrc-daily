@@ -13,10 +13,6 @@ service cloud.firestore {
 			allow read, create;
 			allow update, delete: if isAdmin()
 		}
-    
-    match /magazineSubmissions/{submissionID} {
-			allow read, write;
-		}
 
 		match /tags/{tagID} {
 			allow read;

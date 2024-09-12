@@ -60,16 +60,6 @@ export function linkifyPreview(text: string) {
 	return text.replace(urlRegex, (url) => `${new URL(url).hostname}`)
 }
 
-export function articleSearch(searchTerm: string, article: DocumentData) {
-	const normalizedSearch = searchTerm.trim().toLowerCase()
-
-	return (
-		article.headline.toLowerCase().includes(normalizedSearch) ||
-		article.story.toLowerCase().includes(normalizedSearch) ||
-		article.author.toLowerCase().includes(normalizedSearch)
-	)
-}
-
 export function abbreviateName(name: string) {
 	const maxLength = 10
 

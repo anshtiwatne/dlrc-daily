@@ -20,7 +20,8 @@ import NextLink from 'next/link'
 
 import { Loader } from '@/components/loader'
 import { ErrMsg } from '@/components/error'
-import { abbreviateName, articleSearch } from '@/utils/text'
+import { abbreviateName } from '@/utils/text'
+import { articleSearch } from '@/utils/search'
 import { timeAgo } from '@/utils/datetime'
 
 export default function Page() {
