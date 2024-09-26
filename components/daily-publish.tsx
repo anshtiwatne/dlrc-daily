@@ -352,7 +352,7 @@ export default function DailyPublish() {
 						<p className="text-sm text-foreground-500">
 							Cover image
 						</p>
-						{dominantColor && (
+						{image && dominantColor && (
 							<div
 								className="h-4 w-4 rounded-full"
 								style={{
