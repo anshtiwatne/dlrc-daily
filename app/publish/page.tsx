@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Tab, Tabs } from '@nextui-org/react'
+
 import DailyPublish from '@/components/daily-publish'
 import MagazinePublish from '@/components/magazine-publish'
 

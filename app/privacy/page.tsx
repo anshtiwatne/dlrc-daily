@@ -1,8 +1,8 @@
 'use client'
 
+import NextLink from 'next/link'
 import { Accordion, AccordionItem, Link } from '@nextui-org/react'
 import { useState, useEffect } from 'react'
-import NextLink from 'next/link'
 
 import { Loader } from '@/components/loader'
 

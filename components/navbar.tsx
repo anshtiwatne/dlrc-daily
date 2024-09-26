@@ -55,7 +55,7 @@ export function Navbar() {
 			onMenuOpenChange={setIsMenuOpen}
 		>
 			<NavbarContent justify="start">
-				<NavbarBrand as="li">
+				<NavbarBrand>
 					<button
 						className="flex items-center justify-start gap-2"
 						onClick={() => (window.location.href = '/')}
