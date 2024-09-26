@@ -1,11 +1,10 @@
 'use client'
 
-import { Tab, Tabs } from '@nextui-org/react'
-
-import { DailyPublish } from '@/components/daily-publish'
-import { MagazinePublish } from '@/components/magazine-publish'
-import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { Tab, Tabs } from '@nextui-org/react'
+import DailyPublish from '@/components/daily-publish'
+import MagazinePublish from '@/components/magazine-publish'
 
 export default function Page() {
 	const searchParams = useSearchParams()

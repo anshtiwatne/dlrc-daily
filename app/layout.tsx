@@ -1,6 +1,5 @@
 import '@/app/globals.css'
 import 'react-material-symbols/rounded'
-import clsx from 'clsx'
 import { Metadata, Viewport } from 'next'
 import { Poppins } from 'next/font/google'
 import { Suspense } from 'react'

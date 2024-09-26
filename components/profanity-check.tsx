@@ -31,6 +31,7 @@ export function ProfanityBadge({ text }: { text: string }) {
 	useEffect(() => {
 		const checkProfanity = async () => {
 			const result = await profanityCheck(text)
+
 			setProfanityResult(result)
 		}
 
@@ -42,13 +43,13 @@ export function ProfanityBadge({ text }: { text: string }) {
 	) : (
 		<Chip
 			className="py-[0.125rem] pl-[0.625rem]"
+			color={profanityResult.isProfanity ? 'danger' : 'success'}
 			startContent={
 				<MaterialSymbol
 					icon={profanityResult.isProfanity ? 'warning' : 'verified'}
 					size={16}
 				/>
 			}
-			color={profanityResult.isProfanity ? 'danger' : 'success'}
 			variant="flat"
 		>
 			{profanityResult.isProfanity

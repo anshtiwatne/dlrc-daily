@@ -11,13 +11,10 @@ import {
 	AccordionItem,
 	Card,
 	CardHeader,
-	Image,
 	CardFooter,
 	CardBody,
 	Link,
 } from '@nextui-org/react'
-
-import { Loader } from '@/components/loader'
 
 function GuidelinesModal({
 	isOpen,
@@ -29,8 +26,8 @@ function GuidelinesModal({
 	return (
 		<Modal
 			isOpen={isOpen}
-			onOpenChange={onOpenChange}
 			scrollBehavior="inside"
+			onOpenChange={onOpenChange}
 		>
 			<ModalContent>
 				<ModalHeader>Guidelines</ModalHeader>
@@ -151,7 +148,7 @@ function GuidelinesModal({
 	)
 }
 
-export function MagazinePublish() {
+export default function MagazinePublish() {
 	const {
 		isOpen: isGuidelinesOpen,
 		onOpen: onGuidelinesOpen,
@@ -191,7 +188,7 @@ export function MagazinePublish() {
 					<CardBody>
 						Have a talent for design? Submit us a design for a cover
 						page for the next issue of the magazine on the theme
-						"The Journey".
+						&quot;The Journey&quot;.
 					</CardBody>
 					<CardFooter className="flex w-full flex-col items-start gap-2">
 						<Link
@@ -210,7 +207,7 @@ export function MagazinePublish() {
 			</div>
 			<Button
 				fullWidth
-				className='mt-4'
+				className="mt-4"
 				color="primary"
 				variant="flat"
 				onPress={onGuidelinesOpen}

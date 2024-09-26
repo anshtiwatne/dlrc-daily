@@ -50,7 +50,7 @@ export function Navbar() {
 			className={navTransparency && !isMenuOpen ? 'bg-transparent' : ''}
 			isBlurred={!navTransparency || isMenuOpen}
 			isBordered={!navTransparency}
-			maxWidth="xl"
+			maxWidth="full"
 			position="sticky"
 			onMenuOpenChange={setIsMenuOpen}
 		>

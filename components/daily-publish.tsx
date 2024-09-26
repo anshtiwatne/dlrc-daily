@@ -17,6 +17,7 @@ import {
 	CardFooter,
 	Tooltip,
 	Checkbox,
+	Spinner,
 } from '@nextui-org/react'
 import {
 	useFirestore,
@@ -53,8 +54,8 @@ function GuidelinesModal({
 	return (
 		<Modal
 			isOpen={isOpen}
-			onOpenChange={onOpenChange}
 			scrollBehavior="inside"
+			onOpenChange={onOpenChange}
 		>
 			<ModalContent>
 				<ModalHeader>Guidelines</ModalHeader>
@@ -101,7 +102,7 @@ function SuccessModal({
 				</ModalHeader>
 				<ModalBody className="pb-5">
 					Your article has been submitted. It should be reviewed and
-					published on DLRC Daily soon, if it isn't please let us
+					published on DLRC Daily soon, if it isn&apos;t please let us
 					know.
 				</ModalBody>
 			</ModalContent>
@@ -109,7 +110,7 @@ function SuccessModal({
 	)
 }
 
-export function DailyPublish() {
+export default function DailyPublish() {
 	const { theme } = useTheme()
 	const db = useFirestore()
 	const storage = useStorage()
@@ -140,8 +141,8 @@ export function DailyPublish() {
 	const [lastName, setLastName] = useState('')
 	const [selectedPseudonym, setSelectedPseudonym] = useState('')
 	const [isAnonymous, setIsAnonymous] = useState(false)
+	const [isSubmitting, setIsSubmitting] = useState(false)
 	const [isSubmitSuccess, setIsSubmitSuccess] = useState<boolean | null>(null)
-	const [submitBtnDisabled, setSubmitBtnDisabled] = useState(false)
 
 	const maxHeadlineLength = 30
 	const maxStoryLength = 300
@@ -215,7 +216,7 @@ export function DailyPublish() {
 	}
 
 	function handleSubmit() {
-		setSubmitBtnDisabled(true)
+		setIsSubmitting(true)
 		if (
 			image &&
 			!isImgLoading &&
@@ -269,7 +270,7 @@ export function DailyPublish() {
 			setIsAnonymous(false)
 			setSelectedPseudonym('')
 			setIsSubmitSuccess(null)
-			setSubmitBtnDisabled(false)
+			setIsSubmitting(false)
 			onSubmitSuccessOpen()
 		}, 500)
 	}
@@ -278,7 +279,7 @@ export function DailyPublish() {
 		setIsSubmitSuccess(false)
 		setTimeout(() => {
 			setIsSubmitSuccess(null)
-			setSubmitBtnDisabled(false)
+			setIsSubmitting(false)
 		}, 2000)
 	}
 
@@ -372,14 +373,16 @@ export function DailyPublish() {
 						isDisabled={isImgLoading}
 						size="sm"
 						startContent={
-							!isImgLoading && (
+							isImgLoading ? (
+								<Spinner color="primary" size="sm" />
+							) : (
 								<MaterialSymbol icon="upload" size={20} />
 							)
 						}
 						variant="flat"
 						onPress={() => fileInputRef.current?.click()}
 					>
-						{isImgLoading ? 'Loading...' : 'Upload'}
+						{isImgLoading ? 'Compressing...' : 'Upload'}
 					</Button>
 				</CardFooter>
 			</Card>
@@ -543,15 +546,26 @@ export function DailyPublish() {
 									? 'success'
 									: 'danger'
 						}
-						disabled={submitBtnDisabled}
+						isDisabled={isSubmitting}
 						variant={isSubmitSuccess === null ? 'flat' : 'bordered'}
 						onPress={handleSubmit}
 					>
-						{isSubmitSuccess === null
-							? 'Submit'
-							: isSubmitSuccess
-								? 'Submitted!'
-								: 'Check all fields and try again'}
+						{isSubmitSuccess === null ? (
+							isSubmitting ? (
+								<Spinner
+									className="flex-row"
+									color="primary"
+									label="Submitting..."
+									size="sm"
+								/>
+							) : (
+								'Submit'
+							)
+						) : isSubmitSuccess ? (
+							'Submitted!'
+						) : (
+							'Check all fields and try again'
+						)}
 					</Button>
 				</div>
 			</div>

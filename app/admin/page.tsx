@@ -49,13 +49,13 @@ import {
 	useFirestoreDocDataOnce,
 } from 'reactfire'
 import clsx from 'clsx'
+import { parseDate, getLocalTimeZone } from '@internationalized/date'
 
 import { Loader } from '@/components/loader'
 import { Login } from '@/components/login'
 import { ErrMsg } from '@/components/error'
 import { ProfanityBadge } from '@/components/profanity-check'
 import { pseudonyms } from '@/utils/constants'
-import { parseDate, getLocalTimeZone } from '@internationalized/date'
 
 function ModerateArticles({
 	articleSubmissions,
@@ -470,6 +470,7 @@ function AuthorTally({ articleDocs }: { articleDocs: DocumentData[] }) {
 					if (!acc[article.author]) acc[article.author] = 1
 					else acc[article.author]++
 				}
+
 				return acc
 			},
 			{} as Record<string, number>,
@@ -479,6 +480,7 @@ function AuthorTally({ articleDocs }: { articleDocs: DocumentData[] }) {
 		.reduce(
 			(acc, [author, count]) => {
 				acc[author] = count
+
 				return acc
 			},
 			{} as Record<string, number>,
@@ -613,8 +615,8 @@ function AdminView({ user }: { user: User }) {
 						onChange={setDateRange}
 					/>
 					<Button
-						variant="faded"
 						isIconOnly
+						variant="faded"
 						onPress={() =>
 							setDateRange({
 								start: parseDate(
@@ -631,8 +633,8 @@ function AdminView({ user }: { user: User }) {
 						2w
 					</Button>
 					<Button
-						className="px-6"
 						isIconOnly
+						className="px-6"
 						variant="faded"
 						onPress={() =>
 							setDateRange({
