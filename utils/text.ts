@@ -1,5 +1,3 @@
-import { DocumentData } from '@firebase/firestore'
-
 export function capitalizeTitle(title: string) {
 	const alwaysLower = [
 		'a',

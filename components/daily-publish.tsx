@@ -242,11 +242,9 @@ export default function DailyPublish() {
 								coverImage: url,
 								color: getBgColor(dominantColor),
 								tag: doc(db, 'tags', selectedTag),
-								headline: headline
-									.replace(/\s\s+/g, ' ')
-									.trim(),
-								story: story.replace(/\s\s+/g, ' ').trim(),
-								author: author.replace(/\s\s+/g, ' ').trim(),
+								headline: headline.replace(/\s+/g, ' ').trim(),
+								story: story.replace(/\s+/g, ' ').trim(),
+								author: author.replace(/\s+/g, ' ').trim(),
 							}).then(() => {
 								handleSubmitSuccess()
 							})
@@ -430,6 +428,9 @@ export default function DailyPublish() {
 							<Button
 								isIconOnly
 								color="primary"
+								isDisabled={
+									headline === capitalizeTitle(headline)
+								}
 								size="sm"
 								variant="faded"
 								onPress={() =>
