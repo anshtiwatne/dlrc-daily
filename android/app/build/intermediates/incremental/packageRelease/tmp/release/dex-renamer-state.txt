@@ -1,4 +1,4 @@
-#Fri Jun 07 20:24:35 IST 2024
-base.0=/home/ansht/Documents/dlrc-daily/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+#Wed Oct 02 13:14:35 IST 2024
+base.0=/home/ansht/Documents/DLRC Daily/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

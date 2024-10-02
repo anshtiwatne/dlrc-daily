@@ -4,7 +4,9 @@
     <!-- Automatically generated file. DO NOT MODIFY -->
 
     <!-- Value from default config. -->
-    <string name="appName" translatable="false">DLRC Daily</string>
+    <bool name="enableNotification">true</bool>
+    <!-- Value from default config. -->
+    <bool name="enableSiteSettingsShortcut">true</bool>
     <!-- Value from default config. -->
     <color name="backgroundColor">#FFFFFF</color>
     <!-- Value from default config. -->
@@ -12,9 +14,17 @@
     <!-- Value from default config. -->
     <color name="colorPrimaryDark">#000000</color>
     <!-- Value from default config. -->
-    <bool name="enableNotification">true</bool>
+    <color name="navigationColor">#000000</color>
     <!-- Value from default config. -->
-    <bool name="enableSiteSettingsShortcut">true</bool>
+    <color name="navigationColorDark">#000000</color>
+    <!-- Value from default config. -->
+    <color name="navigationDividerColor">#000000</color>
+    <!-- Value from default config. -->
+    <color name="navigationDividerColorDark">#000000</color>
+    <!-- Value from default config. -->
+    <integer name="splashScreenFadeOutDuration">300</integer>
+    <!-- Value from default config. -->
+    <string name="appName" translatable="false">DLRC Daily</string>
     <!-- Value from default config. -->
     <string name="fallbackType" translatable="false">customtabs</string>
     <!-- Value from default config. -->
@@ -27,14 +37,6 @@
     <string name="launchUrl" translatable="false">https://daily.dlrc.in/</string>
     <!-- Value from default config. -->
     <string name="launcherName" translatable="false">DLRC Daily</string>
-    <!-- Value from default config. -->
-    <color name="navigationColor">#000000</color>
-    <!-- Value from default config. -->
-    <color name="navigationColorDark">#000000</color>
-    <!-- Value from default config. -->
-    <color name="navigationDividerColor">#000000</color>
-    <!-- Value from default config. -->
-    <color name="navigationDividerColorDark">#000000</color>
     <!-- Value from default config. -->
     <string name="orientation" translatable="false">portrait-primary</string>
     <!-- Value from default config. -->
@@ -51,8 +53,6 @@
     <string name="shortcut_short_name_1" translatable="false">Gallery view</string>
     <!-- Value from default config. -->
     <string name="shortcut_short_name_2" translatable="false">Publish</string>
-    <!-- Value from default config. -->
-    <integer name="splashScreenFadeOutDuration">300</integer>
     <!-- Value from default config. -->
     <string name="webManifestUrl" translatable="false">https://daily.dlrc.in/manifest.webmanifest</string>
 
