@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
-import Image from 'next/image'
-import { Button } from '@nextui-org/react'
-import { useAuth } from 'reactfire'
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
-import { Roboto } from 'next/font/google'
+import Image from "next/image"
+import { Button } from "@nextui-org/react"
+import { useAuth } from "reactfire"
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"
+import { Roboto } from "next/font/google"
 
 const RobotoFont = Roboto({
-	weight: '500',
-	style: 'normal',
-	display: 'swap',
-	subsets: ['latin'],
+	weight: "500",
+	style: "normal",
+	display: "swap",
+	subsets: ["latin"],
 })
 
 export function Login() {

@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import { useEffect, useRef, useState } from 'react'
-import { useFirestore } from 'reactfire'
+import { useEffect, useRef, useState } from "react"
+import { useFirestore } from "reactfire"
 import {
 	doc,
 	getDoc,
@@ -13,13 +13,13 @@ import {
 	startAfter,
 	getDocs,
 	DocumentData,
-} from '@firebase/firestore'
-import { MaterialSymbol } from 'react-material-symbols'
-import { useSearchParams } from 'next/navigation'
+} from "firebase/firestore"
+import MaterialSymbol from "@/components/material-symbol"
+import { useSearchParams } from "next/navigation"
 
-import { Loader } from '@/components/loader'
-import { Article } from '@/components/article'
-import { Progress } from '@nextui-org/react'
+import { Loader } from "@/components/loader"
+import { Article } from "@/components/article"
+import { Chip, Progress } from "@nextui-org/react"
 
 export default function Home() {
 	const db = useFirestore()
@@ -32,42 +32,63 @@ export default function Home() {
 	const [isInitialLoad, setIsInitialLoad] = useState(true)
 	const searchParams = useSearchParams()
 	const isLoading = useRef(false)
-	const articlesRef = collection(useFirestore(), 'articles')
+	const articlesRef = collection(useFirestore(), "articles")
 	const loadMoreRef = useRef(null)
 	const [windowDim, setWindowDim] = useState(
-		typeof window !== 'undefined'
+		typeof window !== "undefined"
 			? { width: window.innerWidth, height: window.innerHeight }
 			: { width: 0, height: 0 },
 	)
 
+	const articleID = searchParams.get("article")
+	const autoscroll = searchParams.get("autoscroll")
+
 	useEffect(() => {
-		if (typeof window === 'undefined') return
+		if (typeof window === "undefined") return
 		const handleResize = () =>
 			setWindowDim({
 				width: window.innerWidth,
 				height: window.innerHeight,
 			})
 
-		window.addEventListener('load', () => {
-			if ('serviceWorker' in navigator) {
-				navigator.serviceWorker.register('/sw.js')
+		window.addEventListener("load", () => {
+			if ("serviceWorker" in navigator) {
+				navigator.serviceWorker.register("/sw.js")
 			}
 		})
-		window.addEventListener('resize', handleResize)
+		window.addEventListener("resize", handleResize)
 
-		return () => window.removeEventListener('resize', handleResize)
+		return () => window.removeEventListener("resize", handleResize)
 	}, [])
 
 	useEffect(() => {
-		const articleID = searchParams.get('article')
-
 		if (articleID) {
-			getDoc(doc(db, 'articles', articleID)).then((doc) => {
+			getDoc(doc(db, "articles", articleID)).then((doc) => {
 				if (doc.exists())
 					setSharedArticle({ ...doc.data(), id: doc.id })
 			})
 		} else {
 			setSharedArticle(false)
+		}
+
+		if (autoscroll) {
+			console.info("slideshow mode activated")
+			const timeDelay = isNaN(parseInt(autoscroll))
+				? 50000
+				: parseInt(autoscroll) * 1000
+			let counter = 1
+
+			const interval = setInterval(() => {
+				const articles = document.querySelectorAll("article")
+				articles[counter % articles.length].scrollIntoView({
+					behavior: "smooth",
+				})
+				counter++
+			}, timeDelay)
+
+			return () => {
+				clearInterval(interval)
+			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
@@ -90,19 +111,19 @@ export default function Home() {
 				: sharedArticle.publishDate
 		const newQuery = startAfterDoc
 			? // the publishDate is the timestamp of when the article was published, it's unlikely for two articles to have the same publishDate down to the millisecond, so it is used as a unique identifier when excluding sharedArticleID since the query is ordered by it
-				query(
-					articlesRef,
-					where('publishDate', '!=', sharedArticleDate),
-					orderBy('publishDate', 'desc'),
-					startAfter(startAfterDoc),
-					limit(3),
-				)
+			query(
+				articlesRef,
+				where("publishDate", "!=", sharedArticleDate),
+				orderBy("publishDate", "desc"),
+				startAfter(startAfterDoc),
+				limit(3),
+			)
 			: query(
-					articlesRef,
-					where('publishDate', '!=', sharedArticleDate),
-					orderBy('publishDate', 'desc'),
-					limit(5),
-				)
+				articlesRef,
+				where("publishDate", "!=", sharedArticleDate),
+				orderBy("publishDate", "desc"),
+				limit(5),
+			)
 
 		const snapshot = await getDocs(newQuery)
 		const newArticles = snapshot.docs.map((doc) => ({
@@ -189,28 +210,35 @@ export default function Home() {
 					)}
 				</>
 			))}
-			{/* <div className="w-full py-4 text-center font-semibold">
-				Loading...
-			</div> */}
-			{windowDim.width >= 1024 && (
-				<div className="fixed bottom-4 right-4 flex items-center gap-1">
-					<MaterialSymbol
-						className="text-neutral-700 text-opacity-75"
-						icon="arrow_upward"
-						size={24}
-						onClick={() =>
-							document.getElementById('articles')?.scrollBy(0, -1)
-						}
-					/>
-					<MaterialSymbol
-						className="text-neutral-700 text-opacity-75"
-						icon="arrow_downward"
-						size={24}
-						onClick={() =>
-							document.getElementById('articles')?.scrollBy(0, 1)
-						}
-					/>
-				</div>
+			{autoscroll ? (
+				<Chip
+					className="fixed bottom-4 right-6 bg-[rgba(255,255,255,0.25)] text-neutral-700 lg:bottom-6 lg:bg-[rgba(255,255,255,0.625)]"
+					size="sm"
+					onClose={() => window.history.replaceState({}, "", "/")}
+				>
+					Autoscroll enabled
+				</Chip>
+			) : (
+				windowDim.width >= 1024 && (
+					<div className="fixed bottom-4 right-4 flex items-center gap-1">
+						<MaterialSymbol
+							className="text-neutral-700 text-opacity-75"
+							icon="arrow_upward"
+							size={24}
+							onClick={() =>
+								document.getElementById("articles")?.scrollBy(0, -1)
+							}
+						/>
+						<MaterialSymbol
+							className="text-neutral-700 text-opacity-75"
+							icon="arrow_downward"
+							size={24}
+							onClick={() =>
+								document.getElementById("articles")?.scrollBy(0, 1)
+							}
+						/>
+					</div>
+				)
 			)}
 		</section>
 	)

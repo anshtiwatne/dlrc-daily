@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { useSearchParams } from 'next/navigation'
-import { Tab, Tabs } from '@nextui-org/react'
+import { useState } from "react"
+import { useSearchParams } from "next/navigation"
+import { Tab, Tabs } from "@nextui-org/react"
 
-import DailyPublish from '@/components/daily-publish'
-import MagazinePublish from '@/components/magazine-publish'
+import DailyPublish from "@/components/daily-publish"
+import MagazinePublish from "@/components/magazine-publish"
 
 export default function Page() {
 	const searchParams = useSearchParams()
 	const [publishType, setPublishType] = useState<any>(
-		searchParams.get('type') ? searchParams.get('type') : 'daily',
+		searchParams.get("type") ? searchParams.get("type") : "daily",
 	)
 
 	return (
@@ -18,7 +18,7 @@ export default function Page() {
 			<Tabs
 				fullWidth
 				classNames={{
-					panel: 'm-0 flex flex-grow flex-col p-0 pt-4',
+					panel: "m-0 flex flex-grow flex-col p-0 pt-4",
 				}}
 				selectedKey={publishType}
 				onSelectionChange={setPublishType}

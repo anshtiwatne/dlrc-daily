@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {
 	Modal,
@@ -8,21 +8,21 @@ import {
 	ModalFooter,
 	Button,
 	useDisclosure,
-} from '@nextui-org/react'
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+} from "@nextui-org/react"
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
 
 export function PublishPrompt() {
 	const router = useRouter()
 	const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
 	useEffect(() => {
-		const promptIgnored = localStorage.getItem('publishPrompt') == '1'
+		const promptIgnored = localStorage.getItem("publishPrompt") == "1"
 
 		if (!promptIgnored) {
 			setTimeout(() => {
 				onOpen()
-				localStorage.setItem('publishPrompt', '1')
+				localStorage.setItem("publishPrompt", "1")
 			}, 100000)
 		}
 	}, [])
@@ -50,7 +50,7 @@ export function PublishPrompt() {
 									variant="flat"
 									onPress={() => {
 										onClose()
-										router.push('/publish')
+										router.push("/publish")
 									}}
 								>
 									Try it now

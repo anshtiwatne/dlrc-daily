@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import { Button } from '@nextui-org/react'
-import { MaterialSymbol } from 'react-material-symbols'
-import NextLink from 'next/link'
+import { Button } from "@nextui-org/react"
+import MaterialSymbol from "@/components/material-symbol"
+import NextLink from "next/link"
 
 type ButtonProps = {
 	text: string
@@ -21,7 +21,7 @@ export function ErrMsg({
 	return (
 		<div
 			className="flex flex-grow flex-col items-center justify-center gap-4"
-			style={{ height: '100% !important' }}
+			style={{ height: "100% !important" }}
 		>
 			<h1 className="text-center text-2xl text-foreground-800">{text}</h1>
 			{buttons && (
@@ -35,7 +35,7 @@ export function ErrMsg({
 								href={button.href}
 								startContent={
 									<MaterialSymbol
-										icon={button.icon as any}
+										icon={button.icon}
 										size={20}
 									/>
 								}
@@ -50,7 +50,7 @@ export function ErrMsg({
 								color="primary"
 								startContent={
 									<MaterialSymbol
-										icon={button.icon as any}
+										icon={button.icon}
 										size={20}
 									/>
 								}

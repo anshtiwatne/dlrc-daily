@@ -30,7 +30,7 @@
 
 	<style>
 		body {
-			font-family: 'Poppins', sans-serif;
+			font-family: "Poppins", sans-serif;
 		}
 
 		input {
@@ -41,7 +41,7 @@
 			margin-top: 2rem;
 		}
 
-		input[type='file'] {
+		input[type="file"] {
 			border: 1px solid var(--border);
 		}
 	</style>
@@ -170,31 +170,31 @@
 		}
 
 		function publish() {
-			const articles = db.collection('articles')
+			const articles = db.collection("articles")
 			const images = storage.ref()
 
-			const file = document.getElementById('coverImage').files[0]
+			const file = document.getElementById("coverImage").files[0]
 			const name = `coverImages/${Date.now()}`
 			const metadata = { contentType: file.type }
 
-			const author = document.getElementById('author').value
-			const headline = document.getElementById('headline').value
-			const story = document.getElementById('story').value
-			const tag = document.getElementById('tag').value
+			const author = document.getElementById("author").value
+			const headline = document.getElementById("headline").value
+			const story = document.getElementById("story").value
+			const tag = document.getElementById("tag").value
 
 			images
 				.child(name)
 				.put(file, metadata)
 				.then((snapshot) => snapshot.ref.getDownloadURL())
 				.then((imageURL) => {
-					const image = document.getElementById('coverImage')
+					const image = document.getElementById("coverImage")
 					image.src = imageURL
-					image.crossOrigin = 'anonymous'
+					image.crossOrigin = "anonymous"
 
-					let imgEl = document.createElement('img')
+					let imgEl = document.createElement("img")
 					imgEl.src = imageURL
-					imgEl.crossOrigin = 'anonymous'
-					imgEl.style.display = 'none'
+					imgEl.crossOrigin = "anonymous"
+					imgEl.style.display = "none"
 
 					imgEl.onload = function () {
 						const bgColor = getBgColor(imgEl)
@@ -211,32 +211,32 @@
 								color: bgColor,
 							})
 							.then(() => {
-								alert('Published!')
-								document.getElementById('publishForm').reset()
+								alert("Published!")
+								document.getElementById("publishForm").reset()
 							})
 					}
 				})
 		}
-		document.getElementById('googleSignIn').onclick = () => {
+		document.getElementById("googleSignIn").onclick = () => {
 			auth.signInWithPopup(provider).then((result) => {
 				const user = result.user
 				const email = user.email
-				if (email === 'ansh.tiwatne@gmail.com') {
-					document.getElementById('googleSignIn').innerHTML =
-						'Verified'
+				if (email === "ansh.tiwatne@gmail.com") {
+					document.getElementById("googleSignIn").innerHTML =
+						"Verified"
 				} else {
-					alert('You are not authorized to publish articles.')
+					alert("You are not authorized to publish articles.")
 				}
 			})
 		}
 		document
-			.getElementById('publishForm')
-			.addEventListener('submit', () => {
-				if (auth.currentUser.email === 'ansh.tiwatne@gmail.com') {
+			.getElementById("publishForm")
+			.addEventListener("submit", () => {
+				if (auth.currentUser.email === "ansh.tiwatne@gmail.com") {
 					publish()
 					// server side checks for google auth email before authenticating write access anyway, this check is only to warn on client side
 				} else {
-					alert('You are not authorized to publish articles.')
+					alert("You are not authorized to publish articles.")
 				}
 			})
 	</script>

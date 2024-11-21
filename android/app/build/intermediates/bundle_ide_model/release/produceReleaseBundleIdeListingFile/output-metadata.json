@@ -1,18 +1,18 @@
 {
-  "version": 3,
-  "artifactType": {
-    "type": "BUNDLE",
-    "kind": "RegularFile"
-  },
-  "applicationId": "in.dlrc.daily.twa",
-  "variantName": "release",
-  "elements": [
-    {
-      "type": "SINGLE",
-      "filters": [],
-      "attributes": [],
-      "outputFile": "../../../../outputs/bundle/release/app-release.aab"
-    }
-  ],
-  "elementType": "File"
+	"version": 3,
+	"artifactType": {
+		"type": "BUNDLE",
+		"kind": "RegularFile"
+	},
+	"applicationId": "in.dlrc.daily.twa",
+	"variantName": "release",
+	"elements": [
+		{
+			"type": "SINGLE",
+			"filters": [],
+			"attributes": [],
+			"outputFile": "../../../../outputs/bundle/release/app-release.aab"
+		}
+	],
+	"elementType": "File"
 }

@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {
 	Avatar,
@@ -9,19 +9,18 @@ import {
 	ModalContent,
 	ModalFooter,
 	ModalHeader,
-} from '@nextui-org/react'
-import clsx from 'clsx'
-import { MaterialSymbol } from 'react-material-symbols'
-import { useState } from 'react'
+} from "@nextui-org/react"
+import MaterialSymbol from "@/components/material-symbol"
+import { useState } from "react"
 import {
 	arrayUnion,
 	updateDoc,
 	DocumentData,
 	DocumentReference,
-} from '@firebase/firestore'
+} from "firebase/firestore"
 
-import { getMillis, timeAgo } from '@/utils/datetime'
-import { getRandomColor } from '@/utils/color'
+import { getMillis, timeAgo } from "@/utils/datetime"
+import { getRandomColor } from "@/utils/color"
 
 function CommentText({ text }: { text: string }) {
 	const [isExpanded, setIsExpanded] = useState(false)
@@ -29,10 +28,7 @@ function CommentText({ text }: { text: string }) {
 	return (
 		// eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
 		<span
-			className={clsx(
-				'text-wrap',
-				isExpanded ? 'line-clamp-none' : 'line-clamp-2',
-			)}
+			className={`${isExpanded ? "line-clamp-none" : "line-clamp-2"} text-wrap`}
 			onClick={() => setIsExpanded((prev) => !prev)}
 		>
 			{text}
@@ -51,25 +47,25 @@ export function CommentsModal({
 	isOpen: boolean
 	onOpenChange: (isOpen: boolean) => void
 }) {
-	const [commentText, setCommentText] = useState('')
+	const [commentText, setCommentText] = useState("")
 	const [commentSuccess, setCommentSuccess] = useState<boolean | null>(null)
 
 	async function handleComment(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault()
-		if (commentText.trim() === '') return
+		if (commentText.trim() === "") return
 		try {
 			await updateDoc(articleRef, {
 				submittedComments: arrayUnion({
-					text: commentText.replace(/\s\s+/g, ' ').trim(),
+					text: commentText.replace(/\s\s+/g, " ").trim(),
 					timestamp: new Date(),
 				}),
 			})
-			setCommentText('')
+			setCommentText("")
 			setCommentSuccess(true)
 			setTimeout(() => setCommentSuccess(null), 2500)
 		} catch (error) {
 			// eslint-disable-next-line no-console
-			console.error('Error updating document: ', error)
+			console.error("Error updating document: ", error)
 			setCommentSuccess(false)
 			setTimeout(() => setCommentSuccess(null), 2500)
 		}
@@ -127,18 +123,18 @@ export function CommentsModal({
 							spellCheck
 							color={
 								commentSuccess === null
-									? 'default'
+									? "default"
 									: commentSuccess
-										? 'success'
-										: 'danger'
+										? "success"
+										: "danger"
 							}
 							isDisabled={commentSuccess !== null}
 							placeholder={
 								commentSuccess === null
-									? 'Add a comment...'
+									? "Add a comment..."
 									: commentSuccess
-										? 'Submitted, will be reviewed'
-										: 'Failed to add comment'
+										? "Submitted, will be reviewed"
+										: "Failed to add comment"
 							}
 							type="text"
 							value={commentText}
@@ -148,17 +144,14 @@ export function CommentsModal({
 						<Button
 							isIconOnly
 							isDisabled={
-								commentText.replace(/\s\s+/g, ' ').trim() ===
-									'' || commentSuccess !== null
+								commentText.replace(/\s\s+/g, " ").trim() ===
+									"" || commentSuccess !== null
 							}
 							type="submit"
 							variant="light"
 						>
 							<MaterialSymbol
-								className={clsx(
-									'text-foreground-700',
-									commentSuccess ? 'animate-send' : '',
-								)}
+								className={`text-foreground-700 ${commentSuccess ? "animate-send" : ""}`}
 								icon="send"
 								size={32}
 							/>

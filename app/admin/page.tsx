@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {
 	Input,
@@ -21,8 +21,8 @@ import {
 	DateRangePicker,
 	RangeValue,
 	DateValue,
-} from '@nextui-org/react'
-import { useEffect, useState } from 'react'
+} from "@nextui-org/react"
+import { useEffect, useState } from "react"
 import {
 	DocumentData,
 	collection,
@@ -35,10 +35,10 @@ import {
 	and,
 	arrayUnion,
 	arrayRemove,
-} from '@firebase/firestore'
-import { ref, deleteObject } from '@firebase/storage'
-import { User } from '@firebase/auth'
-import { MaterialSymbol } from 'react-material-symbols'
+} from "firebase/firestore"
+import { ref, deleteObject } from "firebase/storage"
+import { User } from "firebase/auth"
+import MaterialSymbol from "@/components/material-symbol"
 import {
 	useStorage,
 	useFirestore,
@@ -47,15 +47,14 @@ import {
 	useSigninCheck,
 	useAuth,
 	useFirestoreDocDataOnce,
-} from 'reactfire'
-import clsx from 'clsx'
-import { parseDate, getLocalTimeZone } from '@internationalized/date'
+} from "reactfire"
+import { parseDate, getLocalTimeZone } from "@internationalized/date"
 
-import { Loader } from '@/components/loader'
-import { Login } from '@/components/login'
-import { ErrMsg } from '@/components/error'
-import { ProfanityBadge } from '@/components/profanity-check'
-import { pseudonyms } from '@/utils/constants'
+import { Loader } from "@/components/loader"
+import { Login } from "@/components/login"
+import { ErrMsg } from "@/components/error"
+import { ProfanityBadge } from "@/components/profanity-check"
+import { pseudonyms } from "@/utils/constants"
 
 function ModerateArticles({
 	articleSubmissions,
@@ -64,15 +63,15 @@ function ModerateArticles({
 }) {
 	const db = useFirestore()
 	const storage = useStorage()
-	const [search, setSearch] = useState('')
+	const [search, setSearch] = useState("")
 
 	function SubmissionActions({ submission }: { submission: DocumentData }) {
-		const submissionRef = doc(db, 'submissions', submission.NO_ID_FIELD)
+		const submissionRef = doc(db, "submissions", submission.NO_ID_FIELD)
 		const coverImageRef = ref(
 			storage,
 			`coverImages/${submission.NO_ID_FIELD}.webp`,
 		)
-		const articleRef = doc(db, 'articles', submission.NO_ID_FIELD)
+		const articleRef = doc(db, "articles", submission.NO_ID_FIELD)
 		const { data: tagData } = useFirestoreDocData<DocumentData>(
 			submission.tag,
 		)
@@ -154,7 +153,7 @@ function ModerateArticles({
 					</Tooltip>
 				</div>
 				<Modal
-					className={showBgColor ? 'text-neutral-800' : ''}
+					className={showBgColor ? "text-neutral-800" : ""}
 					isOpen={isViewOpen}
 					placement="center"
 					scrollBehavior="inside"
@@ -180,30 +179,20 @@ function ModerateArticles({
 							/>
 							<div className="flex items-center gap-2">
 								<Chip
-									className={clsx(
-										'py-[0.125rem] pl-[0.625rem]',
-										showBgColor
-											? 'bg-[rgba(255,255,255,0.09375)] text-neutral-800'
-											: '',
-									)}
+									className={`py-[0.125rem] pl-[0.625rem] ${showBgColor ? "bg-[rgba(255,255,255,0.09375)] text-neutral-800" : ""}`}
 									startContent={
 										<MaterialSymbol icon="tag" size={16} />
 									}
-									variant={showBgColor ? 'flat' : 'faded'}
+									variant={showBgColor ? "flat" : "faded"}
 								>
 									{tagData?.text}
 								</Chip>
 								<Chip
-									className={clsx(
-										'py-[0.125rem] pl-[0.625rem]',
-										showBgColor
-											? 'bg-[rgba(255,255,255,0.09375)] text-neutral-800'
-											: '',
-									)}
+									className={`py-[0.125rem] pl-[0.625rem] ${showBgColor ? "bg-[rgba(255,255,255,0.09375)] text-neutral-800" : ""}`}
 									startContent={
 										<MaterialSymbol icon="sell" size={16} />
 									}
-									variant={showBgColor ? 'flat' : 'faded'}
+									variant={showBgColor ? "flat" : "faded"}
 								>
 									{articleRef.id}
 								</Chip>
@@ -212,10 +201,7 @@ function ModerateArticles({
 							<div className="flex items-center gap-1">
 								<span className="text-sm">by</span>
 								<span
-									className={clsx(
-										'font-medium',
-										showBgColor ? 'text-neutral-700' : '',
-									)}
+									className={`font-medium ${showBgColor ? "text-neutral-700" : ""}`}
 								>
 									{submission.author}
 								</span>
@@ -301,14 +287,14 @@ function ModerateComments({ commentedArticles }: { commentedArticles: any[] }) {
 	)
 
 	const db = useFirestore()
-	const [search, setSearch] = useState('')
+	const [search, setSearch] = useState("")
 
 	function SubmissionActions({
 		submission,
 	}: {
 		submission: { comment: any; articleID: string; articleHeadline: string }
 	}) {
-		const articleRef = doc(db, 'articles', submission.articleID)
+		const articleRef = doc(db, "articles", submission.articleID)
 		const {
 			isOpen: isViewOpen,
 			onOpen: onViewOpen,
@@ -507,34 +493,34 @@ function AuthorTally({ articleDocs }: { articleDocs: DocumentData[] }) {
 function AdminView({ user }: { user: User }) {
 	const db = useFirestore()
 	const auth = useAuth()
-	const userRef = doc(db, 'users', user.email as string)
+	const userRef = doc(db, "users", user.email as string)
 
 	const [dateRange, setDateRange] = useState<RangeValue<DateValue>>({
 		start: parseDate(
-			new Date(Date.now() - 604800000).toISOString().split('T')[0],
+			new Date(Date.now() - 604800000).toISOString().split("T")[0],
 		),
-		end: parseDate(new Date().toISOString().split('T')[0]),
+		end: parseDate(new Date().toISOString().split("T")[0]),
 	})
 
 	const { status: userDataStatus, data: userData } =
 		useFirestoreDocDataOnce(userRef)
 	const { data: articleSubmissions, status: articleSubmissionsStatus } =
-		useFirestoreCollectionData(collection(db, 'submissions'))
+		useFirestoreCollectionData(collection(db, "submissions"))
 	const { data: commentedArticles, status: commentedArticlesStatus } =
 		useFirestoreCollectionData(
 			query(
-				collection(db, 'articles'),
-				where('submittedComments', '!=', []),
+				collection(db, "articles"),
+				where("submittedComments", "!=", []),
 			),
 		)
 	const { data: recentArticles, status: recentArticlesStatus } =
 		useFirestoreCollectionData(
 			query(
-				collection(db, 'articles'),
+				collection(db, "articles"),
 				and(
 					where(
-						'publishDate',
-						'>=',
+						"publishDate",
+						">=",
 						new Date(
 							dateRange.start
 								.toDate(getLocalTimeZone())
@@ -542,8 +528,8 @@ function AdminView({ user }: { user: User }) {
 						),
 					),
 					where(
-						'publishDate',
-						'<=',
+						"publishDate",
+						"<=",
 						new Date(
 							dateRange.end
 								.toDate(getLocalTimeZone())
@@ -555,7 +541,7 @@ function AdminView({ user }: { user: User }) {
 		)
 
 	useEffect(() => {
-		if (userDataStatus === 'success') {
+		if (userDataStatus === "success") {
 			setDoc(
 				userRef,
 				{
@@ -572,10 +558,10 @@ function AdminView({ user }: { user: User }) {
 	}, [userDataStatus])
 
 	if (
-		articleSubmissionsStatus !== 'success' ||
-		commentedArticlesStatus !== 'success' ||
-		recentArticlesStatus !== 'success' ||
-		userDataStatus !== 'success' ||
+		articleSubmissionsStatus !== "success" ||
+		commentedArticlesStatus !== "success" ||
+		recentArticlesStatus !== "success" ||
+		userDataStatus !== "success" ||
 		!userData
 	)
 		return <Loader />
@@ -584,14 +570,14 @@ function AdminView({ user }: { user: User }) {
 			<ErrMsg
 				buttons={[
 					{
-						text: 'Home',
-						href: '/',
-						icon: 'home',
+						text: "Home",
+						href: "/",
+						icon: "home",
 					},
 					{
-						text: 'Sign out',
-						href: '#',
-						icon: 'logout',
+						text: "Sign out",
+						href: "#",
+						icon: "logout",
 						onPress: () => auth.signOut(),
 					},
 				]}
@@ -622,10 +608,10 @@ function AdminView({ user }: { user: User }) {
 								start: parseDate(
 									new Date(Date.now() - 604800000)
 										.toISOString()
-										.split('T')[0],
+										.split("T")[0],
 								),
 								end: parseDate(
-									new Date().toISOString().split('T')[0],
+									new Date().toISOString().split("T")[0],
 								),
 							})
 						}
@@ -638,9 +624,9 @@ function AdminView({ user }: { user: User }) {
 						variant="faded"
 						onPress={() =>
 							setDateRange({
-								start: parseDate('1970-01-01'),
+								start: parseDate("1970-01-01"),
 								end: parseDate(
-									new Date().toISOString().split('T')[0],
+									new Date().toISOString().split("T")[0],
 								),
 							})
 						}
@@ -657,7 +643,7 @@ function AdminView({ user }: { user: User }) {
 export default function Page() {
 	const { status, data: signInCheckResult } = useSigninCheck()
 
-	if (status !== 'success') return <Loader />
+	if (status !== "success") return <Loader />
 	const { signedIn, user } = signInCheckResult
 
 	if (!signedIn || !user) return <Login />

@@ -1,13 +1,13 @@
-import { ErrMsg } from '@/components/error'
+import { ErrMsg } from "@/components/error"
 
 export default function Page() {
 	return (
 		<ErrMsg
 			buttons={[
 				{
-					text: 'Home',
-					icon: 'home',
-					href: '/',
+					text: "Home",
+					icon: "home",
+					href: "/",
 				},
 			]}
 			text="Work in progress 🚧"

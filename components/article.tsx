@@ -1,17 +1,17 @@
-'use client'
+"use client"
 
-import { useRouter } from 'next/navigation'
-import { forwardRef, useEffect, useState } from 'react'
-import { doc, increment, updateDoc, DocumentData } from '@firebase/firestore'
-import { useFirestore, useFirestoreDocData } from 'reactfire'
-import { Chip, Link, useDisclosure } from '@nextui-org/react'
-import { MaterialSymbol } from 'react-material-symbols'
-import NextLink from 'next/link'
-import Linkify from 'linkify-react'
+import { useRouter } from "next/navigation"
+import { forwardRef, useEffect, useState } from "react"
+import { doc, increment, updateDoc, DocumentData } from "firebase/firestore"
+import { useFirestore, useFirestoreDocData } from "reactfire"
+import { Chip, Link, useDisclosure } from "@nextui-org/react"
+import MaterialSymbol from "@/components/material-symbol"
+import NextLink from "next/link"
+import Linkify from "linkify-react"
 
-import { Loader } from '@/components/loader'
-import { timeAgo } from '@/utils/datetime'
-import { CommentsModal } from '@/components/comments-modal'
+import { Loader } from "@/components/loader"
+import { timeAgo } from "@/utils/datetime"
+import { CommentsModal } from "@/components/comments-modal"
 
 interface ArticleProps {
 	articleDoc: DocumentData
@@ -43,7 +43,7 @@ function RenderLink({
 function formatLink(value: string, type: string) {
 	const urlRegex = /(https?:\/\/[^\s]+)/g
 
-	if (type === 'url' && urlRegex.test(value)) return new URL(value).hostname
+	if (type === "url" && urlRegex.test(value)) return new URL(value).hostname
 	else return value
 }
 
@@ -59,18 +59,18 @@ function LikeCounter({ count }: { count: string }) {
 	}, [count, newNum])
 
 	const renderDigits = () => {
-		let digits = []
+		const digits = []
 
 		for (let i = 0; i < newNum.length; i++) {
 			const newDigit = newNum[i]
-			const oldDigit = oldNum[i] || ''
+			const oldDigit = oldNum[i] || ""
 			const animateDir =
-				parseInt(newNum) > parseInt(oldNum) ? 'up' : 'down'
+				parseInt(newNum) > parseInt(oldNum) ? "up" : "down"
 
 			digits.push(
 				<span
 					key={i}
-					className={`digit-container ${newDigit !== oldDigit ? `animate-${animateDir}` : ''}`}
+					className={`digit-container ${newDigit !== oldDigit ? `animate-${animateDir}` : ""}`}
 				>
 					{newDigit}
 				</span>,
@@ -85,9 +85,9 @@ function LikeCounter({ count }: { count: string }) {
 
 export const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 	const router = useRouter()
-	const articleRef = doc(useFirestore(), 'articles', props.articleDoc.id)
+	const articleRef = doc(useFirestore(), "articles", props.articleDoc.id)
 	const [isLiked, setIsLiked] = useState(
-		localStorage.getItem(`${props.articleDoc.id}_liked`) === '1',
+		localStorage.getItem(`${props.articleDoc.id}_liked`) === "1",
 	)
 	const [likeCount, setLikeCount] = useState(props.articleDoc.likes)
 	const {
@@ -104,13 +104,13 @@ export const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 				likes: increment(isLiked ? -1 : 1),
 			})
 			if (!isLiked)
-				localStorage.setItem(`${props.articleDoc.id}_liked`, '1')
+				localStorage.setItem(`${props.articleDoc.id}_liked`, "1")
 			else localStorage.removeItem(`${props.articleDoc.id}_liked`)
 			setIsLiked((prev) => !prev)
 			setLikeCount((prev: number) => prev + (isLiked ? -1 : 1))
 		} catch (error) {
 			// eslint-disable-next-line no-console
-			console.error('Error updating document: ', error)
+			console.error("Error updating document: ", error)
 		}
 	}
 
@@ -121,7 +121,7 @@ export const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 		})
 	}
 
-	if (tagStatus !== 'success')
+	if (tagStatus !== "success")
 		return (
 			<article
 				ref={ref}
@@ -143,7 +143,7 @@ export const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 			<div
 				className={`h-[40dvh] w-[${props.windowDim.width}] cursor-pointer bg-cover bg-center lg:h-full lg:min-w-[40dvw] lg:max-w-[60dvw]`}
 				style={{
-					backgroundImage: `linear-gradient(to ${props.windowDim.width >= 1024 ? 'left' : 'top'}, ${props.articleDoc.color}, transparent, transparent), url(${props.articleDoc.coverImage})`,
+					backgroundImage: `linear-gradient(to ${props.windowDim.width >= 1024 ? "left" : "top"}, ${props.articleDoc.color}, transparent, transparent), url(${props.articleDoc.coverImage})`,
 				}}
 				onClick={() => {
 					router.push(props.articleDoc.coverImage)
@@ -180,13 +180,12 @@ export const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 							className="text-sm font-semibold uppercase text-neutral-800 text-opacity-85 underline decoration-2 underline-offset-4 md:text-[0.9375rem]"
 							href={`/gallery?${new URLSearchParams({ tag: props.articleDoc.tag.id }).toString()}`}
 						>
-							{props.articleDoc.tag.id === 'NONE'
-								? ''
+							{props.articleDoc.tag.id === "NONE"
+								? ""
 								: tagData.text}
 						</Link>
 						<MaterialSymbol
-							className="cursor-pointer"
-							color="#404040"
+							className="cursor-pointer text-neutral-700"
 							icon="share"
 							size={24}
 							onClick={handleShare}
@@ -197,7 +196,7 @@ export const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 					</div>
 				</header>
 				<Linkify
-					as={'div'}
+					as={"div"}
 					className="text-[1.0625rem] text-neutral-700 md:py-8 md:text-lg"
 					options={{ render: RenderLink, format: formatLink }}
 				>
@@ -214,7 +213,7 @@ export const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 							{props.articleDoc.author}
 						</Link>
 						<span className="timestamp text-sm text-neutral-700 md:text-base">
-							•{' '}
+							•{" "}
 							{timeAgo(
 								props.articleDoc.publishDate.seconds * 1000,
 							)}
@@ -227,7 +226,7 @@ export const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 							onClick={handleLike}
 						>
 							<MaterialSymbol
-								color="#404040"
+								className="text-neutral-700"
 								fill={isLiked}
 								icon="thumb_up"
 								size={24}
@@ -240,7 +239,7 @@ export const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 							onClick={onCommentsOpen}
 						>
 							<MaterialSymbol
-								color="#404040"
+								className="text-neutral-700"
 								icon="comment"
 								size={24}
 							/>
@@ -273,4 +272,4 @@ export const Article = forwardRef<HTMLElement, ArticleProps>((props, ref) => {
 	)
 })
 
-Article.displayName = 'Article'
+Article.displayName = "Article"

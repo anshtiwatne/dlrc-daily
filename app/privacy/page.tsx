@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import NextLink from 'next/link'
-import { Accordion, AccordionItem, Link } from '@nextui-org/react'
-import { useState, useEffect } from 'react'
+import NextLink from "next/link"
+import { Accordion, AccordionItem, Link } from "@nextui-org/react"
+import { useState, useEffect } from "react"
 
-import { Loader } from '@/components/loader'
+import { Loader } from "@/components/loader"
 
 export default function Page() {
 	const [mounted, setMounted] = useState(false)
@@ -15,7 +15,7 @@ export default function Page() {
 
 	return (
 		<div className="w-full px-4 py-1">
-			<Accordion defaultExpandedKeys={['1']}>
+			<Accordion defaultExpandedKeys={["1"]}>
 				<AccordionItem key="1" title="Introduction">
 					DLRC built the DLRC Daily app as an Open Source app. This
 					SERVICE is provided by DLRC at no cost and is intended for
@@ -139,7 +139,7 @@ export default function Page() {
 				</AccordionItem>
 				<AccordionItem key="10" title="Contact Us">
 					If you have any questions or suggestions about our Privacy
-					Policy, do not hesitate to contact us at{' '}
+					Policy, do not hesitate to contact us at{" "}
 					<Link isExternal as={NextLink} href="dev@dlrc.in">
 						dev@dlrc.in
 					</Link>

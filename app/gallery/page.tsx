@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import Masonry from '@mui/lab/Masonry'
-import { Image, Chip, Input } from '@nextui-org/react'
-import { useEffect, useState } from 'react'
+import Masonry from "@mui/lab/Masonry"
+import { Image, Chip, Input } from "@nextui-org/react"
+import { useEffect, useState } from "react"
 import {
 	collection,
 	query,
@@ -12,32 +12,32 @@ import {
 	where,
 	doc,
 	getDoc,
-} from 'firebase/firestore'
-import { useFirestore, useFirestoreCollectionData } from 'reactfire'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { MaterialSymbol } from 'react-material-symbols'
-import NextLink from 'next/link'
+} from "firebase/firestore"
+import { useFirestore, useFirestoreCollectionData } from "reactfire"
+import { useRouter, useSearchParams } from "next/navigation"
+import MaterialSymbol from "@/components/material-symbol"
+import NextLink from "next/link"
 
-import { Loader } from '@/components/loader'
-import { ErrMsg } from '@/components/error'
-import { abbreviateName } from '@/utils/text'
-import { articleSearch } from '@/utils/search'
-import { timeAgo } from '@/utils/datetime'
+import { Loader } from "@/components/loader"
+import { ErrMsg } from "@/components/error"
+import { abbreviateName } from "@/utils/text"
+import { articleSearch } from "@/utils/search"
+import { timeAgo } from "@/utils/datetime"
 
 export default function Page() {
 	const router = useRouter()
 	const db = useFirestore()
 	const [isMd, setIsMd] = useState<boolean | null>(null)
-	const [tagText, setTagText] = useState('')
-	const [search, setSearch] = useState('')
+	const [tagText, setTagText] = useState("")
+	const [search, setSearch] = useState("")
 	const searchParams = useSearchParams()
-	const tagID = searchParams.get('tag')
-	const author = searchParams.get('author')
+	const tagID = searchParams.get("tag")
+	const author = searchParams.get("author")
 	let coverImagesQuery
 
 	async function fetchTagText() {
 		if (tagID) {
-			const tagDoc = await getDoc(doc(db, 'tags', tagID))
+			const tagDoc = await getDoc(doc(db, "tags", tagID))
 
 			if (tagDoc.exists()) setTagText(tagDoc.data().text)
 		}
@@ -45,19 +45,19 @@ export default function Page() {
 
 	if (tagID) {
 		coverImagesQuery = query(
-			collection(db, 'articles'),
-			where('tag', '==', doc(db, 'tags', tagID)),
+			collection(db, "articles"),
+			where("tag", "==", doc(db, "tags", tagID)),
 		)
 		fetchTagText()
 	} else if (author) {
 		coverImagesQuery = query(
-			collection(db, 'articles'),
-			where('author', '==', author),
+			collection(db, "articles"),
+			where("author", "==", author),
 		)
 	} else {
 		coverImagesQuery = query(
-			collection(db, 'articles'),
-			orderBy('publishDate', 'desc'),
+			collection(db, "articles"),
+			orderBy("publishDate", "desc"),
 			limit(100),
 		)
 	}
@@ -65,26 +65,26 @@ export default function Page() {
 		useFirestoreCollectionData(coverImagesQuery)
 
 	useEffect(() => {
-		if (typeof window === 'undefined') return
+		if (typeof window === "undefined") return
 		const handleResize = () => setIsMd(window.innerWidth > 768)
 
 		setIsMd(window.innerWidth > 768)
-		window.addEventListener('resize', handleResize)
+		window.addEventListener("resize", handleResize)
 
-		return () => window.removeEventListener('resize', handleResize)
+		return () => window.removeEventListener("resize", handleResize)
 	}, [])
 
-	if (articlesStatus !== 'success') return <Loader />
+	if (articlesStatus !== "success") return <Loader />
 
 	if (!articlesData.length)
 		return (
 			<ErrMsg
 				buttons={[
-					{ text: 'Home', icon: 'home', href: '/' },
+					{ text: "Home", icon: "home", href: "/" },
 					{
-						text: 'Gallery view',
-						icon: 'photo_library',
-						href: '/gallery',
+						text: "Gallery view",
+						icon: "photo_library",
+						href: "/gallery",
 					},
 				]}
 				text={
@@ -92,7 +92,7 @@ export default function Page() {
 						? `No articles with tag ${tagText} 🧐`
 						: author
 							? `No articles by ${author} 🧐`
-							: 'No articles found 🧐'
+							: "No articles found 🧐"
 				}
 			/>
 		)
@@ -114,13 +114,13 @@ export default function Page() {
 						radius="md"
 						startContent={
 							<MaterialSymbol
-								color="#404040"
-								icon={tagID ? 'tag' : 'person'}
+								className="text-neutral-700"
+								icon={tagID ? "tag" : "person"}
 								size={16}
 							/>
 						}
 						variant="dot"
-						onClose={() => router.push('/gallery')}
+						onClose={() => router.push("/gallery")}
 					>
 						<span className="text-primary">
 							{tagText || (author && abbreviateName(author))}
@@ -132,7 +132,7 @@ export default function Page() {
 						radius="md"
 						startContent={
 							<MaterialSymbol
-								color="#404040"
+								className="text-neutral-700"
 								icon="calendar_month"
 								size={16}
 							/>
@@ -153,7 +153,7 @@ export default function Page() {
 			<Masonry
 				columns={isMd ? 4 : 3}
 				spacing={isMd ? 2 : 1}
-				sx={{ width: 'auto' }}
+				sx={{ width: "auto" }}
 			>
 				{articlesData
 					.sort(

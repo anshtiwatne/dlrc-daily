@@ -1,40 +1,40 @@
-'use client'
+"use client"
 
-import { Divider, Link } from '@nextui-org/react'
-import { MaterialSymbol } from 'react-material-symbols'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGithub } from '@fortawesome/free-brands-svg-icons'
-import { useEffect, useRef, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import NextLink from 'next/link'
+import { Divider, Link } from "@nextui-org/react"
+import MaterialSymbol from "@/components/material-symbol"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faGithub } from "@fortawesome/free-brands-svg-icons"
+import { useEffect, useRef, useState } from "react"
+import { useRouter } from "next/navigation"
+import NextLink from "next/link"
 
-import { Loader } from '@/components/loader'
+import { Loader } from "@/components/loader"
 
 const aboutLinks = [
 	{
-		text: 'Developed by Ansh Tiwatne',
-		icon: 'code',
-		href: 'https://ansht.com',
+		text: "Developed by Ansh Tiwatne",
+		icon: "code",
+		href: "https://ansht.com",
 	},
 	{
-		text: 'MIT License',
-		icon: 'license',
-		href: 'https://raw.githubusercontent.com/anshtiwatne/dlrc-daily/main/LICENSE',
+		text: "MIT License",
+		icon: "license",
+		href: "https://raw.githubusercontent.com/anshtiwatne/dlrc-daily/main/LICENSE",
 	},
 	{
-		text: 'Contribute on GitHub',
+		text: "Contribute on GitHub",
 		icon: faGithub,
-		href: 'https://github.com/anshtiwatne/dlrc-daily',
+		href: "https://github.com/anshtiwatne/dlrc-daily",
 	},
 	{
 		text: `DLRC Foundation ${new Date().getFullYear()}`,
-		icon: 'copyright',
-		href: 'https://dlrc.in',
+		icon: "copyright",
+		href: "https://dlrc.in",
 	},
 	{
 		text: `Write to us`,
-		icon: 'email',
-		href: 'mailto:dev@dlrc.in',
+		icon: "email",
+		href: "mailto:dev@dlrc.in",
 	},
 ]
 
@@ -47,17 +47,17 @@ export default function Page() {
 	useEffect(() => setMounted(true), [])
 
 	function easterEgg() {
-		easterEggRef.current?.classList.add('animate-spin')
+		easterEggRef.current?.classList.add("animate-spin")
 		setTimeout(() => {
-			easterEggRef.current?.classList.remove('animate-spin')
-			router.push('https://dlrc-inshorts.web.app/')
+			easterEggRef.current?.classList.remove("animate-spin")
+			router.push("https://dlrc-inshorts.web.app/")
 		}, 1000)
 	}
 
 	function handleVersionClick() {
-		easterEggRef.current?.classList.add('animate-bounce')
+		easterEggRef.current?.classList.add("animate-bounce")
 		setTimeout(
-			() => easterEggRef.current?.classList.remove('animate-bounce'),
+			() => easterEggRef.current?.classList.remove("animate-bounce"),
 			500,
 		)
 
@@ -94,16 +94,16 @@ export default function Page() {
 							color="foreground"
 							href={link.href}
 						>
-							{typeof link.icon === 'string' ? (
+							{typeof link.icon === "string" ? (
 								<MaterialSymbol
 									className="text-foreground-800"
-									icon={link.icon as any}
+									icon={link.icon}
 									size={24}
 								/>
 							) : (
 								<FontAwesomeIcon
 									className="px-[0.125rem] text-[1.25rem] text-foreground-800"
-									icon={link.icon as any}
+									icon={link.icon}
 								/>
 							)}
 							{link.text}
@@ -112,16 +112,16 @@ export default function Page() {
 				</div>
 				<Divider />
 				<p className="flex-grow">
-					Homepage design inspired by{' '}
+					Homepage design inspired by{" "}
 					<Link href="https://headlines.scroll.in">
 						headlines.scroll.in
-					</Link>{' '}
+					</Link>{" "}
 					and <Link href="https://inshorts.com">inshorts.com</Link>.
 				</p>
 			</div>
 			<button
 				ref={easterEggRef}
-				style={{ fontFamily: 'monospace' }}
+				style={{ fontFamily: "monospace" }}
 				onClick={handleVersionClick}
 			>
 				version 2.0.0

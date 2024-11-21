@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import { Chip, Progress } from '@nextui-org/react'
-import { useEffect, useState } from 'react'
-import { MaterialSymbol } from 'react-material-symbols'
+import { Chip, Progress } from "@nextui-org/react"
+import { useEffect, useState } from "react"
+import MaterialSymbol from "@/components/material-symbol"
 
 interface ProfanityResult {
 	isProfanity: boolean
@@ -12,11 +12,11 @@ interface ProfanityResult {
 
 export async function profanityCheck(
 	text: string,
-	type: 'vector' | 'tensor' = 'vector',
+	type: "vector" | "tensor" = "vector",
 ): Promise<any> {
 	const res = await fetch(`https://${type}.profanity.dev`, {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({ message: text }),
 	})
 	const json = await res.json()
@@ -43,18 +43,18 @@ export function ProfanityBadge({ text }: { text: string }) {
 	) : (
 		<Chip
 			className="py-[0.125rem] pl-[0.625rem]"
-			color={profanityResult.isProfanity ? 'danger' : 'success'}
+			color={profanityResult.isProfanity ? "danger" : "success"}
 			startContent={
 				<MaterialSymbol
-					icon={profanityResult.isProfanity ? 'warning' : 'verified'}
+					icon={profanityResult.isProfanity ? "warning" : "verified"}
 					size={16}
 				/>
 			}
 			variant="flat"
 		>
 			{profanityResult.isProfanity
-				? 'Profanity detected'
-				: 'No profanity detected'}
+				? "Profanity detected"
+				: "No profanity detected"}
 		</Chip>
 	)
 }

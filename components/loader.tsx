@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { CircularProgress } from '@nextui-org/react'
+import { CircularProgress } from "@nextui-org/react"
 
 export function Loader() {
 	return (

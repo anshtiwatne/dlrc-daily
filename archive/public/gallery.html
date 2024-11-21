@@ -124,11 +124,11 @@
 
 		const queryString = window.location.search
 		const urlParams = new URLSearchParams(queryString)
-		const category = urlParams.get('category')
+		const category = urlParams.get("category")
 		console.log(category)
 
 		function loadImage(image) {
-			document.getElementById('gallery').innerHTML +=
+			document.getElementById("gallery").innerHTML +=
 				/*html*/
 				`
             <figure>
@@ -139,7 +139,7 @@
 		}
 
 		function main() {
-			db.collection('articles')
+			db.collection("articles")
 				.get()
 				.then((snapshot) => {
 					let images = []
@@ -148,8 +148,8 @@
 						const articleData = doc.data()
 						const id = doc.id
 						const publishDate = articleData.publishDate.toDate()
-						const articleURL = new URL('https://daily.dlrc.in/')
-						articleURL.searchParams.append('article', id)
+						const articleURL = new URL("https://daily.dlrc.in/")
+						articleURL.searchParams.append("article", id)
 
 						if (
 							!articleData.hidden &&
@@ -173,19 +173,19 @@
 					})
 
 					if (images.length < 21) {
-						document.getElementById('gallery').style.columnCount =
-							'3'
+						document.getElementById("gallery").style.columnCount =
+							"3"
 						if (window.innerWidth < 1000) {
 							document.getElementById(
-								'gallery',
-							).style.columnCount = '2'
+								"gallery",
+							).style.columnCount = "2"
 						}
 					}
 				})
 				.then(
 					setTimeout(() => {
-						document.getElementById('endScreen').style.display =
-							'none'
+						document.getElementById("endScreen").style.display =
+							"none"
 					}, 1000),
 				)
 		}

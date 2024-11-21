@@ -5,15 +5,15 @@ export function hexToHSL(hex: string) {
 
 	// 3 digits
 	if (hex.length == 4) {
-		r = parseInt('0x' + hex[1] + hex[1], 16)
-		g = parseInt('0x' + hex[2] + hex[2], 16)
-		b = parseInt('0x' + hex[3] + hex[3], 16)
+		r = parseInt("0x" + hex[1] + hex[1], 16)
+		g = parseInt("0x" + hex[2] + hex[2], 16)
+		b = parseInt("0x" + hex[3] + hex[3], 16)
 	}
 	// 6 digits
 	else if (hex.length == 7) {
-		r = parseInt('0x' + hex[1] + hex[2], 16)
-		g = parseInt('0x' + hex[3] + hex[4], 16)
-		b = parseInt('0x' + hex[5] + hex[6], 16)
+		r = parseInt("0x" + hex[1] + hex[2], 16)
+		g = parseInt("0x" + hex[3] + hex[4], 16)
+		b = parseInt("0x" + hex[5] + hex[6], 16)
 	}
 
 	;(r /= 255), (g /= 255), (b /= 255)
@@ -59,7 +59,7 @@ export function rgbToHSL(rgb: string) {
 	const result = rgb.match(/\d+/g)
 
 	if (!result) {
-		throw new Error('Invalid RGB or RGBA string')
+		throw new Error("Invalid RGB or RGBA string")
 	}
 	let r = parseInt(result[0]) / 255
 	let g = parseInt(result[1]) / 255
@@ -122,24 +122,24 @@ export function getRandomColor(seed: string) {
 		return hash
 	}
 	const colors = [
-		'rgba(107, 114, 128, 0.75)',
-		'rgba(239, 68, 68, 0.75)',
-		'rgba(249, 115, 22, 0.75)',
-		'rgba(245, 158, 11, 0.75)',
-		'rgba(234, 179, 8, 0.75)',
-		'rgba(132, 204, 22, 0.75)',
-		'rgba(34, 197, 94, 0.75)',
-		'rgba(16, 185, 129, 0.75)',
-		'rgba(20, 184, 166, 0.75)',
-		'rgba(6, 182, 212, 0.75)',
-		'rgba(14, 165, 233, 0.75)',
-		'rgba(59, 130, 246, 0.75)',
-		'rgba(99, 102, 241, 0.75)',
-		'rgba(139, 92, 246, 0.75)',
-		'rgba(168, 85, 247, 0.75)',
-		'rgba(217, 70, 239, 0.75)',
-		'rgba(236, 72, 153, 0.75)',
-		'rgba(244, 63, 94, 0.75)',
+		"rgba(107, 114, 128, 0.75)",
+		"rgba(239, 68, 68, 0.75)",
+		"rgba(249, 115, 22, 0.75)",
+		"rgba(245, 158, 11, 0.75)",
+		"rgba(234, 179, 8, 0.75)",
+		"rgba(132, 204, 22, 0.75)",
+		"rgba(34, 197, 94, 0.75)",
+		"rgba(16, 185, 129, 0.75)",
+		"rgba(20, 184, 166, 0.75)",
+		"rgba(6, 182, 212, 0.75)",
+		"rgba(14, 165, 233, 0.75)",
+		"rgba(59, 130, 246, 0.75)",
+		"rgba(99, 102, 241, 0.75)",
+		"rgba(139, 92, 246, 0.75)",
+		"rgba(168, 85, 247, 0.75)",
+		"rgba(217, 70, 239, 0.75)",
+		"rgba(236, 72, 153, 0.75)",
+		"rgba(244, 63, 94, 0.75)",
 	]
 	const hash = hashCode(seed)
 	const index = Math.abs(hash) % colors.length

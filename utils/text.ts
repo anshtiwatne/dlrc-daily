@@ -1,21 +1,21 @@
 export function capitalizeTitle(title: string) {
 	const alwaysLower = [
-		'a',
-		'an',
-		'the',
-		'and',
-		'but',
-		'or',
-		'nor',
-		'yet',
-		'so',
-		'on',
-		'to',
-		'in',
-		'up',
-		'down',
-		'of',
-		'for',
+		"a",
+		"an",
+		"the",
+		"and",
+		"but",
+		"or",
+		"nor",
+		"yet",
+		"so",
+		"on",
+		"to",
+		"in",
+		"up",
+		"down",
+		"of",
+		"for",
 	]
 
 	function capitalizeWord(word: string, isFirstOrLast: boolean) {
@@ -26,14 +26,14 @@ export function capitalizeTitle(title: string) {
 		return word
 	}
 
-	const words = title.split(' ')
+	const words = title.split(" ")
 	const len = words.length
 
 	for (let i = 0; i < len; i++) {
 		// If word has a hyphen, process each part
-		if (words[i].includes('-')) {
+		if (words[i].includes("-")) {
 			const hyphenatedParts = words[i]
-				.split('-')
+				.split("-")
 				.map((part, index, arr) => {
 					const isFirstOrLastPart =
 						index === 0 || index === arr.length - 1
@@ -41,7 +41,7 @@ export function capitalizeTitle(title: string) {
 					return capitalizeWord(part, isFirstOrLastPart)
 				})
 
-			words[i] = hyphenatedParts.join('-')
+			words[i] = hyphenatedParts.join("-")
 		} else {
 			const isFirstOrLast = i === 0 || i === len - 1
 
@@ -49,7 +49,7 @@ export function capitalizeTitle(title: string) {
 		}
 	}
 
-	return words.join(' ')
+	return words.join(" ")
 }
 
 export function linkifyPreview(text: string) {
@@ -62,7 +62,7 @@ export function abbreviateName(name: string) {
 	const maxLength = 10
 
 	if (name.length > maxLength) {
-		const [firstName, lastName] = name.split(' ')
+		const [firstName, lastName] = name.split(" ")
 
 		return `${firstName} ${lastName.charAt(0)}.`
 	}

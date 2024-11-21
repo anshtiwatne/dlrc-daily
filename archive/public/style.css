@@ -15,7 +15,7 @@
 body {
 	margin: 0;
 	background-color: var(--bg-color);
-	font-family: 'Poppins', sans-serif;
+	font-family: "Poppins", sans-serif;
 	-ms-overflow-style: none;
 	scrollbar-width: none;
 }
@@ -47,7 +47,7 @@ a {
 
 .logo > .logoTxt {
 	color: rgba(255, 255, 255, 0.75);
-	font-family: 'Roboto Slab', serif;
+	font-family: "Roboto Slab", serif;
 	font-weight: 900;
 	text-shadow: var(--text-shadow);
 	animation: disappearToLeft 1s 5s forwards;
@@ -67,7 +67,7 @@ a {
 	padding-top: 1.325rem;
 	top: 0;
 	right: 0;
-	font-variation-settings: 'FILL' 0;
+	font-variation-settings: "FILL" 0;
 	color: whitesmoke;
 	text-shadow: var(--text-shadow);
 }
@@ -133,7 +133,7 @@ a {
 	font-size: min(0.9rem, 3.5vmin);
 	font-weight: 500;
 	color: var(--timestamp-color);
-	font-variation-settings: 'FILL' 1;
+	font-variation-settings: "FILL" 1;
 }
 
 .fullscreenBtn,
@@ -220,7 +220,7 @@ a {
 	align-items: center;
 	text-align: center;
 	min-height: 100dvh;
-	font-family: 'Poppins', sans-serif;
+	font-family: "Poppins", sans-serif;
 	font-size: min(1.1rem, 4.5vmin);
 	color: whitesmoke;
 	padding: 0 1rem 0;

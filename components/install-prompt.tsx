@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {
 	Modal,
@@ -10,21 +10,21 @@ import {
 	useDisclosure,
 	Image,
 	Link,
-} from '@nextui-org/react'
-import { useEffect } from 'react'
+} from "@nextui-org/react"
+import { useEffect } from "react"
 
 export function InstallPrompt() {
 	const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
 	useEffect(() => {
 		const isMobile = /iPhone|iPod|iPad|Android/i.test(navigator.userAgent)
-		const isPWA = window.matchMedia('(display-mode: standalone)').matches
-		const promptIgnored = localStorage.getItem('installPrompt') == '1'
+		const isPWA = window.matchMedia("(display-mode: standalone)").matches
+		const promptIgnored = localStorage.getItem("installPrompt") == "1"
 
 		if (isMobile && !isPWA && !promptIgnored) {
 			setTimeout(() => {
 				onOpen()
-				localStorage.setItem('installPrompt', '1')
+				localStorage.setItem("installPrompt", "1")
 			}, 25000)
 		}
 	}, [])

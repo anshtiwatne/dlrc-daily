@@ -3,7 +3,7 @@ const db = firebase.firestore()
 const messaging = firebase.messaging()
 
 const isMobile = /iPhone|iPod|iPad|Android/i.test(navigator.userAgent)
-const isPWA = window.matchMedia('(display-mode: standalone)').matches
+const isPWA = window.matchMedia("(display-mode: standalone)").matches
 
 function loadArticle(article, id, hidden = false) {
 	const color = article.color
@@ -15,10 +15,10 @@ function loadArticle(article, id, hidden = false) {
 
 	console.log(window.innerWidth)
 
-	document.getElementById('articles').innerHTML +=
+	document.getElementById("articles").innerHTML +=
 		/*html*/
-		`<div class="article" id="${id}" style="background-color: ${color};" ${hidden ? 'hidden' : ''}>
-        <div class="coverImg" style="background-image: linear-gradient(to ${window.innerWidth >= 1000 ? 'left' : 'top'}, ${color}, transparent, transparent), url(${article.coverImage});"></div>
+		`<div class="article" id="${id}" style="background-color: ${color};" ${hidden ? "hidden" : ""}>
+        <div class="coverImg" style="background-image: linear-gradient(to ${window.innerWidth >= 1000 ? "left" : "top"}, ${color}, transparent, transparent), url(${article.coverImage});"></div>
         <div class="txtContent">
             <header>
                 <div class="title">
@@ -50,7 +50,7 @@ function loadArticle(article, id, hidden = false) {
 
 function timeAgo(date) {
 	if (!(date instanceof Date)) {
-		throw new Error('Invalid input. Please provide a valid Date object.')
+		throw new Error("Invalid input. Please provide a valid Date object.")
 	}
 
 	const now = new Date()
@@ -63,7 +63,7 @@ function timeAgo(date) {
 	const oneYearInMillis = 365 * oneDayInMillis
 
 	if (diffInMillis < oneMinuteInMillis) {
-		return 'now'
+		return "now"
 	} else if (diffInMillis < oneHourInMillis) {
 		const minutes = Math.floor(diffInMillis / oneMinuteInMillis)
 		return `${minutes}min`
@@ -86,40 +86,40 @@ function timeAgo(date) {
 }
 
 function unhideArticles() {
-	const endScreen = document.getElementById('endScreen')
-	endScreen.style.height = '10vh'
+	const endScreen = document.getElementById("endScreen")
+	endScreen.style.height = "10vh"
 	endScreen.innerHTML = "That's all for now :("
-	endScreen.style.scrollSnapAlign = 'none'
+	endScreen.style.scrollSnapAlign = "none"
 	window.scrollTo(0, 0)
 }
 
 function updateLikes() {
-	let likeButtons = document.querySelectorAll('.likeGroup')
+	let likeButtons = document.querySelectorAll(".likeGroup")
 	likeButtons.forEach(function (button) {
-		button.addEventListener('click', () => {
-			const articleID = button.getAttribute('data-id')
-			const articleDoc = db.collection('articles').doc(articleID)
-			const articleLikeBtn = button.querySelector(':nth-child(1)')
-			const articleLikeCount = button.querySelector(':nth-child(2)')
+		button.addEventListener("click", () => {
+			const articleID = button.getAttribute("data-id")
+			const articleDoc = db.collection("articles").doc(articleID)
+			const articleLikeBtn = button.querySelector(":nth-child(1)")
+			const articleLikeCount = button.querySelector(":nth-child(2)")
 
 			if (
-				['0', null].includes(localStorage.getItem(`${articleID}_liked`))
+				["0", null].includes(localStorage.getItem(`${articleID}_liked`))
 			) {
 				const increment = firebase.firestore.FieldValue.increment(1)
 				articleDoc.update({ likes: increment })
 
-				button.setAttribute('data-clicked', 1)
-				localStorage.setItem(`${articleID}_liked`, '1')
+				button.setAttribute("data-clicked", 1)
+				localStorage.setItem(`${articleID}_liked`, "1")
 
 				articleLikeBtn.style = "font-variation-settings: 'FILL' 1;"
 				articleLikeCount.innerHTML =
 					parseInt(articleLikeCount.innerHTML) + 1
-			} else if (localStorage.getItem(`${articleID}_liked`) == '1') {
+			} else if (localStorage.getItem(`${articleID}_liked`) == "1") {
 				const increment = firebase.firestore.FieldValue.increment(-1)
 				articleDoc.update({ likes: increment })
 
-				button.setAttribute('data-clicked', 0)
-				localStorage.setItem(`${articleID}_liked`, '0')
+				button.setAttribute("data-clicked", 0)
+				localStorage.setItem(`${articleID}_liked`, "0")
 
 				articleLikeBtn.style = "font-variation-settings: 'FILL' 0;"
 				articleLikeCount.innerHTML =
@@ -131,16 +131,16 @@ function updateLikes() {
 
 function instructionPromptCheck() {
 	if (
-		localStorage.getItem('instructionPrompt') == null &&
+		localStorage.getItem("instructionPrompt") == null &&
 		isMobile &&
 		isPWA
 	) {
 		setTimeout(
 			alert(
-				'• Swipe up for the next short\n• Click fullscreen to open an image\n• Click share to share the short',
+				"• Swipe up for the next short\n• Click fullscreen to open an image\n• Click share to share the short",
 			),
 		)
-		localStorage.setItem('instructionPrompt', '1')
+		localStorage.setItem("instructionPrompt", "1")
 	}
 }
 
@@ -150,17 +150,17 @@ function linkify(text) {
 }
 
 function shareArticle() {
-	const shareButtons = document.querySelectorAll('.shareBtn')
+	const shareButtons = document.querySelectorAll(".shareBtn")
 	shareButtons.forEach(function (button) {
-		button.addEventListener('click', () => {
-			const articleID = button.getAttribute('data-id')
-			const articleURL = new URL('https://daily.dlrc.in/')
-			articleURL.searchParams.append('article', articleID)
+		button.addEventListener("click", () => {
+			const articleID = button.getAttribute("data-id")
+			const articleURL = new URL("https://daily.dlrc.in/")
+			articleURL.searchParams.append("article", articleID)
 
-			const docRef = db.collection('articles').doc(articleID)
+			const docRef = db.collection("articles").doc(articleID)
 			docRef.get().then((doc) => {
 				const shareData = {
-					title: 'Dlrc Daily Article',
+					title: "Dlrc Daily Article",
 					text: doc.data().headline,
 					url: articleURL,
 				}
@@ -173,7 +173,7 @@ function shareArticle() {
 function goToSharedArticle() {
 	const queryString = window.location.search
 	const urlParams = new URLSearchParams(queryString)
-	const articleID = urlParams.get('article')
+	const articleID = urlParams.get("article")
 
 	if (articleID) {
 		const article = document.getElementById(articleID)
@@ -185,27 +185,27 @@ function goToSharedArticle() {
 			}
 			article.scrollIntoView()
 		} else {
-			alert('Article not found')
+			alert("Article not found")
 		}
 
-		window.history.replaceState({}, document.title, '/')
+		window.history.replaceState({}, document.title, "/")
 	}
 }
 
 function checkSlideshowMode() {
 	const queryString = window.location.search
 	const urlParams = new URLSearchParams(queryString)
-	const slideshow = urlParams.get('slideshow')
+	const slideshow = urlParams.get("slideshow")
 
 	if (slideshow) {
-		alert('Slideshow mode enabled')
-		document.getElementsByClassName('logoTxt')[0].style.animation = 'none'
-		const articles = document.querySelectorAll('.article')
+		alert("Slideshow mode enabled")
+		document.getElementsByClassName("logoTxt")[0].style.animation = "none"
+		const articles = document.querySelectorAll(".article")
 		let currentIndex = 0
 
 		function scrollNext() {
 			const nextIndex = (currentIndex + 1) % articles.length
-			articles[nextIndex].scrollIntoView({ behavior: 'smooth' })
+			articles[nextIndex].scrollIntoView({ behavior: "smooth" })
 			currentIndex = nextIndex
 
 			setTimeout(scrollNext, 5000) // 5 seconds delay before the next scroll
@@ -216,7 +216,7 @@ function checkSlideshowMode() {
 }
 
 function getArticleInView() {
-	let elements = document.querySelectorAll('.article')
+	let elements = document.querySelectorAll(".article")
 
 	elements.forEach((element) => {
 		if (element.hidden !== true) {
@@ -240,7 +240,7 @@ function getArticleInView() {
 }
 
 function showForegroundNotification() {
-	if (typeof navigator.serviceWorker !== 'undefined') {
+	if (typeof navigator.serviceWorker !== "undefined") {
 		navigator.serviceWorker.ready.then((registration) => {
 			messaging.onMessage((payload) => {
 				payload = JSON.parse(JSON.stringify(payload))
@@ -257,7 +257,7 @@ function getFCMToken() {
 	messaging
 		.getToken(messaging, {
 			vapidKey:
-				'BL1R4Annaua2hasnfjxlLFYoZIn6NaoM45RfddzZxsjby1SQEa-l3mMapA4__Q5zFa5YYvgdPi3NT6tZtUOicxE',
+				"BL1R4Annaua2hasnfjxlLFYoZIn6NaoM45RfddzZxsjby1SQEa-l3mMapA4__Q5zFa5YYvgdPi3NT6tZtUOicxE",
 		})
 		.then((currentToken) => {
 			// console.log(currentToken)
@@ -266,30 +266,30 @@ function getFCMToken() {
 
 function notifyMe() {
 	Notification.requestPermission((status) => {
-		console.log('Notification permission status:', status)
+		console.log("Notification permission status:", status)
 
-		if (status === 'granted') {
+		if (status === "granted") {
 			showForegroundNotification()
 			getFCMToken()
 		}
 	})
 	if (
 		!(Notification in window) &&
-		window.matchMedia('(display-mode: standalone)').matches &&
-		localStorage.getItem('notificationAlert') == null
+		window.matchMedia("(display-mode: standalone)").matches &&
+		localStorage.getItem("notificationAlert") == null
 	) {
 		setTimeout(
-			alert('To receive notifications enable them in the app settings'),
+			alert("To receive notifications enable them in the app settings"),
 		)
-		localStorage.setItem('notificationAlert', '1')
+		localStorage.setItem("notificationAlert", "1")
 	}
 }
 
 function promptInstallIfWeb() {
-	const promptIgnored = localStorage.getItem('installPrompt') == '1'
+	const promptIgnored = localStorage.getItem("installPrompt") == "1"
 
 	if (isMobile && !isPWA && !promptIgnored) {
-		window.location.replace('/install.html')
+		window.location.replace("/install.html")
 		return false
 	}
 
@@ -302,7 +302,7 @@ function main() {
 	}
 
 	notifyMe()
-	db.collection('articles')
+	db.collection("articles")
 		.get()
 		.then((snapshot) => {
 			let articles = []
@@ -344,7 +344,7 @@ function main() {
 					instructionPromptCheck()
 					updateLikes()
 					shareArticle()
-					window.addEventListener('scroll', getArticleInView)
+					window.addEventListener("scroll", getArticleInView)
 					checkSlideshowMode()
 				}, 250)
 			}

@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {
 	Button,
@@ -14,7 +14,7 @@ import {
 	CardFooter,
 	CardBody,
 	Link,
-} from '@nextui-org/react'
+} from "@nextui-org/react"
 
 function GuidelinesModal({
 	isOpen,
@@ -176,7 +176,7 @@ export default function MagazinePublish() {
 							Fill out the form
 						</Link>
 						<p className="text-foreground-700">
-							Submission deadline:{' '}
+							Submission deadline:{" "}
 							<span className="font-semibold">Sep 25, 2024</span>
 						</p>
 					</CardFooter>
@@ -199,7 +199,7 @@ export default function MagazinePublish() {
 							Fill out the form
 						</Link>
 						<p className="text-foreground-700">
-							Submission deadline:{' '}
+							Submission deadline:{" "}
 							<span className="font-semibold">Sep 25, 2024</span>
 						</p>
 					</CardFooter>

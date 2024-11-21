@@ -1,8 +1,8 @@
 export const pseudonyms = [
-	'DLRC Team',
-	'DLRC Facilitator',
-	'DLRC Student',
-	'DLRC Parent',
+	"DLRC Team",
+	"DLRC Facilitator",
+	"DLRC Student",
+	"DLRC Parent",
 ]
 
-export const submissionTypes = ['news', 'event', 'story', 'poetry', 'other']
+export const submissionTypes = ["news", "event", "story", "poetry", "other"]

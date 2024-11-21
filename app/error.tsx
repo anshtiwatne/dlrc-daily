@@ -1,15 +1,15 @@
-'use client'
+"use client"
 
-import { useEffect } from 'react'
+import { useEffect } from "react"
 import {
 	Modal,
 	ModalContent,
 	ModalBody,
 	ModalHeader,
 	useDisclosure,
-} from '@nextui-org/react'
+} from "@nextui-org/react"
 
-import { ErrMsg } from '@/components/error'
+import { ErrMsg } from "@/components/error"
 
 export default function Error({
 	error,
@@ -31,14 +31,14 @@ export default function Error({
 			<ErrMsg
 				buttons={[
 					{
-						text: 'More info',
-						icon: 'info',
+						text: "More info",
+						icon: "info",
 						onPress: onOpen,
 					},
 					{
-						text: 'Try again',
-						href: '#',
-						icon: 'refresh',
+						text: "Try again",
+						href: "#",
+						icon: "refresh",
 						onPress: () => reset(),
 					},
 				]}

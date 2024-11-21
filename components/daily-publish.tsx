@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {
 	Input,
@@ -18,31 +18,30 @@ import {
 	Tooltip,
 	Checkbox,
 	Spinner,
-} from '@nextui-org/react'
+} from "@nextui-org/react"
 import {
 	useFirestore,
 	useFirestoreCollectionData,
 	useFirestoreCollection,
 	useStorage,
-} from 'reactfire'
-import { collection, doc, setDoc } from 'firebase/firestore'
-import { ref, getDownloadURL, uploadBytes } from 'firebase/storage'
-import { MaterialSymbol } from 'react-material-symbols'
-import { useRef, useState } from 'react'
-import { useTheme } from 'next-themes'
-// @ts-ignore
-import { useExtractColor } from 'react-extract-colors'
+} from "reactfire"
+import { collection, doc, setDoc } from "firebase/firestore"
+import { ref, getDownloadURL, uploadBytes } from "firebase/storage"
+import MaterialSymbol from "@/components/material-symbol"
+import { useRef, useState } from "react"
+import { useTheme } from "next-themes"
+import { useExtractColors } from "react-extract-colors"
 
-import { Loader } from '@/components/loader'
-import { generateID } from '@/utils/id'
-import { capitalizeTitle } from '@/utils/text'
-import { getBgColor } from '@/utils/color'
-import { linkifyPreview } from '@/utils/text'
-import { dataURLToBlob } from '@/utils/file'
-import { webpSupported } from '@/utils/platform'
-import { ErrMsg } from '@/components/error'
-import { pseudonyms } from '@/utils/constants'
-import { sortTags } from '@/utils/sort'
+import { Loader } from "@/components/loader"
+import { generateID } from "@/utils/id"
+import { capitalizeTitle } from "@/utils/text"
+import { getBgColor } from "@/utils/color"
+import { linkifyPreview } from "@/utils/text"
+import { dataURLToBlob } from "@/utils/file"
+import { webpSupported } from "@/utils/platform"
+import { ErrMsg } from "@/components/error"
+import { pseudonyms } from "@/utils/constants"
+import { sortTags } from "@/utils/sort"
 
 function GuidelinesModal({
 	isOpen,
@@ -134,12 +133,12 @@ export default function DailyPublish() {
 
 	const [image, setImage] = useState<string | null>(null)
 	const [isImgLoading, setIsImgLoading] = useState(false)
-	const [selectedTag, setSelectedTag] = useState('')
-	const [headline, setHeadline] = useState('')
-	const [story, setStory] = useState('')
-	const [firstName, setFirstName] = useState('')
-	const [lastName, setLastName] = useState('')
-	const [selectedPseudonym, setSelectedPseudonym] = useState('')
+	const [selectedTag, setSelectedTag] = useState("")
+	const [headline, setHeadline] = useState("")
+	const [story, setStory] = useState("")
+	const [firstName, setFirstName] = useState("")
+	const [lastName, setLastName] = useState("")
+	const [selectedPseudonym, setSelectedPseudonym] = useState("")
 	const [isAnonymous, setIsAnonymous] = useState(false)
 	const [isSubmitting, setIsSubmitting] = useState(false)
 	const [isSubmitSuccess, setIsSubmitSuccess] = useState<boolean | null>(null)
@@ -148,16 +147,16 @@ export default function DailyPublish() {
 	const maxStoryLength = 300
 
 	const { data: tags, status: tagsStatus } = useFirestoreCollectionData(
-		collection(db, 'tags'),
+		collection(db, "tags"),
 	)
 
 	const { data: articles, status: articlesStatus } = useFirestoreCollection(
-		collection(db, 'articles'),
+		collection(db, "articles"),
 	)
 	const { data: submissions, status: submissionsStatus } =
-		useFirestoreCollection(collection(db, 'submissions'))
+		useFirestoreCollection(collection(db, "submissions"))
 
-	const { dominantColor } = useExtractColor(image)
+	const { dominantColor } = useExtractColors(image as string)
 
 	if (!webpSupported()) {
 		return (
@@ -165,13 +164,13 @@ export default function DailyPublish() {
 				<ErrMsg
 					buttons={[
 						{
-							text: 'Home',
-							href: '/',
-							icon: 'home',
+							text: "Home",
+							href: "/",
+							icon: "home",
 						},
 						{
-							text: 'Info',
-							icon: 'info',
+							text: "Info",
+							icon: "info",
 							onPress: () => onPlatformInfoOpen(),
 						},
 					]}
@@ -201,9 +200,9 @@ export default function DailyPublish() {
 	}
 
 	if (
-		tagsStatus !== 'success' ||
-		articlesStatus !== 'success' ||
-		submissionsStatus !== 'success'
+		tagsStatus !== "success" ||
+		articlesStatus !== "success" ||
+		submissionsStatus !== "success"
 	)
 		return <Loader />
 
@@ -227,7 +226,7 @@ export default function DailyPublish() {
 		) {
 			const usedIDs = getUsedIDs()
 			const newID = generateID(usedIDs)
-			const submissionRef = doc(db, 'submissions', newID)
+			const submissionRef = doc(db, "submissions", newID)
 			const storageRef = ref(storage, `coverImages/${newID}.webp`)
 			const author = isAnonymous
 				? selectedPseudonym
@@ -240,11 +239,11 @@ export default function DailyPublish() {
 						getDownloadURL(storageRef).then((url) => {
 							setDoc(submissionRef, {
 								coverImage: url,
-								color: getBgColor(dominantColor),
-								tag: doc(db, 'tags', selectedTag),
-								headline: headline.replace(/\s+/g, ' ').trim(),
-								story: story.replace(/\s+/g, ' ').trim(),
-								author: author.replace(/\s+/g, ' ').trim(),
+								color: getBgColor(dominantColor as string),
+								tag: doc(db, "tags", selectedTag),
+								headline: headline.replace(/\s+/g, " ").trim(),
+								story: story.replace(/\s+/g, " ").trim(),
+								author: author.replace(/\s+/g, " ").trim(),
 							}).then(() => {
 								handleSubmitSuccess()
 							})
@@ -260,13 +259,13 @@ export default function DailyPublish() {
 		setIsSubmitSuccess(true)
 		setTimeout(() => {
 			setImage(null)
-			setSelectedTag('')
-			setHeadline('')
-			setStory('')
-			setFirstName('')
-			setLastName('')
+			setSelectedTag("")
+			setHeadline("")
+			setStory("")
+			setFirstName("")
+			setLastName("")
 			setIsAnonymous(false)
-			setSelectedPseudonym('')
+			setSelectedPseudonym("")
 			setIsSubmitSuccess(null)
 			setIsSubmitting(false)
 			onSubmitSuccessOpen()
@@ -290,12 +289,12 @@ export default function DailyPublish() {
 			const img = new Image()
 
 			img.onload = async () => {
-				const canvas = document.createElement('canvas')
+				const canvas = document.createElement("canvas")
 
 				canvas.width = img.width
 				canvas.height = img.height
 
-				const ctx = canvas.getContext('2d')
+				const ctx = canvas.getContext("2d")
 
 				ctx?.drawImage(img, 0, 0)
 
@@ -306,7 +305,7 @@ export default function DailyPublish() {
 
 				while (high - low > 0.01) {
 					const quality = (low + high) / 2
-					const webpDataUrl = canvas.toDataURL('image/webp', quality)
+					const webpDataUrl = canvas.toDataURL("image/webp", quality)
 
 					blob = dataURLToBlob(webpDataUrl)
 
@@ -341,7 +340,7 @@ export default function DailyPublish() {
 					<div
 						className="relative w-full rounded-lg bg-cover bg-center pt-[75%] text-white"
 						style={{
-							backgroundImage: `url(${image ?? `/images/img-placeholder-${theme === 'light' ? 'light' : 'dark'}.svg`})`,
+							backgroundImage: `url(${image ?? `/images/img-placeholder-${theme === "light" ? "light" : "dark"}.svg`})`,
 						}}
 					/>
 				</CardBody>
@@ -380,7 +379,7 @@ export default function DailyPublish() {
 						variant="flat"
 						onPress={() => fileInputRef.current?.click()}
 					>
-						{isImgLoading ? 'Compressing...' : 'Upload'}
+						{isImgLoading ? "Compressing..." : "Upload"}
 					</Button>
 				</CardFooter>
 			</Card>
@@ -401,9 +400,9 @@ export default function DailyPublish() {
 							>
 								<span
 									className={
-										tag.NO_ID_FIELD === 'NONE'
-											? 'text-danger'
-											: ''
+										tag.NO_ID_FIELD === "NONE"
+											? "text-danger"
+											: ""
 									}
 								>
 									{tag.text}
@@ -493,7 +492,7 @@ export default function DailyPublish() {
 									setFirstName(
 										value
 											.toLowerCase()
-											.split(' ')
+											.split(" ")
 											.map(
 												(word) =>
 													word
@@ -501,7 +500,7 @@ export default function DailyPublish() {
 														.toUpperCase() +
 													word.slice(1),
 											)
-											.join(' '),
+											.join(" "),
 									)
 								}
 							/>
@@ -515,7 +514,7 @@ export default function DailyPublish() {
 									setLastName(
 										value
 											.toLowerCase()
-											.split(' ')
+											.split(" ")
 											.map(
 												(word) =>
 													word
@@ -523,7 +522,7 @@ export default function DailyPublish() {
 														.toUpperCase() +
 													word.slice(1),
 											)
-											.join(' '),
+											.join(" "),
 									)
 								}
 							/>
@@ -542,13 +541,13 @@ export default function DailyPublish() {
 						fullWidth
 						color={
 							isSubmitSuccess === null
-								? 'primary'
+								? "primary"
 								: isSubmitSuccess
-									? 'success'
-									: 'danger'
+									? "success"
+									: "danger"
 						}
 						isDisabled={isSubmitting}
-						variant={isSubmitSuccess === null ? 'flat' : 'bordered'}
+						variant={isSubmitSuccess === null ? "flat" : "bordered"}
 						onPress={handleSubmit}
 					>
 						{isSubmitSuccess === null ? (
@@ -560,12 +559,12 @@ export default function DailyPublish() {
 									size="sm"
 								/>
 							) : (
-								'Submit'
+								"Submit"
 							)
 						) : isSubmitSuccess ? (
-							'Submitted!'
+							"Submitted!"
 						) : (
-							'Check all fields and try again'
+							"Check all fields and try again"
 						)}
 					</Button>
 				</div>

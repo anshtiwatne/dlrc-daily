@@ -1,63 +1,63 @@
 {
-  "packageId": "in.dlrc.daily.twa",
-  "host": "daily.dlrc.in",
-  "name": "DLRC Daily",
-  "launcherName": "DLRC Daily",
-  "display": "standalone",
-  "themeColor": "#000000",
-  "themeColorDark": "#000000",
-  "navigationColor": "#000000",
-  "navigationColorDark": "#000000",
-  "navigationDividerColor": "#000000",
-  "navigationDividerColorDark": "#000000",
-  "backgroundColor": "#FFFFFF",
-  "enableNotifications": true,
-  "startUrl": "/",
-  "iconUrl": "https://daily.dlrc.in/logos/any.png",
-  "maskableIconUrl": "https://daily.dlrc.in/logos/maskable.png",
-  "monochromeIconUrl": "https://daily.dlrc.in/logos/monochrome.png",
-  "splashScreenFadeOutDuration": 300,
-  "signingKey": {
-    "path": "/home/ansht/Documents/DLRC Daily/signing.keystore",
-    "alias": "upload"
-  },
-  "appVersionName": "7",
-  "appVersionCode": 7,
-  "shortcuts": [
-    {
-      "name": "Shorts",
-      "shortName": "Shorts",
-      "url": "https://daily.dlrc.in/",
-      "chosenIconUrl": "https://daily.dlrc.in/shortcuts/web_stories.png"
-    },
-    {
-      "name": "Gallery view",
-      "shortName": "Gallery view",
-      "url": "https://daily.dlrc.in/gallery",
-      "chosenIconUrl": "https://daily.dlrc.in/shortcuts/photo_library.png"
-    },
-    {
-      "name": "Publish",
-      "shortName": "Publish",
-      "url": "https://daily.dlrc.in/publish",
-      "chosenIconUrl": "https://daily.dlrc.in/shortcuts/newspaper.png"
-    }
-  ],
-  "generatorApp": "bubblewrap-cli",
-  "webManifestUrl": "https://daily.dlrc.in/manifest.webmanifest",
-  "fallbackType": "customtabs",
-  "features": {},
-  "alphaDependencies": {
-    "enabled": false
-  },
-  "enableSiteSettingsShortcut": true,
-  "isChromeOSOnly": false,
-  "isMetaQuest": false,
-  "fullScopeUrl": "https://daily.dlrc.in/",
-  "minSdkVersion": 19,
-  "orientation": "portrait-primary",
-  "fingerprints": [],
-  "additionalTrustedOrigins": [],
-  "retainedBundles": [],
-  "appVersion": "7"
+	"packageId": "in.dlrc.daily.twa",
+	"host": "daily.dlrc.in",
+	"name": "DLRC Daily",
+	"launcherName": "DLRC Daily",
+	"display": "standalone",
+	"themeColor": "#000000",
+	"themeColorDark": "#000000",
+	"navigationColor": "#000000",
+	"navigationColorDark": "#000000",
+	"navigationDividerColor": "#000000",
+	"navigationDividerColorDark": "#000000",
+	"backgroundColor": "#FFFFFF",
+	"enableNotifications": true,
+	"startUrl": "/",
+	"iconUrl": "https://daily.dlrc.in/logos/any.png",
+	"maskableIconUrl": "https://daily.dlrc.in/logos/maskable.png",
+	"monochromeIconUrl": "https://daily.dlrc.in/logos/monochrome.png",
+	"splashScreenFadeOutDuration": 300,
+	"signingKey": {
+		"path": "/home/ansht/Documents/DLRC Daily/signing.keystore",
+		"alias": "upload"
+	},
+	"appVersionName": "7",
+	"appVersionCode": 7,
+	"shortcuts": [
+		{
+			"name": "Shorts",
+			"shortName": "Shorts",
+			"url": "https://daily.dlrc.in/",
+			"chosenIconUrl": "https://daily.dlrc.in/shortcuts/web_stories.png"
+		},
+		{
+			"name": "Gallery view",
+			"shortName": "Gallery view",
+			"url": "https://daily.dlrc.in/gallery",
+			"chosenIconUrl": "https://daily.dlrc.in/shortcuts/photo_library.png"
+		},
+		{
+			"name": "Publish",
+			"shortName": "Publish",
+			"url": "https://daily.dlrc.in/publish",
+			"chosenIconUrl": "https://daily.dlrc.in/shortcuts/newspaper.png"
+		}
+	],
+	"generatorApp": "bubblewrap-cli",
+	"webManifestUrl": "https://daily.dlrc.in/manifest.webmanifest",
+	"fallbackType": "customtabs",
+	"features": {},
+	"alphaDependencies": {
+		"enabled": false
+	},
+	"enableSiteSettingsShortcut": true,
+	"isChromeOSOnly": false,
+	"isMetaQuest": false,
+	"fullScopeUrl": "https://daily.dlrc.in/",
+	"minSdkVersion": 19,
+	"orientation": "portrait-primary",
+	"fingerprints": [],
+	"additionalTrustedOrigins": [],
+	"retainedBundles": [],
+	"appVersion": "7"
 }

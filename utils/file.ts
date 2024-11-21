@@ -1,6 +1,6 @@
 export function dataURLToBlob(dataURL: string) {
-	const parts = dataURL.split(';base64,')
-	const contentType = parts[0].split(':')[1]
+	const parts = dataURL.split(";base64,")
+	const contentType = parts[0].split(":")[1]
 	const raw = window.atob(parts[1])
 	const rawLength = raw.length
 	const uInt8Array = new Uint8Array(rawLength)
