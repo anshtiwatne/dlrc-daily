@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useSearchParams } from "next/navigation"
 import { Tab, Tabs } from "@nextui-org/react"
 
@@ -9,9 +9,17 @@ import MagazinePublish from "@/components/magazine-publish"
 
 export default function Page() {
 	const searchParams = useSearchParams()
-	const [publishType, setPublishType] = useState<any>(
+	const [publishType, setPublishType] = useState(
 		searchParams.get("type") ? searchParams.get("type") : "daily",
 	)
+
+	useEffect(() => {
+		const promptIgnored = localStorage.getItem("publishPrompt") == "1"
+
+		if (!promptIgnored) {
+			localStorage.setItem("publishPrompt", "1")
+		}
+	}, [])
 
 	return (
 		<div className="flex h-full w-full flex-grow flex-col p-4">
@@ -21,7 +29,7 @@ export default function Page() {
 					panel: "m-0 flex flex-grow flex-col p-0 pt-4",
 				}}
 				selectedKey={publishType}
-				onSelectionChange={setPublishType}
+				onSelectionChange={(key) => setPublishType(key.toString())}
 			>
 				<Tab key="daily" title="DLRC Daily">
 					<DailyPublish />

@@ -19,7 +19,7 @@ import MaterialSymbol from "@/components/material-symbol"
 import NextLink from "next/link"
 
 import { Loader } from "@/components/loader"
-import { ErrMsg } from "@/components/error"
+import ErrMsg from "@/components/error-msg"
 import { abbreviateName } from "@/utils/text"
 import { articleSearch } from "@/utils/search"
 import { timeAgo } from "@/utils/datetime"

@@ -1,4 +1,4 @@
-export function timeAgo(date: Date | Number, short = true) {
+export function timeAgo(date: Date | number, short = true) {
 	const now = new Date()
 	const diff = Number(now) - Number(date)
 	const minute = 60 * 1000
@@ -39,7 +39,7 @@ export function timeAgo(date: Date | Number, short = true) {
 	}
 }
 
-export function getMillis(timestamp: any) {
+export function getMillis(timestamp: Date | { seconds: number }) {
 	if (timestamp instanceof Date) {
 		return timestamp.getTime()
 	} else if (timestamp.seconds) {

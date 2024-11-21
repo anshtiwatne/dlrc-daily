@@ -16,9 +16,11 @@ export function hexToHSL(hex: string) {
 		b = parseInt("0x" + hex[5] + hex[6], 16)
 	}
 
-	;(r /= 255), (g /= 255), (b /= 255)
+	r /= 255
+	g /= 255
+	b /= 255
 
-	let max = Math.max(r, g, b),
+	const max = Math.max(r, g, b),
 		min = Math.min(r, g, b)
 	let h,
 		s,
@@ -27,7 +29,7 @@ export function hexToHSL(hex: string) {
 	if (max == min) {
 		h = s = 0
 	} else {
-		let d = max - min
+		const d = max - min
 
 		s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
 
@@ -43,11 +45,11 @@ export function hexToHSL(hex: string) {
 				break
 		}
 
-		// @ts-ignore
+		// @ts-expect-error: h might be undefined
 		h /= 6
 	}
 
-	// @ts-ignore
+	// @ts-expect-error: h might be undefined due to conditional assignment
 	h = Math.round(360 * h)
 	s = Math.round(100 * s)
 	l = Math.round(100 * l)
@@ -61,14 +63,15 @@ export function rgbToHSL(rgb: string) {
 	if (!result) {
 		throw new Error("Invalid RGB or RGBA string")
 	}
-	let r = parseInt(result[0]) / 255
-	let g = parseInt(result[1]) / 255
-	let b = parseInt(result[2]) / 255
+	const r = parseInt(result[0]) / 255
+	const g = parseInt(result[1]) / 255
+	const b = parseInt(result[2]) / 255
 
-	let cmin = Math.min(r, g, b),
-		cmax = Math.max(r, g, b),
-		delta = cmax - cmin,
-		h = 0,
+	const cmin = Math.min(r, g, b)
+	const cmax = Math.max(r, g, b)
+	const delta = cmax - cmin
+
+	let h = 0,
 		s = 0,
 		l = 0
 
@@ -98,7 +101,7 @@ export function rgbToHSL(rgb: string) {
 }
 
 export function getBgColor(rgb: string) {
-	let hsl = rgbToHSL(rgb)
+	const hsl = rgbToHSL(rgb)
 
 	// increase luminosity and saturation if too dark
 	if (hsl.l < 75) {

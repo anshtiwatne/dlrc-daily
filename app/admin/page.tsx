@@ -52,7 +52,7 @@ import { parseDate, getLocalTimeZone } from "@internationalized/date"
 
 import { Loader } from "@/components/loader"
 import { Login } from "@/components/login"
-import { ErrMsg } from "@/components/error"
+import ErrMsg from "@/components/error-msg"
 import { ProfanityBadge } from "@/components/profanity-check"
 import { pseudonyms } from "@/utils/constants"
 
@@ -554,7 +554,6 @@ function AdminView({ user }: { user: User }) {
 				{ merge: true },
 			)
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [userDataStatus])
 
 	if (

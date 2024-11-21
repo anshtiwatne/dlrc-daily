@@ -11,7 +11,7 @@ type ButtonProps = {
 	onPress?: () => void
 }
 
-export function ErrMsg({
+export default function ErrMsg({
 	text,
 	buttons,
 }: {

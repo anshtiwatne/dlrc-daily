@@ -90,12 +90,10 @@ export default function Home() {
 				clearInterval(interval)
 			}
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [articleID, autoscroll])
 
 	useEffect(() => {
 		if (sharedArticle !== null) fetchArticles(null)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [sharedArticle])
 
 	async function fetchArticles(startAfterDoc: DocumentData | null) {
@@ -111,19 +109,19 @@ export default function Home() {
 				: sharedArticle.publishDate
 		const newQuery = startAfterDoc
 			? // the publishDate is the timestamp of when the article was published, it's unlikely for two articles to have the same publishDate down to the millisecond, so it is used as a unique identifier when excluding sharedArticleID since the query is ordered by it
-			query(
-				articlesRef,
-				where("publishDate", "!=", sharedArticleDate),
-				orderBy("publishDate", "desc"),
-				startAfter(startAfterDoc),
-				limit(3),
-			)
+				query(
+					articlesRef,
+					where("publishDate", "!=", sharedArticleDate),
+					orderBy("publishDate", "desc"),
+					startAfter(startAfterDoc),
+					limit(3),
+				)
 			: query(
-				articlesRef,
-				where("publishDate", "!=", sharedArticleDate),
-				orderBy("publishDate", "desc"),
-				limit(5),
-			)
+					articlesRef,
+					where("publishDate", "!=", sharedArticleDate),
+					orderBy("publishDate", "desc"),
+					limit(5),
+				)
 
 		const snapshot = await getDocs(newQuery)
 		const newArticles = snapshot.docs.map((doc) => ({
@@ -166,7 +164,6 @@ export default function Home() {
 		return () => {
 			if (currentRef) observer.unobserve(currentRef)
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [lastDoc, hasMore, isInitialLoad])
 
 	if (!articlesData.length) {
@@ -193,11 +190,7 @@ export default function Home() {
 				<Fragment key={i}>
 					<Article
 						key={article.id}
-						ref={
-							i === articlesData.length - 1
-								? loadMoreRef
-								: null
-						}
+						ref={i === articlesData.length - 1 ? loadMoreRef : null}
 						articleDoc={article}
 						isShared={false}
 						windowDim={windowDim}
@@ -227,7 +220,9 @@ export default function Home() {
 							icon="arrow_upward"
 							size={24}
 							onClick={() =>
-								document.getElementById("articles")?.scrollBy(0, -1)
+								document
+									.getElementById("articles")
+									?.scrollBy(0, -1)
 							}
 						/>
 						<MaterialSymbol
@@ -235,7 +230,9 @@ export default function Home() {
 							icon="arrow_downward"
 							size={24}
 							onClick={() =>
-								document.getElementById("articles")?.scrollBy(0, 1)
+								document
+									.getElementById("articles")
+									?.scrollBy(0, 1)
 							}
 						/>
 					</div>

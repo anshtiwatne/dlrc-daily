@@ -7,13 +7,13 @@ import MaterialSymbol from "@/components/material-symbol"
 interface ProfanityResult {
 	isProfanity: boolean
 	score: number
-	flaggedFor: string
+	// flaggedFor: string
 }
 
 export async function profanityCheck(
 	text: string,
 	type: "vector" | "tensor" = "vector",
-): Promise<any> {
+): Promise<ProfanityResult> {
 	const res = await fetch(`https://${type}.profanity.dev`, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },

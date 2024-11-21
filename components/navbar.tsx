@@ -88,11 +88,6 @@ export function Navbar() {
 					onClick={() =>
 						document.getElementById("menu-toggle")?.click()
 					}
-					// style={
-					// 	navTransparency && !isMenuOpen
-					// 		? { background: 'radial-gradient(farthest-corner, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%)' }
-					// 		: {}
-					// }
 				>
 					<MaterialSymbol
 						className={`${navTransparency && !isMenuOpen ? "text-neutral-200 text-opacity-95 lg:text-neutral-700 lg:text-opacity-75" : "text-black text-opacity-100 dark:text-neutral-300"}`}

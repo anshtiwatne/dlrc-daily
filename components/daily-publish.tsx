@@ -39,7 +39,7 @@ import { getBgColor } from "@/utils/color"
 import { linkifyPreview } from "@/utils/text"
 import { dataURLToBlob } from "@/utils/file"
 import { webpSupported } from "@/utils/platform"
-import { ErrMsg } from "@/components/error"
+import ErrMsg from "@/components/error-msg"
 import { pseudonyms } from "@/utils/constants"
 import { sortTags } from "@/utils/sort"
 
