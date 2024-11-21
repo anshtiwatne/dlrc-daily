@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState, Fragment } from "react"
 import { useFirestore } from "reactfire"
 import {
 	doc,
@@ -169,12 +169,13 @@ export default function Home() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [lastDoc, hasMore, isInitialLoad])
 
-	if (!articlesData.length)
+	if (!articlesData.length) {
 		return (
 			<div className="absolute left-0 top-0 h-screen w-screen">
 				<Loader />
 			</div>
 		)
+	}
 
 	return (
 		<section
@@ -188,12 +189,12 @@ export default function Home() {
 					windowDim={windowDim}
 				/>
 			)}
-			{articlesData.map((article, index) => (
-				<>
+			{articlesData.map((article, i) => (
+				<Fragment key={i}>
 					<Article
 						key={article.id}
 						ref={
-							index === articlesData.length - 1
+							i === articlesData.length - 1
 								? loadMoreRef
 								: null
 						}
@@ -201,14 +202,14 @@ export default function Home() {
 						isShared={false}
 						windowDim={windowDim}
 					/>
-					{index === articlesData.length - 1 && (
+					{i === articlesData.length - 1 && (
 						<Progress
 							isIndeterminate
 							className="mt-[-0.25rem] w-full"
 							size="sm"
 						/>
 					)}
-				</>
+				</Fragment>
 			))}
 			{autoscroll ? (
 				<Chip

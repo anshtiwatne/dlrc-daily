@@ -50,7 +50,12 @@ export default function RootLayout({
 		<html suppressHydrationWarning lang="en">
 			<head />
 			<body className={poppins.className}>
-				<Providers>
+				<Providers
+					themeProps={{
+						attribute: "class",
+						defaultTheme: "light",
+					}}
+				>
 					<FirebaseContextProvider>
 						<div className="relative flex min-h-dvh flex-col">
 							<Navbar />
