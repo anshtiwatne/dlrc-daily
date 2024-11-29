@@ -1,5 +1,6 @@
 {
 	"name": "dlrc-daily",
+	"author": "Ansh Tiwatne",
 	"version": "2.0.0",
 	"private": true,
 	"scripts": {

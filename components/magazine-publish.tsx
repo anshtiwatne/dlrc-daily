@@ -177,7 +177,7 @@ export default function MagazinePublish() {
 						</Link>
 						<p className="text-foreground-700">
 							Submission deadline:{" "}
-							<span className="font-semibold">Sep 25, 2024</span>
+							<span className="font-semibold">Jan 10, 2025</span>
 						</p>
 					</CardFooter>
 				</Card>
@@ -188,7 +188,7 @@ export default function MagazinePublish() {
 					<CardBody>
 						Have a talent for design? Submit us a design for a cover
 						page for the next issue of the magazine on the theme
-						&quot;The Journey&quot;.
+						&quot;Time&quot;.
 					</CardBody>
 					<CardFooter className="flex w-full flex-col items-start gap-2">
 						<Link
@@ -200,7 +200,7 @@ export default function MagazinePublish() {
 						</Link>
 						<p className="text-foreground-700">
 							Submission deadline:{" "}
-							<span className="font-semibold">Sep 25, 2024</span>
+							<span className="font-semibold">Jan 10, </span>
 						</p>
 					</CardFooter>
 				</Card>
