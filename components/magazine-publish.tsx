@@ -200,7 +200,7 @@ export default function MagazinePublish() {
 						</Link>
 						<p className="text-foreground-700">
 							Submission deadline:{" "}
-							<span className="font-semibold">Jan 10, </span>
+							<span className="font-semibold">Jan 10, 2025</span>
 						</p>
 					</CardFooter>
 				</Card>
