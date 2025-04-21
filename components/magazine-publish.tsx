@@ -171,13 +171,14 @@ export default function MagazinePublish() {
 						<Link
 							isExternal
 							showAnchorIcon
-							href="https://forms.gle/62vr8y76JzrdRuUY7"
+							// href="https://forms.gle/62vr8y76JzrdRuUY7"
 						>
 							Fill out the form
 						</Link>
 						<p className="text-foreground-700">
-							Submission deadline:{" "}
-							<span className="font-semibold">Jan 10, 2025</span>
+							Submission deadline has passed
+							{/* Submission deadline:{" "} */}
+							{/* <span className="font-semibold">Jan 10, 2025</span> */}
 						</p>
 					</CardFooter>
 				</Card>
@@ -194,13 +195,14 @@ export default function MagazinePublish() {
 						<Link
 							isExternal
 							showAnchorIcon
-							href="https://forms.gle/F5xgsfkU3iVBqWjz6"
+							// href="https://forms.gle/F5xgsfkU3iVBqWjz6"
 						>
 							Fill out the form
 						</Link>
 						<p className="text-foreground-700">
-							Submission deadline:{" "}
-							<span className="font-semibold">Jan 10, 2025</span>
+							Submission deadline has passed
+							{/* Submission deadline:{" "} */}
+							{/* <span className="font-semibold">Jan 10, 2025</span> */}
 						</p>
 					</CardFooter>
 				</Card>

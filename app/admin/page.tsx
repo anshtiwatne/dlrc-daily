@@ -596,8 +596,8 @@ function AdminView({ user }: { user: User }) {
 				<div className="flex w-full items-center gap-2">
 					<DateRangePicker
 						// label="Date range"
-						value={dateRange}
-						onChange={setDateRange}
+						value={dateRange as any}
+						onChange={setDateRange as any}
 					/>
 					<Button
 						isIconOnly
